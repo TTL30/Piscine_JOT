@@ -6,6 +6,7 @@
 
 int main()
 {
+    // debut
     Svgfile svgout;
     graphe g{"files/cubetown.txt","files/cubetown_weights_0.txt"};
     g.afficher(svgout);
