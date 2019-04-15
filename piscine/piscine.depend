@@ -1,14 +1,16 @@
 # depslib dependency file v1.0
-1555341218 source:c:\users\jade\piscine_jot\piscine\aretes.cpp
+1555363721 source:c:\users\jade\piscine_jot\piscine\aretes.cpp
 	<iostream>
 	<queue>
 	<stack>
 	<unordered_map>
 	<unordered_set>
 	"aretes.h"
+	"algorithm"
 
-1555341218 c:\users\jade\piscine_jot\piscine\aretes.h
+1555364337 c:\users\jade\piscine_jot\piscine\aretes.h
 	"sommet.h"
+	<vector>
 
 1555338657 c:\users\jade\piscine_jot\piscine\sommet.h
 	<string>
@@ -16,19 +18,20 @@
 	<unordered_map>
 	<unordered_set>
 
-1555341640 source:c:\users\jade\piscine_jot\piscine\graphe.cpp
+1555364393 source:c:\users\jade\piscine_jot\piscine\graphe.cpp
 	<fstream>
 	<iostream>
 	"graphe.h"
 	"aretes.h"
+	"algorithm"
 
-1555338657 c:\users\jade\piscine_jot\piscine\graphe.h
+1555364207 c:\users\jade\piscine_jot\piscine\graphe.h
 	<string>
 	<unordered_map>
 	"sommet.h"
 	"aretes.h"
 
-1555342462 source:c:\users\jade\piscine_jot\piscine\main.cpp
+1555364393 source:c:\users\jade\piscine_jot\piscine\main.cpp
 	<iostream>
 	"graphe.h"
 

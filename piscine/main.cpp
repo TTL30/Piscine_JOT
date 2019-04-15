@@ -4,6 +4,7 @@
 int main()
 {
     graphe g{"triville.txt", "triville_weights_0.txt"};
+    g.trier();
     g.afficher();
     g.afficherBFS("1");
     g.afficherDFS("1");

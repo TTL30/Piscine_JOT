@@ -2,6 +2,7 @@
 #include <iostream>
 #include "graphe.h"
 #include "aretes.h"
+#include "algorithm"
 
 graphe::graphe(std::string nomFichier, std::string nomFichier2)
 {
@@ -58,11 +59,21 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
             //std::cout<<poid<<std::endl;
         }
        // Aretes* ess ={id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second};
-        m_aretes.insert({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid}});
+        m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid}});
         poid.clear();
     }
-
 }
+
+bool compaPoid(const Aretes* m1,const Aretes* m2)
+{
+    return m1->getpoid()<m2->getpoid();
+}
+
+void graphe::trier()
+{
+        std::sort(m_aretes.begin(),m_aretes.end(),compaPoid);
+}
+
 void graphe::afficher() const{
     for(auto itr=m_aretes.begin(); itr!=m_aretes.end();itr++)
     {

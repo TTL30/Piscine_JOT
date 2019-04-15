@@ -1,6 +1,7 @@
 #ifndef ARETES_H_INCLUDED
 #define ARETES_H_INCLUDED
 #include "sommet.h"
+#include <vector>
 
 class Aretes
 {
@@ -9,6 +10,7 @@ class Aretes
         Aretes(std::string id,std::vector<float> p, Sommet* s1, Sommet* s2, int taille);
         ~Aretes();
         void afficher()const;
+        std::vector<float> getpoid() const {return m_poid;}
 
 
     protected:
