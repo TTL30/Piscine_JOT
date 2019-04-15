@@ -72,7 +72,7 @@ void graphe::afficher(Svgfile& svgout) const
     std::cout<< "odre :" <<m_sommets.size()<< std::endl;
      for(auto itr=m_aretes.begin(); itr!=m_aretes.end();itr++)
     {
-        (*itr)->dessinerAretes(svgout);
+         (*itr)->dessinerAretes(svgout);
     }
     for(auto itr=m_sommets.begin(); itr!=m_sommets.end(); itr++)
     {
