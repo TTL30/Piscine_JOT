@@ -51,17 +51,22 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
         ifc>>id_arete; if(ifs.fail()) throw std::runtime_error("Probleme lecture nom arete");
         for(int j=0;j<taille_poid;j++)
         {
+
             ifc>>p; if(ifs.fail()) throw std::runtime_error("Probleme lecture poid 1");
+
             poid[j]=p;
+            std::cout<<poid[j]<<std::endl;
         }
-        Aretes* ess={id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second};
-        m_aretes.insert(ess);
+       // Aretes* ess ={id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second};
+        m_aretes.insert({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid}});
     }
 
 }
 void graphe::afficher() const{
-    std::cout<<"graphe : "<<std::endl;
-    std::cout<<"  coder l'affichage ! "<<std::endl;
+    for(auto itr=m_aretes.begin(); itr!=m_aretes.end();itr++)
+    {
+        (*itr)->afficher();
+    }
 }
 
 /*Sommet graphe::getSom() const

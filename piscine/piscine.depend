@@ -62,3 +62,44 @@
 	<unordered_set>
 	"aretes.h"
 
+1555338380 source:c:\users\jade\piscine_jot\piscine\aretes.cpp
+	<iostream>
+	<queue>
+	<stack>
+	<unordered_map>
+	<unordered_set>
+	"aretes.h"
+
+1555336871 c:\users\jade\piscine_jot\piscine\aretes.h
+	"sommet.h"
+
+1555327728 c:\users\jade\piscine_jot\piscine\sommet.h
+	<string>
+	<vector>
+	<unordered_map>
+	<unordered_set>
+
+1555323752 source:c:\users\jade\piscine_jot\piscine\main.cpp
+	<iostream>
+	"graphe.h"
+
+1555333924 c:\users\jade\piscine_jot\piscine\graphe.h
+	<string>
+	<unordered_map>
+	"sommet.h"
+	"aretes.h"
+
+1555327728 source:c:\users\jade\piscine_jot\piscine\sommet.cpp
+	<iostream>
+	<queue>
+	<stack>
+	<unordered_map>
+	<unordered_set>
+	"sommet.h"
+
+1555338316 source:c:\users\jade\piscine_jot\piscine\graphe.cpp
+	<fstream>
+	<iostream>
+	"graphe.h"
+	"aretes.h"
+
