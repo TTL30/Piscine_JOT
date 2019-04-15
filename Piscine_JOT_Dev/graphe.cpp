@@ -64,7 +64,10 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
         poid.clear();
     }
 }
-
+int graphe::getTaillear()const
+{
+    return (int)m_aretes.size();
+}
 bool compaPoid(const Aretes* m1,const Aretes* m2)
 {
     return m1->getpoid()<m2->getpoid();
@@ -87,6 +90,23 @@ void graphe::afficher(Svgfile& svgout) const{
     }
 
 }
+
+
+
+void graphe::Kruskal()
+{
+    std::vector<Aretes*>aretesKruskal;
+    trier();
+    for(auto it:m_aretes)
+    {
+        if()
+
+
+    }
+
+
+}
+
 
 
 graphe::~graphe()

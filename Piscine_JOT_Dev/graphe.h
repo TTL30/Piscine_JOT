@@ -15,7 +15,9 @@ class graphe
         void afficher(Svgfile& svgout) const;
         Sommet getSom() const;
         void trier();
-        //bool compaPoid(const float m1,const float m2);
+        void Kruskal();
+        int getTaillear()const;
+
     protected:
 
     private:
