@@ -37,7 +37,7 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
     ifc>> taille_ar; if ( ifs.fail() )throw std::runtime_error("Probleme lecture taille aretes");
     ifc>> taille_poid; if (ifs.fail()) throw std::runtime_error("Probleme lecture taille poid");
 
-    float poid[taille_poid];
+    std::vector<float> poid;
     //lecture des aretes
     for (int i=0; i<taille; ++i){
         //lecture des ids des deux extrémités
@@ -54,11 +54,12 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
 
             ifc>>p; if(ifs.fail()) throw std::runtime_error("Probleme lecture poid 1");
 
-            poid[j]=p;
-            std::cout<<poid[j]<<std::endl;
+            poid.push_back(p);
+            //std::cout<<poid<<std::endl;
         }
        // Aretes* ess ={id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second};
         m_aretes.insert({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid}});
+        poid.clear();
     }
 
 }

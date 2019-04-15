@@ -6,7 +6,7 @@ class Aretes
 {
     public:
         ///constructeur qui reçoit en params les données du sommet
-        Aretes(std::string id,float* p, Sommet* s1, Sommet* s2, int taille);
+        Aretes(std::string id,std::vector<float> p, Sommet* s1, Sommet* s2, int taille);
         ~Aretes();
         void afficher()const;
 
@@ -18,7 +18,7 @@ class Aretes
         /// Données spécifiques du sommet
         int m_taille;
         std::string m_id; // Identifiant
-        float* m_poid;
+        std::vector<float> m_poid;
         Sommet* m_s1;
         Sommet* m_s2;
 
