@@ -17,11 +17,18 @@ void Sommet::afficherData() const
 {
     std::cout<<"    "<<m_id<<" : "<<"(x,y)=("<<m_x<<","<<m_y<<")"<<std::endl;
 }
-
+double Sommet::getX() const
+{
+    return m_x;
+}
+double Sommet::getY() const
+{
+    return m_y;
+}
 void Sommet::dessinerSommet(Svgfile& svgout)const
 {
-    svgout.addCircle(m_x,m_y,20,1,"blue");
-    svgout.addText(m_x-5,m_y+5,m_id,"black");
+    svgout.addDisk(m_x,m_y,20,"blue");
+    svgout.addText(m_x-5,m_y+5,m_id,"white");
 }
 void Sommet::afficherVoisins() const
 {

@@ -4,7 +4,6 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
-#include "svgfile.h"
 
 class Sommet
 {
@@ -14,8 +13,6 @@ class Sommet
         void ajouterVoisin(const Sommet*);
         void afficherData() const;
         void afficherVoisins() const;
-        void dessinerSommet(Svgfile& svgout)const;
-
         ///méthode de parcours en largeur du graphe à partir du sommet
         ///renvoie les prédécesseurs sous forme d'une map (clé=id du sommet,valeur=id de son prédécesseur)
         std::unordered_map<std::string,std::string> parcoursBFS() const;
@@ -23,12 +20,8 @@ class Sommet
         std::unordered_map<std::string,std::string> parcoursDFS() const;
         ///méthode qui recherche la composante connexe du sommet
         ///renvoie la liste des ids des sommets de la composante
-        std::unordered_set<std::string> rechercherCC();
+        std::unordered_set<std::string> rechercherCC() const;
         ~Sommet();
-        double getX() const;
-        double getY() const;
-
-
 
     protected:
 

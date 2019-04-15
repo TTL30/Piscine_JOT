@@ -12,7 +12,7 @@ class graphe
         //format du fichier ordre/liste des sommets/taille/liste des arêtes
         graphe(std::string, std::string);
         ~graphe();
-        void afficher(Svgfile& svgout) const;
+        void afficher() const;
         ///lance un parcours en largeur à partir du sommet d'identifiant id
         void parcoursBFS(std::string) const;
         ///lance et affiche le parcours en largeur à partir du sommet d'identifiant id
@@ -24,6 +24,7 @@ class graphe
         ///recherche et affiche les composantes connexes
         ///retourne le nombre de composantes connexes
         int rechercher_afficherToutesCC() const;
+        Sommet getSom() const;
 
     protected:
 
