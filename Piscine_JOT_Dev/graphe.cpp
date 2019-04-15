@@ -1,6 +1,9 @@
 #include <fstream>
 #include <iostream>
 #include "graphe.h"
+#include "aretes.h"
+#include "algorithm"
+
 
 graphe::graphe(std::string nomFichier, std::string nomFichier2)
 {
@@ -36,7 +39,8 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
     ifc>> taille_ar; if ( ifs.fail() )throw std::runtime_error("Probleme lecture taille aretes");
     ifc>> taille_poid; if (ifs.fail()) throw std::runtime_error("Probleme lecture taille poid");
 
-    float poid[taille_poid];
+    std::vector<float> poid;
+
     //lecture des aretes
     for (int i=0; i<taille; ++i){
         //lecture des ids des deux extrémités
@@ -52,141 +56,39 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
         {
 
             ifc>>p; if(ifs.fail()) throw std::runtime_error("Probleme lecture poid 1");
-
-            poid[j]=p;
-            std::cout<<poid[j]<<std::endl;
+            poid.push_back(p);
+            //std::cout<<poid<<std::endl;
         }
        // Aretes* ess ={id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second};
-        m_aretes.insert({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid}});
+        m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid}});
+        poid.clear();
     }
-
 }
 
-///----AFFICHAGE DU GRAPHE
-
-void graphe::afficher(Svgfile& svgout) const
+bool compaPoid(const Aretes* m1,const Aretes* m2)
 {
+    return m1->getpoid()<m2->getpoid();
+}
 
-    std::cout<<"graphe : "<<std::endl;
-    //std::cout<<"  coder l'affichage ! "<<std::endl;
-    std::cout<< "odre :" <<m_sommets.size()<< std::endl;
-     for(auto itr=m_aretes.begin(); itr!=m_aretes.end();itr++)
+void graphe::trier()
+{
+        std::sort(m_aretes.begin(),m_aretes.end(),compaPoid);
+}
+
+void graphe::afficher(Svgfile& svgout) const{
+    for(auto itr=m_aretes.begin(); itr!=m_aretes.end();itr++)
     {
-         (*itr)->dessinerAretes(svgout);
+        (*itr)->afficher();
+        (*itr)->dessinerArete(svgout);
     }
-    for(auto itr=m_sommets.begin(); itr!=m_sommets.end(); itr++)
+    for(auto it=m_sommets.begin(); it!=m_sommets.end();it++)
     {
-        //std::cout<<itr->first <<" " <<std::endl;
-        std::cout<<"Sommet:"<<std::endl;
-        itr->second->afficherData();
-        itr->second->afficherVoisins();
-        itr->second->dessinerSommet(svgout);
+        it->second->dessinerSommet(svgout);
     }
 
-
 }
 
-void graphe::parcoursBFS(std::string id) const
-{
-    Sommet*s0=(m_sommets.find(id))->second;
-    std::unordered_map<std::string,std::string> l_pred;
-    l_pred=s0->parcoursBFS();
-}
 
-void graphe::afficherBFS(std::string id) const
-{
-    Sommet*s0=(m_sommets.find(id))->second;
-    std::unordered_map<std::string,std::string> l_pred;
-    std::cout<<"parcoursBFS a partir de "<<id<<" :"<<std::endl;
-    l_pred=s0->parcoursBFS();
-    for(auto s:l_pred)
-    {
-        std::cout<<s.first<<" <--- ";
-        std::pair<std::string,std::string> pred=s;
-        while(pred.second!=id)
-        {
-            pred=*l_pred.find(pred.second);
-            std::cout<<pred.first<<" <--- ";
-        }
-        std::cout<<id<<std::endl;
-    }
-}
-void graphe::parcoursDFS(std::string id) const
-{
-    Sommet*s0=(m_sommets.find(id))->second;
-    std::unordered_map<std::string,std::string> l_pred;
-    l_pred=s0->parcoursDFS();
-}
-void graphe::afficherDFS(std::string id) const
-{
-    Sommet*s0=(m_sommets.find(id))->second;
-    std::unordered_map<std::string,std::string> l_pred;
-    std::cout<<"parcoursDFS a partir de "<<id<<" :"<<std::endl;
-    l_pred=s0->parcoursDFS();
-    for(auto s:l_pred)
-    {
-        std::cout<<s.first<<" <--- ";
-        std::pair<std::string,std::string> pred=s;
-        while(pred.second!=id)
-        {
-            pred=*l_pred.find(pred.second);
-            std::cout<<pred.first<<" <--- ";
-        }
-        std::cout<<id<<std::endl;
-    }
-}
-auto print(std::unordered_set<std::string> const &s)
-{
-    auto it = s.cbegin() ;
-    std::cout << *it << ' ';
-    return it;
-
-}
-
-int graphe::rechercher_afficherToutesCC() const
-{
-    std::cout<<"composantes connexes :"<<std::endl;
-    std::unordered_set<std::string> cc;
-    std::unordered_map<std::string,Sommet*> MesSom;
-    std::unordered_set<std::string> Liste;
-
-    MesSom=m_sommets;
-
-    std::string id= MesSom.begin()->first;
-    Sommet*s0=(m_sommets.find(id))->second;
-
-    int i=0;
-    int vartest=0;
- for(auto j: m_sommets)
-    {
-        for(const auto &i:cc)
-            {
-                Liste.insert(i);
-            }
-        if(Liste.find(j.first)==cc.find(j.first))
-            {
-                id=j.first;
-                s0=(m_sommets.find(id))->second;
-                cc=s0->rechercherCC();
-                cc.insert(id);
-            }
-            else{cc.clear();}
-
-        if(!cc.empty())
-        {
-            i++;
-            std::cout<<"cc"<<i<<std::endl;
-
-            for(auto itr=cc.begin(); itr!=cc.end();++itr)
-                {
-                    std::cout<< *itr << " ";
-                }
-               std::cout<<""<< std::endl;
-        }
-    }
-    std::cout<<"recherche et affichage de toutes les composantes connexes a coder"<<std::endl;
-    return i;
-}
 graphe::~graphe()
 {
     //dtor

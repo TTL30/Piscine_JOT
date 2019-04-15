@@ -25,12 +25,13 @@ class graphe
         ///retourne le nombre de composantes connexes
         int rechercher_afficherToutesCC() const;
         Sommet getSom() const;
-
+        void trier();
+        //bool compaPoid(const float m1,const float m2);
     protected:
 
     private:
         /// Le réseau est constitué d'une collection de sommets
-        std::unordered_set<Aretes*> m_aretes;//stockée dans une map (clé=id du sommet, valeur= pointeur sur le sommet)
+        std::vector<Aretes*> m_aretes;//stockée dans une map (clé=id du sommet, valeur= pointeur sur le sommet)
         std::unordered_map<std::string,Sommet*> m_sommets;//stockée dans une map (clé=id du sommet, valeur= pointeur sur le sommet)
 
 };

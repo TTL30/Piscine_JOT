@@ -4,10 +4,17 @@
 #include<unordered_map>
 #include<unordered_set>
 #include "aretes.h"
+#include "algorithm"
 
-Aretes::Aretes(std::string id, float* p ,Sommet* s1, Sommet* s2, int taille):m_id{id},m_poid{p},m_s1{s1}, m_s2{s2}, m_taille{taille}
+
+Aretes::Aretes(std::string id, std::vector<float> p ,Sommet* s1, Sommet* s2, int taille):m_id{id},m_poid{p},m_s1{s1}, m_s2{s2}, m_taille{taille}
 {
 }
+/*bool Aretes::compaPoid(const float m1,const float m2)
+{
+    return m1<m2;
+}*/
+
 
 void Aretes::afficher()const
 {
@@ -15,10 +22,9 @@ void Aretes::afficher()const
     m_s1->afficherData();
 
     m_s2->afficherData();
-    std::cout<<" poid : "<< m_poid[0]<<std::endl;
-    for(int i=0;i<m_taille; ++i)
+    for(auto &itr:m_poid)
     {
-        std::cout<<" poid " <<i <<" : "<< *m_poid[i]<<std::endl;
+        std::cout<<" poid " <<itr<<std::endl;
     }
     std::cout<<" "<<std::endl;
 }

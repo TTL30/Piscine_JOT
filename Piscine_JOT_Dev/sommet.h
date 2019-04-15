@@ -16,14 +16,6 @@ class Sommet
         void afficherVoisins() const;
         void dessinerSommet(Svgfile& svgout)const;
 
-        ///méthode de parcours en largeur du graphe à partir du sommet
-        ///renvoie les prédécesseurs sous forme d'une map (clé=id du sommet,valeur=id de son prédécesseur)
-        std::unordered_map<std::string,std::string> parcoursBFS() const;
-         ///méthode de parcours en profondeur du graphe à partir du sommet
-        std::unordered_map<std::string,std::string> parcoursDFS() const;
-        ///méthode qui recherche la composante connexe du sommet
-        ///renvoie la liste des ids des sommets de la composante
-        std::unordered_set<std::string> rechercherCC();
         ~Sommet();
         double getX() const;
         double getY() const;
