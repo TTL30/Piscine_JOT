@@ -8,7 +8,7 @@ int main()
 {
     // debut
     Svgfile svgout;
-    graphe g{"files/cubetown.txt","files/cubetown_weights_0.txt"};
+    graphe g{"files/manhattan.txt","files/cubetown_weights_0.txt"};
     g.afficher(svgout);
     return 0;
 }
