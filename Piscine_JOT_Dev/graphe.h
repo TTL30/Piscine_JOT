@@ -16,13 +16,17 @@ class graphe
         Sommet getSom() const;
         void trier();
         //bool compaPoid(const float m1,const float m2);
+        //std::vector<bool> possibilites(std::vector<bool> allaretes);
+        void Pareto();
+        std::vector<bool> possibilites(std::vector<bool> allaretes);
     protected:
 
     private:
         /// Le réseau est constitué d'une collection de sommets
+        std::vector<float> m_poid;
         std::vector<Aretes*> m_aretes;//stockée dans une map (clé=id du sommet, valeur= pointeur sur le sommet)
         std::unordered_map<std::string,Sommet*> m_sommets;//stockée dans une map (clé=id du sommet, valeur= pointeur sur le sommet)
-
+        int nbaret;
 };
 
 #endif // GRAPHE_H
