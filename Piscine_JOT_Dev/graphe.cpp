@@ -96,94 +96,55 @@ bool compaPoid(const Aretes* m1,const Aretes* m2)
     return m1->getpoid(m1->getnbpoid())<m2->getpoid(m2->getnbpoid());
 }
 
-
-
-void graphe::afficherDFS(std::string id) const
+std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
 {
-    Sommet*s0=(m_sommets.find(id))->second;
-    std::unordered_map<std::string,std::string> l_pred;
-    std::cout<<"parcoursDFS a partir de "<<id<<" :"<<std::endl;
-    l_pred=s0->parcoursDFS();
-    for(auto s:l_pred)
-    {
-        std::cout<<s.first<<" <--- ";
-        std::pair<std::string,std::string> pred=s;
-        while(pred.second!=id)
-        {
-            pred=*l_pred.find(pred.second);
-            std::cout<<pred.first<<" <--- ";
-        }
-        std::cout<<id<<std::endl;
-    }
-}
-struct Sous_sommet
-{
-    int parent_sommet;
-    int rang_sommet;
-};
-int recherche_connexe(Sous_sommet mes_SousSommet[], int i)
-{
-  if (mes_SousSommet[i].parent_sommet != i)
-        mes_SousSommet[i].parent_sommet = recherche_connexe(mes_SousSommet, mes_SousSommet[i].parent_sommet);
-
-    return mes_SousSommet[i].parent_sommet;
-}
-void Connexite(Sous_sommet mesSousSommet[], int x, int y)
-{
-    int xroot = recherche_connexe(mesSousSommet, x);
-    int yroot = recherche_connexe(mesSousSommet, y);
-
-
-    if (mesSousSommet[xroot].rang_sommet < mesSousSommet[yroot].rang_sommet)
-        mesSousSommet[xroot].parent_sommet = yroot;
-    else if (mesSousSommet[xroot].rang_sommet > mesSousSommet[yroot].rang_sommet)
-        mesSousSommet[yroot].parent_sommet = xroot;
-
-    else
-    {
-        mesSousSommet[yroot].parent_sommet = xroot;
-        mesSousSommet[xroot].rang_sommet++;
-    }
-}
-void graphe::Krusk(Svgfile& svgout,int p)
-{
-    std::vector<Aretes*> mesAretesKrusk;
+    std::vector<Aretes*> Arbre;
+    int *connexe;
+    int indiceA=0 ,indiceG=0;
+    int x,s1,s2;
     int nbsommet= m_sommets.size();
-    int nbKruskal=0;
-    int i=0;
-    ///trie
+    int n= m_aretes.size();
+    Aretes* u ;
+    connexe= ( int*)malloc(nbsommet* sizeof( int));
+    for(x=0;x<nbsommet;x++)
+    {
+        connexe[x]=x;
+    }
+
     std::sort(m_aretes.begin(),m_aretes.end(),compaPoid);
     for(auto &j: m_aretes)
     {
         j->setnbpoid(j->add());
-
     }
-    ///allocation dynamique
-    Sous_sommet * mes_Soussomm= (struct Sous_sommet*)malloc(nbsommet* sizeof(struct Sous_sommet));
-
-    for(int it=0;it<nbsommet;it++)
+    while(indiceA<nbsommet-1 || indiceG<n)
     {
-        mes_Soussomm[it].parent_sommet=it;
-        mes_Soussomm[it].rang_sommet=0;
-    }
-    while(nbKruskal < nbsommet-1)
-    {
-        Aretes* maillon_Arete = m_aretes[i++] ;
-        int idso1 = std::stoi(maillon_Arete->getSommet1()->getid());
-        int idso2 = std::stoi(maillon_Arete->getSommet2()->getid());
+        u=m_aretes[indiceG];
+        int idso1 = std::stoi(u->getSommet1()->getid());
+        int idso2 = std::stoi(u->getSommet2()->getid());
 
-        int check_x =recherche_connexe(mes_Soussomm,idso1);
-        int check_y =recherche_connexe(mes_Soussomm,idso2);
-        if(check_x!=check_y)
+        s1= connexe[idso1];
+        s2= connexe[idso2];
+        if(s1==s2)
         {
-            printf("test");
-            nbKruskal++;
-            mesAretesKrusk.push_back(maillon_Arete);
-            Connexite(mes_Soussomm, check_x,check_y);
+            indiceG++;
+        }
+        else
+        {
+            Arbre.push_back(u);
+            indiceA++;
+            indiceG++;
+            for (x=0 ; x<nbsommet ; x++)
+            {
+
+                if (connexe[x]==s1)
+                {
+                    connexe[x]=s2;
+                }
+            }
         }
     }
     int posx=p*500;
-    for(auto itr=mesAretesKrusk.begin(); itr!=mesAretesKrusk.end(); itr++)
+    for(auto itr=Arbre.begin(); itr!=Arbre.end(); itr++)
     {
         (*itr)->dessinerArete(svgout,"red",posx,0);
     }
@@ -193,8 +154,8 @@ void graphe::Krusk(Svgfile& svgout,int p)
     }
     auto poidstring=std::to_string(p);
     svgout.addText(posx+100,450,"Kruskal pour le poids ("+poidstring+")","black");
+    return Arbre;
 }
-
 
 
 void graphe::afficher(Svgfile& svgout) const

@@ -14,7 +14,9 @@ class graphe
         ~graphe();
         void afficher(Svgfile& svgout) const;
         Sommet getSom() const;
-        void Krusk(Svgfile& svgout,int p);const
+        void Krusk(Svgfile& svgout,int p);
+        std::vector<Aretes*> kruskal (Svgfile& svgout,int i);
+
         Aretes* get_aret(){return m_aretes[0];}
  ///lance un parcours en profondeur à partir du sommet d'identifiant id
         void parcoursDFS(std::string) const;

@@ -17,11 +17,11 @@ void Sommet::afficherData() const
 {
     std::cout<<"    "<<m_id<<" : "<<"(x,y)=("<<m_x<<","<<m_y<<")"<<std::endl;
 }
-double Sommet::getX() const
+int Sommet::getX() const
 {
     return m_x;
 }
-double Sommet::getY() const
+int Sommet::getY() const
 {
     return m_y;
 }
