@@ -34,8 +34,6 @@
 		</Compiler>
 		<Unit filename="Couleur.cpp" />
 		<Unit filename="Couleur.h" />
-		<Unit filename="aretes.cpp" />
-		<Unit filename="aretes.h" />
 		<Unit filename="graphe.cpp" />
 		<Unit filename="graphe.h" />
 		<Unit filename="main.cpp" />

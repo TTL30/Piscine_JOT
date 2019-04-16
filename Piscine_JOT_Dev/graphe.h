@@ -14,10 +14,9 @@ class graphe
         ~graphe();
         void afficher(Svgfile& svgout) const;
         Sommet getSom() const;
-        void trier();
-        void Kruskal();
-        int getTaillear()const;
-
+        void Krusk();
+        Aretes* get_aret(){return m_aretes[0];}
+        //bool compaPoid(const float m1,const float m2);
     protected:
 
     private:

@@ -21,6 +21,7 @@ class Sommet
         double getY() const;
 
 
+
     protected:
 
     private:
