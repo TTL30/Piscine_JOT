@@ -95,14 +95,14 @@ void graphe::afficher(Svgfile& svgout) const{
 
 void graphe::Kruskal()
 {
-    std::vector<Aretes*>aretesKruskal;
+  /*  std::vector<Aretes*>aretesKruskal;
     trier();
     for(auto it:m_aretes)
     {
         if()
 
 
-    }
+    }*/
 
 
 }
