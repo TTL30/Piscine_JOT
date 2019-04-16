@@ -16,9 +16,12 @@ class Aretes
         int get_taillep() const {return m_taille;}
         void setnbpoid(int i) { m_nbpoid=i;}
 
-
+        Sommet* getSommet1() const{return m_s1;}
+        Sommet* getSommet2() const{return m_s2;}
+        std::string getidar() const {return m_id;}
         int add() { return m_nbpoid+1;}
-        void dessinerArete(Svgfile& svgout)const;
+        void dessinerArete(Svgfile& svgout,std::string m_couleur,int posxinit,int posyinit)const;
+
 
 
 
