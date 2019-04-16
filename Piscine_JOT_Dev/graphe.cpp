@@ -60,19 +60,23 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
             //std::cout<<poid<<std::endl;
         }
        // Aretes* ess ={id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second};
-        m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid}});
+        m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, 0}});
         poid.clear();
     }
 }
 
 bool compaPoid(const Aretes* m1,const Aretes* m2)
 {
-    return m1->getpoid()<m2->getpoid();
+    return m1->getpoid(m1->getnbpoid())<m2->getpoid(m2->getnbpoid());
 }
 
-void graphe::trier()
+void graphe::Krusk()
 {
         std::sort(m_aretes.begin(),m_aretes.end(),compaPoid);
+        for(auto &j : m_aretes)
+        {
+            j->setnbpoid(j->add());
+        }
 }
 
 void graphe::afficher(Svgfile& svgout) const{
