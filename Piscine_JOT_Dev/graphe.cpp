@@ -76,6 +76,14 @@ bool compaPoid(const Aretes* m1,const Aretes* m2)
 void graphe::trier()
 {
         std::sort(m_aretes.begin(),m_aretes.end(),compaPoid);
+<<<<<<< HEAD
+=======
+        for(auto &j : m_aretes)
+        {
+            j->setnbpoid(j->add());
+            printf("oui");
+        }
+>>>>>>> 56c279f8497df4c5ceb463888f2ce2a8aa38001d
 }
 
 void graphe::afficher(Svgfile& svgout) const{
