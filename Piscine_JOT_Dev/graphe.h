@@ -14,10 +14,12 @@ class graphe
         ~graphe();
         void afficher(Svgfile& svgout) const;
         Sommet getSom() const;
-        void Krusk();
+        void Krusk(Svgfile& svgout,int p);const
         Aretes* get_aret(){return m_aretes[0];}
-        //bool compaPoid(const float m1,const float m2);
-    protected:
+ ///lance un parcours en profondeur à partir du sommet d'identifiant id
+        void parcoursDFS(std::string) const;
+        ///lance et affiche le parcours en profondeur à partir du sommet d'identifiant id
+        void afficherDFS(std::string) const;    protected:
 
     private:
         /// Le réseau est constitué d'une collection de sommets
