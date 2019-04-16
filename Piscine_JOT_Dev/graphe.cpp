@@ -75,6 +75,36 @@ bool compaPoid(const Aretes* m1,const Aretes* m2)
     return m1->getpoid()<m2->getpoid();
 }
 
+int graphe::rechercher_afficherToutesCC() const
+{
+    std::unordered_set<std::string> cc;
+
+    int i=0;
+
+    while(cc.size()!=m_sommets.size()) //tant que la taille du set est différent de l'ordre du graphe
+    {
+        printf("ubinj\n");
+        for(auto it : m_sommets)  //Parcours des sommets
+        {
+            printf("xxxxxxx\n");
+            if(cc.count(it.first)==0)
+            {
+                printf("dfgh\n");
+                Sommet* s=(m_sommets.find(it.first))->second;
+                auto comp=s->rechercherCC();
+
+                comp.insert(it.first);
+                ++i;
+                for(auto itr:comp)
+                {
+                    cc.insert(itr);
+                }
+            }
+        }
+    }
+    return i;
+}
+
 void graphe::Pareto()
 {
     std::vector<graphe> salut;
@@ -89,10 +119,11 @@ void graphe::Pareto()
     }
     std::vector<bool> allaretes=c;
     salut.push_back(allgraphes);
-    ///int connex=;
+
 
     for(int i=0; i<pow(2,nbaret)-1;++i)
     {
+
         int nombreAr=0;
         allaretes=possibilites(allaretes);
 
@@ -103,14 +134,31 @@ void graphe::Pareto()
                 if(k->getbolAr(j)==allaretes[j])
                 {
                     allgraphes.m_aretes.push_back(k);
+                    //allgraphes.m_sommets.insert({"0",k->getsommet1()});
                     nombreAr++;
                 }
             }
         }
-        /*if((nombreAr==nbaret-1)&&())
+        int connex=allgraphes.rechercher_afficherToutesCC();
+        //printf("%d\n", connex);
+        /*if((nombreAr==nbaret-1))
         {
-            salut.push_back(allgraphes);
-        }*/
+           // printf("fgh\n");
+
+        }*/salut.push_back(allgraphes);
+        for(auto saaaalut : salut)
+        {
+            for(auto aurevoir : saaaalut.m_aretes)
+            {
+                for(int h=0;h<nbaret;++h)
+                    {
+                        //printf("z");
+                        std::cout<<aurevoir->getbolAr(h);
+                    }
+                std::cout<<std::endl;
+            }
+
+        }
 
     }
 
@@ -154,11 +202,6 @@ std::vector<bool> graphe::possibilites(std::vector<bool> allaretes)
             allaretes[k-1]=true;
     }
     ///---comparaison entre graphe initial et nouv graphe
-    for(auto i: allaretes)
-    {
-        std::cout<<i;
-    }
-std::cout<<std::endl;
 
     return allaretes;
 }
