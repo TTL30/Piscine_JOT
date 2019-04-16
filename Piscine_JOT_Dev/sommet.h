@@ -13,8 +13,6 @@ class Sommet
         Sommet(std::string,double,double);
         void ajouterVoisin(const Sommet*);
         void afficherData() const;
-        std::unordered_map<std::string,std::string> parcoursBFS() const;
-        std::unordered_set<std::string> rechercherCC() const;
         void afficherVoisins() const;
         void dessinerSommet(Svgfile& svgout)const;
 
@@ -29,8 +27,6 @@ class Sommet
     private:
         /// Voisinage : liste d'adjacence
         std::vector<const Sommet*> m_voisins;
-
-
 
         /// Données spécifiques du sommet
         std::string m_id; // Identifiant

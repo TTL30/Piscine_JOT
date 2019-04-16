@@ -17,8 +17,6 @@ class graphe
         void trier();
         //bool compaPoid(const float m1,const float m2);
         //std::vector<bool> possibilites(std::vector<bool> allaretes);
-        int rechercher_afficherToutesCC() const;
-
         void Pareto();
         std::vector<bool> possibilites(std::vector<bool> allaretes);
     protected:
