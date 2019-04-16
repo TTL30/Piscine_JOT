@@ -76,6 +76,7 @@ void graphe::Krusk()
         for(auto &j : m_aretes)
         {
             j->setnbpoid(j->add());
+            printf("oui");
         }
 }
 
