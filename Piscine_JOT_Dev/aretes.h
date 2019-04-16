@@ -8,16 +8,15 @@ class Aretes
 {
     public:
         ///constructeur qui reçoit en params les données du sommet
-        Aretes(std::string id,std::vector<float> p, Sommet* s1, Sommet* s2, int taille, int tp);
+        Aretes(std::string id,std::vector<float> p, Sommet* s1, Sommet* s2, int taille, std::vector<bool> bolAr);
         ~Aretes();
         void afficher()const;
-        float getpoid(int i) const {return m_poid[i];}
-        int getnbpoid() const {return m_nbpoid;}
-        int get_taillep() const {return m_taille;}
-        void setnbpoid(int i) { m_nbpoid=i;}
-
-
-        int add() { return m_nbpoid+1;}
+        std::vector<float> getpoid() const {return m_poid;}
+        int gettaille()const {return m_taille;}
+        Sommet* getsommet1()const {return m_s1;}
+        Sommet* getsommet2()const {return m_s2;}
+        bool getbolAr(int i) const {return m_bolAr[i];}
+        std::vector<bool> getbolArr() const {return m_bolAr;}
         void dessinerArete(Svgfile& svgout)const;
 
 
@@ -28,11 +27,12 @@ class Aretes
     private:
         /// Données spécifiques du sommet
         int m_taille;
-        int m_nbpoid;
         std::string m_id; // Identifiant
         std::vector<float> m_poid;
         Sommet* m_s1;
         Sommet* m_s2;
+        std::vector<bool> m_bolAr;
+
 
 };
 

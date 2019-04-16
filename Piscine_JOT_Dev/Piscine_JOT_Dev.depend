@@ -93,7 +93,7 @@
 	"aretes.h"
 	"algorithm"
 
-1555406565 source:c:\users\jade\piscine_jot\piscine_jot_dev\aretes.cpp
+1555366167 source:c:\users\jade\piscine_jot\piscine_jot_dev\aretes.cpp
 	<iostream>
 	<queue>
 	<stack>
@@ -102,11 +102,11 @@
 	"aretes.h"
 	"algorithm"
 
-1555406980 c:\users\jade\piscine_jot\piscine_jot_dev\aretes.h
+1555366167 c:\users\jade\piscine_jot\piscine_jot_dev\aretes.h
 	"sommet.h"
 	<vector>
 
-1555406565 c:\users\jade\piscine_jot\piscine_jot_dev\sommet.h
+1555365413 c:\users\jade\piscine_jot\piscine_jot_dev\sommet.h
 	<string>
 	<vector>
 	<unordered_map>
@@ -138,17 +138,17 @@
 	<iostream>
 	"time.h"
 
-1555406565 source:c:\users\jade\piscine_jot\piscine_jot_dev\main.cpp
+1555366204 source:c:\users\jade\piscine_jot\piscine_jot_dev\main.cpp
 	<iostream>
 	"graphe.h"
 
-1555406565 c:\users\jade\piscine_jot\piscine_jot_dev\graphe.h
+1555366167 c:\users\jade\piscine_jot\piscine_jot_dev\graphe.h
 	<string>
 	<unordered_map>
 	"sommet.h"
 	"aretes.h"
 
-1555406565 source:c:\users\jade\piscine_jot\piscine_jot_dev\sommet.cpp
+1555365413 source:c:\users\jade\piscine_jot\piscine_jot_dev\sommet.cpp
 	<iostream>
 	<queue>
 	<stack>
@@ -180,10 +180,104 @@
 	"util.h"
 	<windows.h>
 
-1555406834 source:c:\users\jade\piscine_jot\piscine_jot_dev\graphe.cpp
+1555366109 source:c:\users\jade\piscine_jot\piscine_jot_dev\graphe.cpp
 	<fstream>
 	<iostream>
 	"graphe.h"
+	"aretes.h"
+	"algorithm"
+
+1555368124 source:c:\users\oscar\piscine_jot\piscine_jot_dev\couleur.cpp
+	"couleur.h"
+	"svgfile.h"
+	"util.h"
+	<iostream>
+	"time.h"
+
+1555368124 c:\users\oscar\piscine_jot\piscine_jot_dev\couleur.h
+	<string>
+	<cstdint>
+
+1555368124 c:\users\oscar\piscine_jot\piscine_jot_dev\svgfile.h
+	<string>
+	<fstream>
+	<set>
+	"Couleur.h"
+	"util.h"
+
+1555368124 c:\users\oscar\piscine_jot\piscine_jot_dev\util.h
+	<string>
+	<random>
+	<ctime>
+	<iostream>
+	<cstdio>
+
+1555429997 source:c:\users\oscar\piscine_jot\piscine_jot_dev\graphe.cpp
+	<fstream>
+	<iostream>
+	"graphe.h"
+	"aretes.h"
+	"algorithm"
+
+1555431247 c:\users\oscar\piscine_jot\piscine_jot_dev\graphe.h
+	<string>
+	<unordered_map>
+	"sommet.h"
+	"aretes.h"
+
+1555434228 c:\users\oscar\piscine_jot\piscine_jot_dev\sommet.h
+	<string>
+	<vector>
+	<unordered_map>
+	<unordered_set>
+	"svgfile.h"
+
+1555427429 c:\users\oscar\piscine_jot\piscine_jot_dev\aretes.h
+	"sommet.h"
+	<vector>
+
+1555428775 source:c:\users\oscar\piscine_jot\piscine_jot_dev\main.cpp
+	<iostream>
+	"graphe.h"
+
+1555434265 source:c:\users\oscar\piscine_jot\piscine_jot_dev\sommet.cpp
+	<iostream>
+	<queue>
+	<stack>
+	<unordered_map>
+	<unordered_set>
+	"sommet.h"
+	"svgfile.h"
+
+1555368124 source:c:\users\oscar\piscine_jot\piscine_jot_dev\svgfile.cpp
+	"svgfile.h"
+	"util.h"
+	<iostream>
+	<sstream>
+
+1555368124 source:c:\users\oscar\piscine_jot\piscine_jot_dev\util.cpp
+	"util.h"
+	<random>
+	<ctime>
+	<iostream>
+	<cstdio>
+	<streambuf>
+	<vector>
+	<cstdlib>
+	<cstdio>
+	<algorithm>
+	<cstring>
+	<iostream>
+	<thread>
+	"util.h"
+	<windows.h>
+
+1555422743 source:c:\users\oscar\piscine_jot\piscine_jot_dev\aretes.cpp
+	<iostream>
+	<queue>
+	<stack>
+	<unordered_map>
+	<unordered_set>
 	"aretes.h"
 	"algorithm"
 
