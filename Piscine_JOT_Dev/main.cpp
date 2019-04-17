@@ -5,7 +5,7 @@ int main()
 {
     // debut
     Svgfile svgout;
-    graphe g{"files/triville.txt","files/triville_weights_0.txt"};
+    graphe g{"files/broadway.txt","files/broadway_weights_0.txt"};
     //g.trier();
     //g.afficher(svgout);
     g.Pareto();

@@ -93,10 +93,6 @@ void graphe::Pareto()
         }
         else allaretes.push_back(false);
     }
-     for(int j=0;j<nbaret;++j)
-    {
-        std::cout<<allaretes[j];
-    }
     std::cout<<std::endl;
     std::sort(allaretes.begin(),allaretes.end());
     do{
