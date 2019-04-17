@@ -11,7 +11,7 @@ int main()
     {
         std::cout<< "AUTRE KRUSTAL AVEC POID  :  " << i << std::endl;
         //g.Krusk(svgout,i+1);
-        g.kruskal(svgout,i+1);
+        g.kruskal(svgout,i);
         g.afficher(svgout);
     }
 

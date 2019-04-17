@@ -85,7 +85,7 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
             poid.push_back(p);
             //std::cout<<poid<<std::endl;
         }
-        // Aretes* ess ={id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second};
+
         m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, 0}});
         poid.clear();
     }
@@ -96,10 +96,21 @@ bool compaPoid(const Aretes* m1,const Aretes* m2)
     return m1->getpoid(m1->getnbpoid())<m2->getpoid(m2->getnbpoid());
 }
 
+float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
+{
+    float mon_poidtot;
+    for(auto j:Krusk)
+    {
+        mon_poidtot+=j->getpoid(poid);
+    }
+    return mon_poidtot;
+}
+
 std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
 {
     std::vector<Aretes*> Arbre;
     int *connexe;
+    int poidarbre;
     int indiceA=0 ,indiceG=0;
     int x,s1,s2;
     int nbsommet= m_sommets.size();
@@ -143,7 +154,13 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
             }
         }
     }
-    int posx=p*500;
+    int posx;
+    if(p==0)
+    {
+        posx=500;
+    }
+    else
+        posx=500+p*500;
     for(auto itr=Arbre.begin(); itr!=Arbre.end(); itr++)
     {
         (*itr)->dessinerArete(svgout,"red",posx,0);
@@ -153,7 +170,9 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
         it->second->dessinerSommet(svgout,posx,0);
     }
     auto poidstring=std::to_string(p);
-    svgout.addText(posx+100,450,"Kruskal pour le poids ("+poidstring+")","black");
+    poidarbre=mon_poidtot(Arbre,p);
+    auto poidtotstring=std::to_string(poidarbre);
+    svgout.addText(posx+100,450,"Kruskal pour le poids ("+poidstring+"), le poids total : ("+poidtotstring+")","black");
     return Arbre;
 }
 

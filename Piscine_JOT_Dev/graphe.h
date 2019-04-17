@@ -16,6 +16,8 @@ class graphe
         Sommet getSom() const;
         void Krusk(Svgfile& svgout,int p);
         std::vector<Aretes*> kruskal (Svgfile& svgout,int i);
+        float mon_poidtot(std::vector<Aretes*> Krusk,int poid);
+
 
         Aretes* get_aret(){return m_aretes[0];}
  ///lance un parcours en profondeur à partir du sommet d'identifiant id

@@ -63,7 +63,7 @@
 <text x="795" y="205" fill="white" >6</text>
 <circle cx="700" cy="300" r="20" fill="blue" />
 <text x="695" y="305" fill="white" >9</text>
-<text x="600" y="450" fill="black" >Kruskal pour le poids (1)</text>
+<text x="600" y="450" fill="black" >Kruskal pour le poids (0), le poids total : (60)</text>
 <text x="400" y="350" fill="black" >1;8</text>
 <line x1="400" y1="300" x2="400" y2="400" stroke="black" />
 <text x="230" y="295" fill="black" >1;1</text>
@@ -206,7 +206,7 @@
 <text x="1295" y="205" fill="white" >6</text>
 <circle cx="1200" cy="300" r="20" fill="blue" />
 <text x="1195" y="305" fill="white" >9</text>
-<text x="1100" y="450" fill="black" >Kruskal pour le poids (2)</text>
+<text x="1100" y="450" fill="black" >Kruskal pour le poids (1), le poids total : (54)</text>
 <text x="230" y="295" fill="black" >1;1</text>
 <line x1="200" y1="300" x2="300" y2="300" stroke="black" />
 <text x="130" y="395" fill="black" >3;1</text>
