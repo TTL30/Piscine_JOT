@@ -61,16 +61,13 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
             poid.push_back(p);
             //std::cout<<poid<<std::endl;
         }
-        for(int j=taille;j>0;--j)
-        {
 
             std::vector<bool> bolAr = {false};
-            bolAr[j-1]=true;
+            bolAr[i]=true;
 
             m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, bolAr}});
 
             bolAr.clear();
-        }
         printf("rjne");
         poid.clear();
 
@@ -102,7 +99,6 @@ void graphe::Pareto(Svgfile& svgout)
     std::vector<bool> allaretes=c;
     std::vector<Sommet*> allsom;
     int som_ssgraphe;
-
 
     for(int i=0; i<pow(2,nbaret)-1;++i)
     {
@@ -136,7 +132,8 @@ void graphe::Pareto(Svgfile& svgout)
         }
         allgraphes.m_aretes.clear();
     }
-    toutesPossi[9].afficher(svgout);
+    for(int i=0;i<toutesPossi.size();i++)
+        toutesPossi[i].afficher(svgout,i);
 
 }
 
@@ -146,15 +143,15 @@ void graphe::trier()
 }
 
 
-void graphe::afficher(Svgfile& svgout) const{
+void graphe::afficher(Svgfile& svgout,int i) const{
     for(auto itr=m_aretes.begin(); itr!=m_aretes.end();itr++)
     {
         (*itr)->afficher();
-        (*itr)->dessinerArete(svgout);
+        (*itr)->dessinerArete(svgout,i);
     }
     for(auto it=m_sommets.begin(); it!=m_sommets.end();it++)
     {
-        it->second->dessinerSommet(svgout);
+        it->second->dessinerSommet(svgout,i);
     }
 }
 

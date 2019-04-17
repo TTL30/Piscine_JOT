@@ -18,7 +18,7 @@ class Aretes
         bool getbolAr(int i) const {return m_bolAr[i];}
         std::vector<bool> getbolArr() const {return m_bolAr;}
         int getid();
-        void dessinerArete(Svgfile& svgout)const;
+        void dessinerArete(Svgfile& svgout,int i)const;
 
 
 

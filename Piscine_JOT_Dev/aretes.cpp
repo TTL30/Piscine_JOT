@@ -29,9 +29,9 @@ void Aretes::afficher()const
     std::cout<<" "<<std::endl;
 }
 
-void Aretes::dessinerArete(Svgfile& svgout)const
+void Aretes::dessinerArete(Svgfile& svgout,int x)const
 {
-    svgout.addLine(m_s1->getX(),m_s1->getY(),m_s2->getX(),m_s2->getY(),"black");
+    svgout.addLine(m_s1->getX()+200*x,m_s1->getY(),m_s2->getX()+200*x,m_s2->getY(),"black");
 }
 
 Aretes::~Aretes()

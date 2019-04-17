@@ -12,7 +12,7 @@ class graphe
         //format du fichier ordre/liste des sommets/taille/liste des arêtes
         graphe(std::string, std::string);
         ~graphe();
-        void afficher(Svgfile& svgout) const;
+        void afficher(Svgfile& svgout,int i) const;
         Sommet getSom() const;
         void trier();
         //bool compaPoid(const float m1,const float m2);

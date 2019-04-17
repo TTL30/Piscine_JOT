@@ -14,7 +14,7 @@ class Sommet
         void ajouterVoisin(const Sommet*);
         void afficherData() const;
         void afficherVoisins() const;
-        void dessinerSommet(Svgfile& svgout)const;
+        void dessinerSommet(Svgfile& svgout,int i)const;
         std::vector <const Sommet*> getvoisin() const;
 
         ~Sommet();
