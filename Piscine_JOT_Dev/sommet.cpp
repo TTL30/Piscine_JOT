@@ -35,8 +35,8 @@ int Sommet::getid() const
 }
 void Sommet::dessinerSommet(Svgfile& svgout,int i)const
 {
-    svgout.addDisk(m_x+i*200,m_y,20,"blue");
-    svgout.addText(m_x-5+i*200,m_y+5,m_id,"white");
+    svgout.addDisk(m_x+i*500,m_y,20,"blue");
+    svgout.addText(m_x-5+i*500,m_y+5,m_id,"white");
 }
 void Sommet::afficherVoisins() const
 {

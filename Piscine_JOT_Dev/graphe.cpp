@@ -44,6 +44,7 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
     //lecture des aretes
     nbaret=taille;
     m_nbsom=ordre;
+    int j=taille;
     for (int i=0; i<taille; ++i){
         //lecture des ids des deux extrémités
         ifs>>id_arete; if(ifs.fail()) throw std::runtime_error("Probleme lecture nom arete");
@@ -62,13 +63,11 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
             //std::cout<<poid<<std::endl;
         }
 
-            std::vector<bool> bolAr = {false};
-            bolAr[i]=true;
-
+        std::vector<bool> bolAr = {false};
+            bolAr[j]=true;
             m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, bolAr}});
-
             bolAr.clear();
-        printf("rjne");
+        --j;
         poid.clear();
 
     }
@@ -95,8 +94,7 @@ void graphe::Pareto(Svgfile& svgout)
     std::vector<graphe> paretoo;
 
     graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
-    std::vector<bool> c(nbaret,false);
-    std::vector<bool> allaretes=c;
+    std::vector<bool> allaretes(nbaret,false);
     std::vector<Sommet*> allsom;
     int som_ssgraphe;
 
@@ -104,15 +102,18 @@ void graphe::Pareto(Svgfile& svgout)
     {
         allaretes=possibilites(allaretes);
         int cas=0;
+        int j= nbaret-1;
         for(Aretes* k : m_aretes)
-        {
-                if(allaretes[k->getid()]==1)
+            {
+                std::cout<<k->getid()<<std::endl;
+               if(allaretes[j]==1)
                 {
                     cas++;
                     allgraphes.m_aretes.push_back(k);
+                    /*std::cout<<"sommet : "<< k->getsommet1()->getid()<<std::endl;
                     allsom.push_back(k->getsommet1());
                     std::cout<<"1  :  "<<k->getsommet1()->getid()<<std::endl;
-                    for(Sommet* som: allsom)
+                    /*for(Sommet* som: allsom)
                     {
                         if(som->getid()!=k->getsommet2()->getid());
                         {
@@ -120,15 +121,24 @@ void graphe::Pareto(Svgfile& svgout)
                             std::cout<<"2   :  "<<k->getsommet2()->getid()<<   "som : "<<som->getid()<<std::endl;
                             allgraphes.m_sommets.insert({k->getsommet2()->getid(),k->getsommet2()});
                         }
-                    }
-                    allsom.clear();
-                }
+                    }*/
+                    //allsom.clear();
+
+            }
+            if(j!=0)
+            {
+                j--;
+            }
+
+
         }
+
+            allgraphes.m_sommets=m_sommets;
+
 
         if((cas==m_nbsom-1)&&(allgraphes.connex(this)==0))
         {
             toutesPossi.push_back(allgraphes);
-            printf("ok\n");
         }
         allgraphes.m_aretes.clear();
     }
@@ -174,13 +184,6 @@ std::vector<bool> graphe::possibilites(std::vector<bool> allaretes)
             }while(allaretes[k-1]==true);
             allaretes[k-1]=true;
     }
-    ///---comparaison entre graphe initial et nouv graphe
-    for(auto i: allaretes)
-    {
-        std::cout<<i;
-    }
-std::cout<<std::endl;
-
 
     return allaretes;
 }
