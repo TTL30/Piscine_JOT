@@ -14,10 +14,9 @@ class graphe
         ~graphe();
         void afficher(Svgfile& svgout) const;
         Sommet getSom() const;
-        void Krusk();
+        std::vector<Aretes*> kruskal (Svgfile& svgout,int i);
+        float mon_poidtot(std::vector<Aretes*> Krusk,int poid);
         Aretes* get_aret(){return m_aretes[0];}
-        //bool compaPoid(const float m1,const float m2);
-    protected:
 
     private:
         /// Le réseau est constitué d'une collection de sommets

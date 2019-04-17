@@ -9,10 +9,8 @@ int main()
     for(int i=0;i< g.get_aret()->get_taillep();++i)
     {
         std::cout<< "AUTRE KRUSTAL AVEC POID  :  " << i << std::endl;
-        g.Krusk();
+        g.kruskal(svgout,i);
         g.afficher(svgout);
-
-
     }
 
     return 0;
