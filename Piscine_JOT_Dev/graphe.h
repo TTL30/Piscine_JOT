@@ -14,15 +14,23 @@ class graphe
         ~graphe();
         void afficher(Svgfile& svgout) const;
         Sommet getSom() const;
+        void trier();
         std::vector<Aretes*> kruskal (Svgfile& svgout,int i);
         float mon_poidtot(std::vector<Aretes*> Krusk,int poid);
         Aretes* get_aret(){return m_aretes[0];}
 
+        void Pareto(Svgfile& svgout);
+        std::vector<bool> possibilites(std::vector<bool> allaretes);
+        int connex(int nbsom);
+    protected:
+
     private:
         /// Le réseau est constitué d'une collection de sommets
+        std::vector<float> m_poid;
         std::vector<Aretes*> m_aretes;//stockée dans une map (clé=id du sommet, valeur= pointeur sur le sommet)
-        std::unordered_map<std::string,Sommet*> m_sommets;//stockée dans une map (clé=id du sommet, valeur= pointeur sur le sommet)
-
+        std::unordered_map<int,Sommet*> m_sommets;//stockée dans une map (clé=id du sommet, valeur= pointeur sur le sommet)
+        int nbaret;
+        int m_nbsom;
 };
 
 #endif // GRAPHE_H

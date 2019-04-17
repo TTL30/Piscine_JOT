@@ -20,7 +20,7 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
     ifs >> ordre;
     if ( ifs.fail() )
         throw std::runtime_error("Probleme lecture ordre du graphe");
-    std::string id;
+    int id;
     double x,y;
     //lecture des sommets
     for (int i=0; i<ordre; ++i)
@@ -38,10 +38,9 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
     }
     int taille;
     ifs >> taille;
-    if ( ifs.fail() )
-        throw std::runtime_error("Probleme lecture taille du graphe");
-    std::string id_voisin;
-    std::string id_arete;
+    if ( ifs.fail() )throw std::runtime_error("Probleme lecture taille du graphe");
+    int id_voisin;
+    int id_arete;
     int taille_ar;
     int taille_poid;
 
@@ -55,10 +54,10 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
         throw std::runtime_error("Probleme lecture taille poid");
 
     std::vector<float> poid;
-
-    //lecture des aretes
-    for (int i=0; i<taille; ++i)
-    {
+    nbaret=taille;
+    m_nbsom=ordre;
+    int k=taille;
+    for (int i=0; i<taille; ++i){
         //lecture des ids des deux extrémités
         ifs>>id_arete;
         if(ifs.fail())
@@ -86,14 +85,56 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
             //std::cout<<poid<<std::endl;
         }
 
-        m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, 0}});
+
+        std::vector<bool> bolAr = {nbaret -1,false};
+            bolAr[k]=true;
+            m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, bolAr}});
+            bolAr.clear();
+        --k;
+
         poid.clear();
+
     }
 }
 
 bool compaPoid(const Aretes* m1,const Aretes* m2)
 {
-    return m1->getpoid(m1->getnbpoid())<m2->getpoid(m2->getnbpoid());
+    return m1->getpoidnb(m1->getnbpoid())<m2->getpoidnb(m2->getnbpoid());
+}
+
+int graphe::connex(int nbsom)
+{
+    int con=1;
+    std::vector<Sommet*> messom;
+    messom.push_back(m_aretes[0]->getsommet1());
+
+    for(Aretes* are:m_aretes)
+    {
+{
+            if(std::find(messom.begin(),messom.end(),are->getsommet1())==messom.end())
+            {
+                messom.push_back(are->getsommet1());
+
+
+            }
+            if(std::find(messom.begin(),messom.end(),are->getsommet2())==messom.end())
+            {
+                messom.push_back(are->getsommet2());
+
+
+
+            }
+con++;
+        //}
+
+    }
+}
+
+
+    if(messom.size()==nbsom) {con=0; printf("E2\n");}
+     messom.clear();
+
+    return con;
 }
 
 
@@ -102,7 +143,7 @@ float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
     float mon_poidtot;
     for(auto j:Krusk)
     {
-        mon_poidtot+=j->getpoid(poid);
+        mon_poidtot+=j->getpoidnb(poid);
     }
     return mon_poidtot;
 }
@@ -131,8 +172,8 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
     while(indiceA<nbsommet-1 || indiceG<n)
     {
         u=m_aretes[indiceG];
-        int idso1 = std::stoi(u->getSommet1()->getid());
-        int idso2 = std::stoi(u->getSommet2()->getid());
+        int idso1 =u->getsommet1()->getid();
+        int idso2 = u->getsommet2()->getid();
 
         s1= connexe[idso1];
         s2= connexe[idso2];
@@ -177,10 +218,65 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
     return Arbre;
 }
 
-
-void graphe::afficher(Svgfile& svgout) const
+void graphe::Pareto(Svgfile& svgout)
 {
-    for(auto itr=m_aretes.begin(); itr!=m_aretes.end(); itr++)
+    std::vector<graphe> toutesPossi;
+    std::vector<graphe> paretoo;
+
+    graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
+    std::vector<bool> allaretes(nbaret,false);
+    std::vector<Sommet*> allsom;
+    int con=0;
+
+
+    for(int i=0; i<pow(2,nbaret)-1;++i)
+    {
+        allaretes=possibilites(allaretes);
+        int cas=0;
+        int j= nbaret-1;
+        for(Aretes* k : m_aretes)
+            {
+               if(allaretes[j]==1)
+                {
+                    cas++;
+                    allgraphes.m_aretes.push_back(k);
+            }
+            if(j!=0)
+            {
+                j--;
+            }
+        }
+
+        allgraphes.m_sommets=m_sommets;
+        allgraphes.m_nbsom=m_nbsom;
+        allgraphes.nbaret=cas;
+
+
+        if(cas==m_nbsom-1)
+        {
+            con=allgraphes.connex(m_nbsom);
+            if(con==0)
+            {
+                toutesPossi.push_back(allgraphes);
+            }
+
+        }
+        allgraphes.m_aretes.clear();
+        allgraphes.m_sommets.clear();
+    }
+    toutesPossi[0].afficher(svgout);
+
+
+}
+
+void graphe::trier()
+{
+    std::sort(m_aretes.begin(),m_aretes.end(),compaPoid);
+}
+
+
+void graphe::afficher(Svgfile& svgout) const{
+    for(auto itr=m_aretes.begin(); itr!=m_aretes.end();itr++)
     {
         (*itr)->afficher();
         (*itr)->dessinerArete(svgout,"black",0,0);
@@ -189,9 +285,37 @@ void graphe::afficher(Svgfile& svgout) const
     {
         it->second->dessinerSommet(svgout,0,0);
     }
-
 }
 
+std::vector<bool> graphe::possibilites(std::vector<bool> allaretes)
+{
+    //graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
+    if(allaretes[nbaret-1]==false)
+    {
+        allaretes[nbaret-1] = true;
+    }
+    else
+    {       allaretes[nbaret-1] = false;
+            int k=nbaret-1;
+            do{
+                if( allaretes[k-1]==true)
+                {
+                    allaretes[k-1]=false;
+                    k--;
+                }
+            }while(allaretes[k-1]==true);
+            allaretes[k-1]=true;
+    }
+    ///---comparaison entre graphe initial et nouv graphe
+    for(auto i: allaretes)
+    {
+        std::cout<<i;
+    }
+std::cout<<std::endl;
+
+
+    return allaretes;
+}
 
 
 graphe::~graphe()
