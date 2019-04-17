@@ -144,8 +144,64 @@ void graphe::Pareto(Svgfile& svgout)
     }
     for(int i=0;i<toutesPossi.size();i++)
         toutesPossi[i].afficher(svgout,i);
-
 }
+
+
+void graphe::ParetoDij(Svgfile& svgout)
+{
+    std::vector<graphe> toutesPossi;
+    std::vector<graphe> paretoo;
+
+    graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
+    std::vector<bool> allaretes(nbaret,false);
+    std::vector<Sommet*> allsom;
+    int som_ssgraphe;
+
+    for(int i=0; i<pow(2,nbaret)-1;++i)
+    {
+        allaretes=possibilites(allaretes);
+        int cas=0;
+        int j= nbaret-1;
+        for(Aretes* k : m_aretes)
+            {
+                std::cout<<k->getid()<<std::endl;
+               if(allaretes[j]==1)
+                {
+                    cas++;
+                    allgraphes.m_aretes.push_back(k);
+                    /*std::cout<<"sommet : "<< k->getsommet1()->getid()<<std::endl;
+                    allsom.push_back(k->getsommet1());
+                    std::cout<<"1  :  "<<k->getsommet1()->getid()<<std::endl;
+                    /*for(Sommet* som: allsom)
+                    {
+                        if(som->getid()!=k->getsommet2()->getid());
+                        {
+                            allsom.push_back(k->getsommet2());
+                            std::cout<<"2   :  "<<k->getsommet2()->getid()<<   "som : "<<som->getid()<<std::endl;
+                            allgraphes.m_sommets.insert({k->getsommet2()->getid(),k->getsommet2()});
+                        }
+                    }*/
+                    //allsom.clear();
+            }
+            if(j!=0)
+            {
+                j--;
+            }
+        }
+        allgraphes.m_sommets=m_sommets;
+        if(((cas==m_nbsom-1)||(cas>=m_nbsom))&&(allgraphes.connex(this)==0))
+        {
+            toutesPossi.push_back(allgraphes);
+        }
+
+        allgraphes.m_aretes.clear();
+    }
+    for(int i=0;i<toutesPossi.size();i++)
+    toutesPossi[i].afficher(svgout,i);
+}
+
+
+
 
 void graphe::trier()
 {

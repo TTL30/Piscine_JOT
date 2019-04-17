@@ -18,6 +18,8 @@ class graphe
         //bool compaPoid(const float m1,const float m2);
         //std::vector<bool> possibilites(std::vector<bool> allaretes);
         void Pareto(Svgfile& svgout);
+        void ParetoDij(Svgfile& svgout);
+
         std::vector<bool> possibilites(std::vector<bool> allaretes);
         int connex(graphe* compa);
     protected:
