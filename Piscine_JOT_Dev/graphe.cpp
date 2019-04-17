@@ -79,11 +79,35 @@ void graphe::Pareto()
 {
     std::vector<graphe> salut;
     std::vector<graphe> paretoo;
+    std::vector<std::vector<bool>> graphepossibles;
     int nombreAr=0;
+    int ordre=m_sommets.size();
     graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
-    std::vector<bool> c;
-
-    for(int i=0;i<nbaret;++i)
+    ///std::vector<bool> c;
+    std::vector<bool> allaretes;
+    for (int i=0;i<nbaret;++i)
+    {
+        if (i<ordre-1)
+        {
+            allaretes.push_back(true);
+        }
+        else allaretes.push_back(false);
+    }
+     for(int j=0;j<nbaret;++j)
+    {
+        std::cout<<allaretes[j];
+    }
+    std::cout<<std::endl;
+    std::sort(allaretes.begin(),allaretes.end());
+    do{
+            for(int k=0;k<allaretes.size();++k)
+            {
+                std::cout<<allaretes[k];
+            }
+            std::cout<<std::endl;
+    }while(std::next_permutation(allaretes.begin(),allaretes.end()));
+    std::cout<<std::endl;
+    /*for(int i=0;i<nbaret;++i)
     {
         c.push_back(false);
     }
@@ -102,11 +126,16 @@ void graphe::Pareto()
             for(int j=0;j<nbaret;++j)
             {
                 std::cout<<allaretes[j];
+                graphepossibles.push_back(allaretes);
             }
+
             std::cout<<std::endl;
         }while(std::next_permutation(allaretes.begin(),allaretes.end()));
+
         //allaretes=possibilites(allaretes);
         std::cout<<std::endl;
+
+
 
         for(auto k : m_aretes)
         {
@@ -124,9 +153,24 @@ void graphe::Pareto()
             salut.push_back(allgraphes);
         }*/
 
-    }
 
+    /*std::cout<<"Solution a ordre-1 aretes :"<<std::endl;
+        for(int h=0;h<graphepossibles.size();++h)
+        {
+            if(h==ordre-1)
+            {
+                printf("%d\n",h);
+                for(int j=0;j<nbaret;++j)
+                {
+                    std::cout<<allaretes[j];
+                }
+                std::cout<<std::endl;
+            }
+
+        }*/
 }
+
+
 
 void graphe::trier()
 {
