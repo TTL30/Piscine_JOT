@@ -287,7 +287,6 @@ void graphe::trier()
     std::sort(m_aretes.begin(),m_aretes.end(),compaPoid);
 }
 
-
 void graphe::afficher(Svgfile& svgout,int posx) const
 {
     for(auto itr=m_aretes.begin(); itr!=m_aretes.end(); itr++)
