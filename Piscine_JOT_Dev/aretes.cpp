@@ -8,7 +8,7 @@
 #include <string>
 
 
-Aretes::Aretes(std::string id, std::vector<float> p ,Sommet* s1, Sommet* s2, int taille, int tp):m_id{id},m_poid{p},m_s1{s1}, m_s2{s2}, m_taille{taille}, m_nbpoid{tp}
+Aretes::Aretes(int id, std::vector<float> p ,Sommet* s1, Sommet* s2, int taille, std::vector<bool> bolAr,int tp):m_id{id},m_poid{p},m_s1{s1}, m_s2{s2}, m_taille{taille},m_bolAr{bolAr},m_nbpoid{tp}
 {
 }
 
@@ -29,12 +29,12 @@ void Aretes::dessinerArete(Svgfile& svgout,std::string m_couleur,int posxinit,in
 {
 
     std::string textpoid;
-    for(int i=0;i<get_taillep();i++)
+    for(int i=0;i<gettaille();i++)
     {
-        int  poid1 = static_cast<int>(getpoid(i));
+        int  poid1 = static_cast<int>(getpoidnb(i));
         auto lepoid1=std::to_string(poid1);
         textpoid.append(lepoid1);
-        if((i-get_taillep())!=-1)
+        if((i-gettaille())!=-1)
         {
             textpoid.append(";");
         }
@@ -54,4 +54,9 @@ void Aretes::dessinerArete(Svgfile& svgout,std::string m_couleur,int posxinit,in
 Aretes::~Aretes()
 {
     //dtor
+}
+
+int Aretes::getid()
+{
+    return m_id;
 }

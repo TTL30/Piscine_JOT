@@ -10,18 +10,20 @@ class Sommet
 {
     public:
         ///constructeur qui reçoit en params les données du sommet
-        Sommet(std::string,double,double);
+        Sommet(int,double,double);
         void ajouterVoisin(const Sommet*);
         void afficherData() const;
         void afficherVoisins() const;
-void dessinerSommet(Svgfile& svgout, int posinitx,int posinity)const;
+        void dessinerSommet(Svgfile& svgout, int posinitx,int posinity)const;
 
         ~Sommet();
         int getX() const;
         int getY() const;
         std::vector<const Sommet*> getVois()const {return m_voisins;}
-        std::string getid()const {return m_id;}
         std::unordered_map<std::string,std::string> parcoursDFS() const;
+        void dessinerSommet(Svgfile& svgout)const;
+        std::vector <const Sommet*> getvoisin() const;
+        int getid() const;
 
 
 
@@ -33,7 +35,7 @@ void dessinerSommet(Svgfile& svgout, int posinitx,int posinity)const;
         std::vector<const Sommet*> m_voisins;
 
         /// Données spécifiques du sommet
-        std::string m_id; // Identifiant
+        int m_id; // Identifiant
         double m_x, m_y; // Position
 
 };
