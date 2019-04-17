@@ -6,7 +6,7 @@
 #include "sommet.h"
 #include "svgfile.h"
 
-Sommet::Sommet(std::string id,double x,double y):m_id{id},m_x{x},m_y{y}
+Sommet::Sommet(int id,double x,double y):m_id{id},m_x{x},m_y{y}
 {
 }
 void Sommet::ajouterVoisin(const Sommet* voisin)
@@ -21,9 +21,17 @@ double Sommet::getX() const
 {
     return m_x;
 }
+std::vector<const Sommet*> Sommet::getvoisin() const
+{
+    return m_voisins;
+}
 double Sommet::getY() const
 {
     return m_y;
+}
+int Sommet::getid() const
+{
+    return m_id;
 }
 void Sommet::dessinerSommet(Svgfile& svgout)const
 {

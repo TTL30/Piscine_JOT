@@ -8,6 +8,6 @@ int main()
     graphe g{"files/broadway.txt","files/broadway_weights_0.txt"};
     //g.trier();
     //g.afficher(svgout);
-    g.Pareto();
+    g.Pareto(svgout);
     return 0;
 }

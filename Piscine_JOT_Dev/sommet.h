@@ -10,13 +10,15 @@ class Sommet
 {
     public:
         ///constructeur qui reçoit en params les données du sommet
-        Sommet(std::string,double,double);
+        Sommet(int,double,double);
         void ajouterVoisin(const Sommet*);
         void afficherData() const;
         void afficherVoisins() const;
         void dessinerSommet(Svgfile& svgout)const;
+        std::vector <const Sommet*> getvoisin() const;
 
         ~Sommet();
+        int getid() const;
         double getX() const;
         double getY() const;
 
@@ -29,7 +31,7 @@ class Sommet
         std::vector<const Sommet*> m_voisins;
 
         /// Données spécifiques du sommet
-        std::string m_id; // Identifiant
+        int m_id; // Identifiant
         double m_x, m_y; // Position
 
 };

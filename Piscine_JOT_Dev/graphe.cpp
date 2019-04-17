@@ -18,7 +18,7 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
     ifs >> ordre;
     if ( ifs.fail() )
         throw std::runtime_error("Probleme lecture ordre du graphe");
-    std::string id;
+    int id;
     double x,y;
     //lecture des sommets
     for (int i=0; i<ordre; ++i){
@@ -29,8 +29,8 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
     }
     int taille;
     ifs >> taille; if ( ifs.fail() )throw std::runtime_error("Probleme lecture taille du graphe");
-    std::string id_voisin;
-    std::string id_arete;
+    int id_voisin;
+    int id_arete;
     int taille_ar;
     int taille_poid;
 
@@ -43,6 +43,7 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
 
     //lecture des aretes
     nbaret=taille;
+    m_nbsom=ordre;
     for (int i=0; i<taille; ++i){
         //lecture des ids des deux extrémités
         ifs>>id_arete; if(ifs.fail()) throw std::runtime_error("Probleme lecture nom arete");
@@ -60,11 +61,17 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
             poid.push_back(p);
             //std::cout<<poid<<std::endl;
         }
+        for(int j=taille;j>0;--j)
+        {
 
-        std::vector<bool> bolAr = {false};
-        bolAr[i]=true;
-        m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, bolAr}});
-        bolAr.clear();
+            std::vector<bool> bolAr = {false};
+            bolAr[j-1]=true;
+
+            m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, bolAr}});
+
+            bolAr.clear();
+        }
+        printf("rjne");
         poid.clear();
 
     }
@@ -75,44 +82,61 @@ bool compaPoid(const Aretes* m1,const Aretes* m2)
     return m1->getpoid()<m2->getpoid();
 }
 
-void graphe::Pareto()
+int graphe::connex(graphe* compa)
 {
-    std::vector<graphe> salut;
+    int con=0;
+    for(int i=0;i<m_aretes.size();++i)
+    {
+
+    }
+    return con;
+}
+
+void graphe::Pareto(Svgfile& svgout)
+{
+    std::vector<graphe> toutesPossi;
     std::vector<graphe> paretoo;
 
     graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
-    std::vector<bool> c;
-
-    for(int i=0;i<nbaret;++i)
-    {
-        c.push_back(false);
-    }
+    std::vector<bool> c(nbaret,false);
     std::vector<bool> allaretes=c;
-    salut.push_back(allgraphes);
-    ///int connex=;
+    std::vector<Sommet*> allsom;
+    int som_ssgraphe;
+
 
     for(int i=0; i<pow(2,nbaret)-1;++i)
     {
-        int nombreAr=0;
         allaretes=possibilites(allaretes);
-
-        for(auto k : m_aretes)
+        int cas=0;
+        for(Aretes* k : m_aretes)
         {
-            for(int j=0;j<nbaret;++j)
-            {
-                if(k->getbolAr(j)==allaretes[j])
+                if(allaretes[k->getid()]==1)
                 {
+                    cas++;
                     allgraphes.m_aretes.push_back(k);
-                    nombreAr++;
+                    allsom.push_back(k->getsommet1());
+                    std::cout<<"1  :  "<<k->getsommet1()->getid()<<std::endl;
+                    for(Sommet* som: allsom)
+                    {
+                        if(som->getid()!=k->getsommet2()->getid());
+                        {
+                            allsom.push_back(k->getsommet2());
+                            std::cout<<"2   :  "<<k->getsommet2()->getid()<<   "som : "<<som->getid()<<std::endl;
+                            allgraphes.m_sommets.insert({k->getsommet2()->getid(),k->getsommet2()});
+                        }
+                    }
+                    allsom.clear();
                 }
-            }
         }
-        /*if((nombreAr==nbaret-1)&&())
-        {
-            salut.push_back(allgraphes);
-        }*/
 
+        if((cas==m_nbsom-1)&&(allgraphes.connex(this)==0))
+        {
+            toutesPossi.push_back(allgraphes);
+            printf("ok\n");
+        }
+        allgraphes.m_aretes.clear();
     }
+    toutesPossi[9].afficher(svgout);
 
 }
 
@@ -159,6 +183,7 @@ std::vector<bool> graphe::possibilites(std::vector<bool> allaretes)
         std::cout<<i;
     }
 std::cout<<std::endl;
+
 
     return allaretes;
 }
