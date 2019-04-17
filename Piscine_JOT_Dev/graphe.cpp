@@ -79,7 +79,7 @@ void graphe::Pareto()
 {
     std::vector<graphe> salut;
     std::vector<graphe> paretoo;
-
+    int nombreAr=0;
     graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
     std::vector<bool> c;
 
@@ -91,10 +91,22 @@ void graphe::Pareto()
     salut.push_back(allgraphes);
     ///int connex=;
 
-    for(int i=0; i<pow(2,nbaret)-1;++i)
+    //for(int i=0; i<pow(2,nbaret)-1;++i)
+    for(int i=nbaret;i>0-1;--i)
     {
-        int nombreAr=0;
-        allaretes=possibilites(allaretes);
+
+        //int nombreAr=0;
+        allaretes[i]=true;
+        do{
+
+            for(int j=0;j<nbaret;++j)
+            {
+                std::cout<<allaretes[j];
+            }
+            std::cout<<std::endl;
+        }while(std::next_permutation(allaretes.begin(),allaretes.end()));
+        //allaretes=possibilites(allaretes);
+        std::cout<<std::endl;
 
         for(auto k : m_aretes)
         {
@@ -134,7 +146,7 @@ void graphe::afficher(Svgfile& svgout) const{
     }
 }
 
-std::vector<bool> graphe::possibilites(std::vector<bool> allaretes)
+/*std::vector<bool> graphe::possibilites(std::vector<bool> allaretes)
 {
     //graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
     if(allaretes[nbaret-1]==false)
@@ -155,13 +167,13 @@ std::vector<bool> graphe::possibilites(std::vector<bool> allaretes)
     }
     ///---comparaison entre graphe initial et nouv graphe
     for(auto i: allaretes)
-    {
+     {
         std::cout<<i;
     }
 std::cout<<std::endl;
 
     return allaretes;
-}
+}*/
 
 graphe::~graphe()
 {
