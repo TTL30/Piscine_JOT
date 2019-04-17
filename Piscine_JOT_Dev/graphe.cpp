@@ -44,7 +44,7 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
     //lecture des aretes
     nbaret=taille;
     m_nbsom=ordre;
-    int j=taille;
+    int k=taille;
     for (int i=0; i<taille; ++i){
         //lecture des ids des deux extrémités
         ifs>>id_arete; if(ifs.fail()) throw std::runtime_error("Probleme lecture nom arete");
@@ -64,11 +64,11 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
         }
 
 
-        std::vector<bool> bolAr = {false};
-            bolAr[j]=true;
+        std::vector<bool> bolAr = {nbaret -1,false};
+            bolAr[k]=true;
             m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, bolAr}});
             bolAr.clear();
-        --j;
+        --k;
 
         poid.clear();
 
@@ -80,13 +80,38 @@ bool compaPoid(const Aretes* m1,const Aretes* m2)
     return m1->getpoid()<m2->getpoid();
 }
 
-int graphe::connex(graphe* compa)
+int graphe::connex(int nbsom)
 {
-    int con=0;
-    for(int i=0;i<m_aretes.size();++i)
+    int con=1;
+    std::vector<Sommet*> messom;
+    messom.push_back(m_aretes[0]->getsommet1());
+
+    for(Aretes* are:m_aretes)
     {
+{
+            if(std::find(messom.begin(),messom.end(),are->getsommet1())==messom.end())
+            {
+                messom.push_back(are->getsommet1());
+
+
+            }
+            if(std::find(messom.begin(),messom.end(),are->getsommet2())==messom.end())
+            {
+                messom.push_back(are->getsommet2());
+
+
+
+            }
+con++;
+        //}
 
     }
+}
+
+
+    if(messom.size()==nbsom) {con=0; printf("E2\n");}
+     messom.clear();
+
     return con;
 }
 
@@ -98,7 +123,7 @@ void graphe::Pareto(Svgfile& svgout)
     graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
     std::vector<bool> allaretes(nbaret,false);
     std::vector<Sommet*> allsom;
-    int som_ssgraphe;
+    int con=0;
 
 
     for(int i=0; i<pow(2,nbaret)-1;++i)
@@ -108,44 +133,36 @@ void graphe::Pareto(Svgfile& svgout)
         int j= nbaret-1;
         for(Aretes* k : m_aretes)
             {
-                std::cout<<k->getid()<<std::endl;
                if(allaretes[j]==1)
                 {
                     cas++;
                     allgraphes.m_aretes.push_back(k);
-                    /*std::cout<<"sommet : "<< k->getsommet1()->getid()<<std::endl;
-                    allsom.push_back(k->getsommet1());
-                    std::cout<<"1  :  "<<k->getsommet1()->getid()<<std::endl;
-                    /*for(Sommet* som: allsom)
-                    {
-                        if(som->getid()!=k->getsommet2()->getid());
-                        {
-                            allsom.push_back(k->getsommet2());
-                            std::cout<<"2   :  "<<k->getsommet2()->getid()<<   "som : "<<som->getid()<<std::endl;
-                            allgraphes.m_sommets.insert({k->getsommet2()->getid(),k->getsommet2()});
-                        }
-                    }*/
-                    //allsom.clear();
-
             }
             if(j!=0)
             {
                 j--;
             }
-
-
         }
 
-            allgraphes.m_sommets=m_sommets;
+        allgraphes.m_sommets=m_sommets;
+        allgraphes.m_nbsom=m_nbsom;
+        allgraphes.nbaret=cas;
 
 
-        if((cas==m_nbsom-1)&&(allgraphes.connex(this)==0))
+        if(cas==m_nbsom-1)
         {
-            toutesPossi.push_back(allgraphes);
+            con=allgraphes.connex(m_nbsom);
+            if(con==0)
+            {
+                toutesPossi.push_back(allgraphes);
+            }
+
         }
         allgraphes.m_aretes.clear();
+        allgraphes.m_sommets.clear();
     }
     toutesPossi[0].afficher(svgout);
+
 
 }
 

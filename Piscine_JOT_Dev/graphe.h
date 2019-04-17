@@ -19,7 +19,7 @@ class graphe
         //std::vector<bool> possibilites(std::vector<bool> allaretes);
         void Pareto(Svgfile& svgout);
         std::vector<bool> possibilites(std::vector<bool> allaretes);
-        int connex(graphe* compa);
+        int connex(int nbsom);
     protected:
 
     private:

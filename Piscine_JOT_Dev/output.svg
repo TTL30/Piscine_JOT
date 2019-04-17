@@ -3,7 +3,7 @@
 
 <line x1="100" y1="100" x2="200" y2="100" stroke="black" />
 <line x1="100" y1="100" x2="100" y2="200" stroke="black" />
-<line x1="200" y1="100" x2="100" y2="200" stroke="black" />
+<line x1="200" y1="100" x2="200" y2="200" stroke="black" />
 <circle cx="200" cy="200" r="20" fill="blue" />
 <text x="195" y="205" fill="white" >3</text>
 <circle cx="100" cy="200" r="20" fill="blue" />
