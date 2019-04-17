@@ -15,6 +15,7 @@ class graphe
         void afficher(Svgfile& svgout) const;
         Sommet getSom() const;
         std::vector<Aretes*> kruskal (Svgfile& svgout,int i);
+        float mon_poidtot(std::vector<Aretes*> Krusk,int poid);
         Aretes* get_aret(){return m_aretes[0];}
 
     private:
