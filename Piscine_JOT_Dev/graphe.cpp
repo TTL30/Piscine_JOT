@@ -182,77 +182,6 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
     return Arbre;
 }
 
-
-/*int graphe::connex2(int nbsom)
-{
-    int con=0;
-    int k=0;
-    int ordre=m_sommets.size();
-    int taille=m_aretes.size();
-    int nbar=0;
-    std::vector<Sommet*> messom;
-    int** connection;
-    connection=(int**) malloc(ordre*sizeof(int*));
-    int nbcon=0;
-    int cpt=0;
-    int var=0;
-    if (connection == NULL)
-    {
-        printf("pb espace connexe");
-        exit(1);
-    }
-    for (int i=0; i<ordre; i++)
-    {
-        connection[i]=(int*)malloc(ordre* sizeof(int));
-        if(connection[i]==NULL)
-        {
-            printf("pb espace connexe");
-            exit(1);
-        }
-    }
-    for (int i=0; i<nbsom; ++i)
-    {
-        for(int j=0; j<nbsom; ++j)
-        {
-            connection[i][j]=i;
-        }
-    }
-
-    for(auto testcon : m_aretes)
-    {
-        nbar++;
-        int val=testcon->getsommet2()->getid();
-        int s1=testcon->getsommet1()->getid();
-        int k=0;
-        for(int c=s1; c<ordre; c++)
-        {
-            int cpt=c;
-            var=connection[val][c];
-            connection[val][c]=connection[s1][s1];
-            for (int i=0; i<nbsom; ++i)
-            {
-              if(connection[i][c-1]==connection[var][c-1])
-              {
-                connection[i][c]= connection[s1][s1];
-              }
-            }
-        }
-    }
-    while(k<ordre-1)
-    {
-        if(connection[k][ordre-1]!=connection[k+1][ordre-1])
-        {
-            nbcon=1;
-            k=ordre-1;
-        }
-        else
-        {
-            k++;
-        }
-    }
-    return nbcon;
-}*/
-
 int graphe::Connexite()
 {
     int ordre=m_sommets.size();
@@ -348,7 +277,6 @@ void graphe::Pareto(Svgfile &svgout)
     while(std::next_permutation(allaretes.begin(),allaretes.end()));
     std::cout<<std::endl;
     std::cout<<"size:"<<toutesPossi.size()<<std::endl;
-
 }
 
 
