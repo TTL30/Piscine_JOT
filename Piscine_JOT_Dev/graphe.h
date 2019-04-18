@@ -23,6 +23,8 @@ class graphe
         std::vector<bool> possibilites(std::vector<bool> allaretes);
         int connex(int nbsom);
         int connex2(int nbsom);
+        int Connexite();
+
         void setar(Aretes* unearete);
 
         int racine(Sommet i,std::vector<Sommet> foret);
