@@ -11,17 +11,22 @@ class graphe
         ///constructeur qui charge le graphe en mémoire
         //format du fichier ordre/liste des sommets/taille/liste des arêtes
         graphe(std::string, std::string);
-        ~graphe();
+        ~graphe(){};
         void afficher(Svgfile& svgout) const;
         Sommet getSom() const;
         void trier();
+
         std::vector<Aretes*> kruskal (Svgfile& svgout,int i);
         float mon_poidtot(std::vector<Aretes*> Krusk,int poid);
         Aretes* get_aret(){return m_aretes[0];}
-
-        void Pareto(Svgfile& svgout);
+        void Pareto(Svgfile &svgout);
         std::vector<bool> possibilites(std::vector<bool> allaretes);
         int connex(int nbsom);
+        int connex2(int nbsom);
+        void setar(Aretes* unearete);
+
+        int racine(Sommet i,std::vector<Sommet> foret);
+
     protected:
 
     private:
@@ -31,6 +36,7 @@ class graphe
         std::unordered_map<int,Sommet*> m_sommets;//stockée dans une map (clé=id du sommet, valeur= pointeur sur le sommet)
         int nbaret;
         int m_nbsom;
+
 };
 
 #endif // GRAPHE_H
