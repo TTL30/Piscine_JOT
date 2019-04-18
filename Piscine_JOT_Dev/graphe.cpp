@@ -5,7 +5,7 @@
 #include "algorithm"
 #include <sstream>
 #include <string>
-#define INFINI 1000.0
+
 
 graphe::graphe(std::string nomFichier, std::string nomFichier2)
 {
@@ -87,13 +87,11 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
             //std::cout<<poid<<std::endl;
         }
 
-
         std::vector<bool> bolAr = {nbaret -1,false};
         bolAr[k]=true;
-        m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, bolAr,0}});
+        m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, bolAr}});
         bolAr.clear();
         --k;
-
         poid.clear();
 
     }
@@ -104,44 +102,138 @@ bool compaPoid(const Aretes* m1,const Aretes* m2)
     return m1->getpoidnb(m1->getnbpoid())<m2->getpoidnb(m2->getnbpoid());
 }
 
-int graphe::connex(int nbsom)
+int graphe::connex2(int nbsom)
 {
-    int con=1;
+    int con=0;
+    int k=0;
+    int ordre=m_sommets.size();
+    int taille=m_aretes.size();
+    int nbar=0;
     std::vector<Sommet*> messom;
-    messom.push_back(m_aretes[0]->getsommet1());
-
-    for(Aretes* are:m_aretes)
+    //nmessom.push_back(m_aretes[0]->getsommet1());
+    int** connection;
+    connection=(int**) malloc(ordre*sizeof(int*));
+    int nbcon=0;
+    int cpt=0;
+    int var=0;
+    if (connection == NULL)
     {
+        printf("pb espace connexe");
+        exit(1);
+    }
+    for (int i=0; i<ordre; i++)
+    {
+        connection[i]=(int*)malloc(ordre* sizeof(int));
+        if(connection[i]==NULL)
         {
-            if(std::find(messom.begin(),messom.end(),are->getsommet1())==messom.end())
-            {
-                messom.push_back(are->getsommet1());
-
-
-            }
-            if(std::find(messom.begin(),messom.end(),are->getsommet2())==messom.end())
-            {
-                messom.push_back(are->getsommet2());
-
-
-
-            }
-            con++;
-            //}
+            printf("pb espace connexe");
+            exit(1);
+        }
+    }
+    for (int i=0; i<nbsom; ++i)
+    {
+        for(int j=0; j<nbsom; ++j)
+        {
+            connection[i][j]=i;
 
         }
     }
 
 
-    if(messom.size()==nbsom)
+    for(auto testcon : m_aretes)
     {
-        con=0;
-        printf("E2\n");
-    }
-    messom.clear();
+        nbar++;
+        //std::cout<<"aretes"<<testcon->getsommet1()->getid()<<";"<<testcon->getsommet2()->getid()<<std::endl;
+        int val=testcon->getsommet2()->getid();
+        int s1=testcon->getsommet1()->getid();
+        int k=0;
 
-    return con;
+
+        //connex[testcon->getsommet2()->getid()][testcon->getsommet1()->getid()]=connex[testcon->getsommet1()->getid()][testcon->getsommet1()->getid()];
+        for(int c=s1; c<ordre; c++)
+        {
+            int cpt=c;
+            var=connection[val][c];
+            connection[val][c]=connection[s1][s1];
+            //connection[var][c]=connection[s1][s1];
+
+            for (int i=0; i<nbsom; ++i)
+            {
+                //std::cout<<"ouiief "<<connection[i][c-1]<<std::endl;
+                //std::cout<<"ouiiefdsqdsq "<<connection[var][c-1]<<std::endl;
+
+              if(connection[i][c-1]==connection[var][c-1])
+              {
+                connection[i][c]= connection[s1][s1];
+              }
+            }
+            //std::cout<<connection[c][val]<<std::endl;
+
+        }
+    }
+    for(int j=0; j<ordre; j++)
+    {
+        //std::cout<<connection[j][ordre-1]<<std::endl;
+
+    }
+    while(k<ordre-1)
+    {
+        //printf("test\n");
+
+        if(connection[k][ordre-1]!=connection[k+1][ordre-1])
+        {
+            printf("A\n");
+            nbcon=1;
+            k=ordre-1;
+        }
+        else
+        {
+            k++;
+        }
+    }
+    //std::cout<<nbcon<<std::endl;
+
+
+    return nbcon;
+
 }
+
+
+
+
+/*for(Aretes* are:m_aretes)
+{
+
+    {
+
+        if(std::find(messom.begin(),messom.end(),are->getsommet1())==messom.end())
+        {
+
+            messom.push_back(are->getsommet1());
+
+
+        }
+        if(std::find(messom.begin(),messom.end(),are->getsommet2())==messom.end())
+        {
+
+            messom.push_back(are->getsommet2());
+
+
+
+        }
+    con++;*/
+
+
+
+//}
+
+//}*/
+
+
+/*if(messom.size()==nbsom) {con=0;}
+ messom.clear();
+return con;
+}*/
 
 
 float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
@@ -224,30 +316,28 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
     return Arbre;
 }
 
-void graphe::Pareto(Svgfile& svgout)
+/*void graphe::Pareto(Svgfile& svgout)
 {
     std::vector<graphe> toutesPossi;
     std::vector<graphe> paretoo;
 
-    graphe allgraphes= {"files/sous_graphe.txt","files/sous_graphe.txt"};
+    //graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
     std::vector<bool> allaretes(nbaret,false);
     std::vector<Sommet*> allsom;
     int con=0;
-    int posx=0;
-    int resltdij=0;
 
 
-    for(int i=0; i<pow(2,nbaret)-1; ++i)
+    for(int i=0; i<pow(2,nbaret)-1;++i)
     {
         allaretes=possibilites(allaretes);
         int cas=0;
         int j= nbaret-1;
         for(Aretes* k : m_aretes)
-        {
-            if(allaretes[j]==1)
             {
-                cas++;
-                allgraphes.m_aretes.push_back(k);
+               if(allaretes[j]==1)
+                {
+                    cas++;
+                    allgraphes.m_aretes.push_back(k);
             }
             if(j!=0)
             {
@@ -272,32 +362,139 @@ void graphe::Pareto(Svgfile& svgout)
         allgraphes.m_aretes.clear();
         allgraphes.m_sommets.clear();
     }
-    float** ma_matrice;
-    toutesPossi[1].afficher(svgout,0);
-    ma_matrice=graphetomatradj(toutesPossi[1]);
-    for(int i=0;i<m_nbsom;i++)
+    toutesPossi[0].afficher(svgout);
+
+
+}*/
+
+void graphe::Pareto(Svgfile &svgout)
+{
+    //std::vector<graphe> salut;
+    //std::vector<graphe> paretoo;
+    std::vector<std::vector<bool>> graphepossibles;
+    int nombreAr=0;
+    int ordre=m_sommets.size();
+    std::vector<graphe> toutesPossi;
+    graphe allgraphes= {"files/sous_graphe.txt","files/sous_graphe.txt"};
+    ///std::vector<bool> c;
+    std::vector<bool> allaretes;
+    for (int i=0; i<nbaret; ++i)
     {
-        resltdij+=djikstra(ma_matrice,toutesPossi[1].m_sommets.at(i)->getid());
+        if (i<ordre-1)
+        {
+            allaretes.push_back(true);
+        }
+        else
+            allaretes.push_back(false);
     }
+    std::cout<<std::endl;
+    std::sort(allaretes.begin(),allaretes.end());
+    do
+    {
+        /*for(int k=0;k<allaretes.size();++k)
+        {
+            std::cout<<allaretes[k];
+
+        }*/
+
+        //allgraphes.m_aretes.push_back(allaretes);
+
+        std::vector<graphe> paretoo;
+
+        //graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
+        std::vector<Sommet*> allsom;
+        int con;
+
+
+        //for(int i=0; i<pow(2,nbaret)-1;++i)
+        //{
+        int cas=0;
+        int j= nbaret-1;
+        for(Aretes* k : m_aretes)
+        {
+            if(allaretes[j]==1)
+            {
+                cas++;
+                allgraphes.setar(k);
+
+            }
+            if(j!=0)
+            {
+                j--;
+            }
+        }
+
+        allgraphes.m_sommets=m_sommets;
+        allgraphes.m_nbsom=m_nbsom;
+        allgraphes.nbaret=cas;
+
+
+        if(cas==m_nbsom-1)
+        {
+            con=allgraphes.connex2(m_nbsom);
+            printf("connexe: %d\n",con);
+
+            if(con==0)
+            {
+                toutesPossi.push_back(allgraphes);
+            }
+
+        }
+        allgraphes.m_aretes.clear();
+        allgraphes.m_sommets.clear();
+
+        //}
+        /*for(int i=0;i<toutesPossi.size();++i)
+        {
+            toutesPossi[i].afficher(svgout);
+
+        }*/
+    }
+    while(std::next_permutation(allaretes.begin(),allaretes.end()));
+    std::cout<<std::endl;
+    int oui=0;
+    int non=toutesPossi.size();
+    int cones=toutesPossi[non-1].connex2(m_nbsom);
+    toutesPossi[oui].afficher(svgout);
+    int cone=toutesPossi[oui].connex2(m_nbsom);
+    std::cout<<"monnb "<<cone<<cones<<std::endl;
+    /*int cone=toutesPossi[oui].connex2(ordre);
+    if (cone==0)
+    {
+        printf("connexe");
+        toutesPossi[oui].afficher(svgout);
+
+    }
+    else
+    {
+        printf("pas connexe");
+    }*/
+    std::cout<<"size"<<toutesPossi.size()<<std::endl;
 
 }
+
+
+
 
 void graphe::trier()
 {
     std::sort(m_aretes.begin(),m_aretes.end(),compaPoid);
 }
 
-void graphe::afficher(Svgfile& svgout,int posx) const
+
+void graphe::afficher(Svgfile& svgout) const
 {
     for(auto itr=m_aretes.begin(); itr!=m_aretes.end(); itr++)
     {
-        (*itr)->afficher();
-        (*itr)->dessinerArete(svgout,"black",posx,0);
+        //(*itr)->afficher();
+        (*itr)->dessinerArete(svgout,"black",0,0);
     }
     for(auto it=m_sommets.begin(); it!=m_sommets.end(); it++)
     {
-        it->second->dessinerSommet(svgout,posx,0);
+        it->second->dessinerSommet(svgout,0,0);
     }
+}
+/*<<<<<<< HEAD // ancien algo possibilités
 }
 
 std::vector<bool> graphe::possibilites(std::vector<bool> allaretes)
@@ -308,121 +505,62 @@ std::vector<bool> graphe::possibilites(std::vector<bool> allaretes)
         allaretes[nbaret-1] = true;
     }
     else
-    {
-        allaretes[nbaret-1] = false;
-        int k=nbaret-1;
-        do
-        {
-            if( allaretes[k-1]==true)
-            {
-                allaretes[k-1]=false;
-                k--;
-            }
-        }
-        while(allaretes[k-1]==true);
-        allaretes[k-1]=true;
+    {       allaretes[nbaret-1] = false;
+            int k=nbaret-1;
+            do{
+                if( allaretes[k-1]==true)
+                {
+                    allaretes[k-1]=false;
+                    k--;
+                }
+            }while(allaretes[k-1]==true);
+            allaretes[k-1]=true;
     }
     ///---comparaison entre graphe initial et nouv graphe
     for(auto i: allaretes)
     {
         std::cout<<i;
     }
-    std::cout<<std::endl;
+std::cout<<std::endl;
+
+
     return allaretes;
-}
-float** graphe::graphetomatradj(graphe mon_graphe)
+
+}*/
+
+/*std::vector<bool> graphe::possibilites(std::vector<bool> allaretes)
 {
-    float** ma_matrice;
-    int nbsommet= m_sommets.size();
-    ma_matrice = (float **) malloc(nbsommet*sizeof(float *));
-    if (ma_matrice == NULL)
+    //graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
+    if(allaretes[nbaret-1]==false)
     {
-        printf("espace mémoire insuffisant\n");
-        exit(1);
+        allaretes[nbaret-1] = true;
     }
-    for (int i=0; i<nbsommet; i++)
-    {
-        ma_matrice[i] = (float *) malloc(nbsommet*sizeof(float));
-        if (ma_matrice[i] == NULL)
-        {
-            printf("espace mémoire insuffisant\n");
-            exit(1);
-        }
+    else
+    {       allaretes[nbaret-1] = false;
+            int k=nbaret-1;
+            do{
+                if( allaretes[k-1]==true)
+                {
+                    allaretes[k-1]=false;
+                    k--;
+                }
+            }while(allaretes[k-1]==true);
+            allaretes[k-1]=true;
     }
-    for (int i=0; i<nbsommet; i++)
-        for(int j=0; j<nbsommet; j++)
-            ma_matrice[i][j]=0;
-    for(auto it : mon_graphe.getmesaret())
-    {
-        int idso1 =it->getsommet1()->getid();
-        int idso2 =it->getsommet2()->getid();
-        ma_matrice[idso1][idso2]=it->getpoidnb(1);
-        ma_matrice[idso2][idso1]=it->getpoidnb(1);
-        //std::cout<<it->getsommet1()->getid()<<" "<<it->getsommet2()->getid()<<" "<<ma_matrice[idso1][idso2]<<std::endl;
+    ///---comparaison entre graphe initial et nouv graphe
+    for(auto i: allaretes)
+     {
+        std::cout<<i;
     }
+std::cout<<std::endl;
 
-    /*for(int i2=0; i2<nbsommet; i2++)
-    {
-        for(int j2=0; j2<nbsommet; j2++)
-        {
-            std::cout<<ma_matrice[i2][j2]<<std::endl;
-        }
-    }*/
-    return ma_matrice;
-}
-float graphe::djikstra(float**matrice_adjacence,int s)
+    return allaretes;
+}*/
+
+
+void graphe::setar(Aretes* unearete)
 {
-    int *sommet_marques;
-    float *long_min;
-    int* pred;
-    int nums1,nums2,smin;
-    float minim;
-    int nb=0;
-    int nbsommet= m_sommets.size();
-    float result;
-    sommet_marques = (int *) malloc(nbsommet*sizeof(int));
-    pred = (int *) malloc(nbsommet*sizeof(int));
-    long_min = (float *) malloc(nbsommet*sizeof(float));
-    for(int i=0; i<nbsommet; i++)
-    {
-        sommet_marques[i]=0;
-        long_min[i]=INFINI;
-    }
-    long_min[s]=nb=0;
-    while(nb<nbsommet)
-    {
-        minim=INFINI;
-        for (nums1=0 ; nums1<nbsommet ; nums1++)
-        {
-            if (!sommet_marques[nums1] && long_min[nums1]<minim)
-            {
-                smin = nums1 ;
-                minim = long_min[nums1] ;
-            }
-        }
-        sommet_marques[smin]=1;
-        nb++;
-        for (nums2=0 ; nums2<nbsommet ; nums2++)
-        {
-            if (matrice_adjacence[smin][nums2] && !sommet_marques[nums2] &&  long_min[smin]+ matrice_adjacence[smin][nums2]<long_min[nums2])
-            {
-                long_min[nums2] = long_min[smin] + matrice_adjacence[smin][nums2] ;
-                pred[nums2] = smin ;
-            }
-        }
-    }
-
-        for(int j2=0; j2<nbsommet; j2++)
-        {
-            result+=long_min[j2];
-        }
-            std::cout<<result<<std::endl;
-
-        return result;
+    m_aretes.push_back(unearete);
 }
 
 
-        graphe::~graphe()
-        {
-            //dtor
-        }
