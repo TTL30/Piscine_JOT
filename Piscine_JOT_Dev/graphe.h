@@ -16,12 +16,24 @@ class graphe
         Sommet getSom() const;
         void trier();
         std::vector<Aretes*> kruskal (Svgfile& svgout,int i);
-        float mon_poidtot(std::vector<Aretes*> Krusk,int poid);
-        Aretes* get_aret(){return m_aretes[0];}
+
+
 
         void Pareto(Svgfile& svgout);
+       // std::vector<graphe> FrontPareto(std::vector<graphe> possi);
         std::vector<bool> possibilites(std::vector<bool> allaretes);
         int connex(int nbsom);
+
+        std::vector<Aretes*> get_aret(){return m_aretes;}
+        void ajouter(Aretes* are,int i);
+        float mon_poidtot(std::vector<Aretes*> Krusk,int poid);
+        float ajouter(std::vector<Aretes*> Krusk,int nb,int poid);
+        float getpoid( int i) const;
+        int getnbarete()const {return nbaret;}
+        int getnbpoid()const;
+        Couleur getcoul()const;
+        void setvectpoid(float poid);
+        std::vector<float> getvectpoid() const;
     protected:
 
     private:
@@ -31,6 +43,8 @@ class graphe
         std::unordered_map<int,Sommet*> m_sommets;//stockée dans une map (clé=id du sommet, valeur= pointeur sur le sommet)
         int nbaret;
         int m_nbsom;
+        int m_nbpoid;
+        Couleur m_couleur;
 };
 
 #endif // GRAPHE_H

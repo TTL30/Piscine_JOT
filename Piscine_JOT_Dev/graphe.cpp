@@ -56,6 +56,7 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
     std::vector<float> poid;
     nbaret=taille;
     m_nbsom=ordre;
+    m_nbpoid=taille_poid;
     int k=taille;
     for (int i=0; i<taille; ++i){
         //lecture des ids des deux extrémités
@@ -114,34 +115,74 @@ int graphe::connex(int nbsom)
             if(std::find(messom.begin(),messom.end(),are->getsommet1())==messom.end())
             {
                 messom.push_back(are->getsommet1());
-
-
             }
             if(std::find(messom.begin(),messom.end(),are->getsommet2())==messom.end())
             {
                 messom.push_back(are->getsommet2());
-
-
-
             }
-con++;
-        //}
-
     }
 }
 
 
-    if(messom.size()==nbsom) {con=0; printf("E2\n");}
+    if(messom.size()==nbsom) con=0;
      messom.clear();
 
     return con;
 }
 
+bool compaPoidGraph(const graphe m1,const graphe m2)
+{
+    return m1.getpoid(0)<m2.getpoid(0);
+}
+void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom, Svgfile& svgout)
+{
+    svgout.addLine(10,10,10,170, "black");
+    svgout.addLine(7,50,50,50,"black");
+    svgout.addGrid();
 
+
+    for(graphe mg:dom)
+    {
+        svgout.addDisk(mg.getpoid(1)+100,mg.getpoid(0)+20,1,"green");
+    }
+    for(graphe mf:nodom)
+    {
+        svgout.addDisk(mf.getpoid(1)+100,mf.getpoid(0)+20,1,"red");
+    }
+}
+void FrontPareto(std::vector<graphe> possi, Svgfile& svgout)
+{
+    std::vector<graphe> domine;
+    std::vector<graphe> nndomine;
+    std::sort(possi.begin(),possi.end(),compaPoidGraph);
+    float yref=4000;
+      for(graphe mesGr:possi)
+        {
+            if(mesGr.getpoid(1)<yref)
+            {
+                domine.push_back(mesGr);
+                yref=mesGr.getpoid(1);
+            }
+            else
+            {
+                nndomine.push_back(mesGr);
+            }
+    }
+    for(graphe d:domine)
+    {
+        d.getcoul()={0,255,0};
+    }
+    for(graphe nd:nndomine)
+    {
+        nd.getcoul()={255,0,0};
+    }
+    affpareto(domine,nndomine,svgout);
+
+}
 float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
 {
-    float mon_poidtot;
-    for(auto j:Krusk)
+    float mon_poidtot=0.0;
+    for(Aretes* j:Krusk)
     {
         mon_poidtot+=j->getpoidnb(poid);
     }
@@ -221,8 +262,6 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
 void graphe::Pareto(Svgfile& svgout)
 {
     std::vector<graphe> toutesPossi;
-    std::vector<graphe> paretoo;
-
     graphe allgraphes={"files/sous_graphe.txt","files/sous_graphe.txt"};
     std::vector<bool> allaretes(nbaret,false);
     std::vector<Sommet*> allsom;
@@ -250,6 +289,8 @@ void graphe::Pareto(Svgfile& svgout)
         allgraphes.m_sommets=m_sommets;
         allgraphes.m_nbsom=m_nbsom;
         allgraphes.nbaret=cas;
+        allgraphes.m_nbpoid=m_nbpoid;
+
 
 
         if(cas==m_nbsom-1)
@@ -257,16 +298,22 @@ void graphe::Pareto(Svgfile& svgout)
             con=allgraphes.connex(m_nbsom);
             if(con==0)
             {
+                for(int i=0;i<m_nbpoid;i++)
+                {
+                    allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
+                }
+
                 toutesPossi.push_back(allgraphes);
             }
 
         }
-        allgraphes.m_aretes.clear();
-        allgraphes.m_sommets.clear();
+    allgraphes.m_aretes.clear();
+    allgraphes.m_sommets.clear();
+    allgraphes.m_poid.clear();
+
     }
-    toutesPossi[0].afficher(svgout);
-
-
+   // toutesPossi[0].afficher(svgout);
+    FrontPareto(toutesPossi, svgout);
 }
 
 void graphe::trier()
@@ -306,19 +353,34 @@ std::vector<bool> graphe::possibilites(std::vector<bool> allaretes)
             }while(allaretes[k-1]==true);
             allaretes[k-1]=true;
     }
-    ///---comparaison entre graphe initial et nouv graphe
-    for(auto i: allaretes)
-    {
-        std::cout<<i;
-    }
-std::cout<<std::endl;
 
 
     return allaretes;
 }
+int graphe::getnbpoid()const
+{
+    return m_nbpoid;
+}
+float graphe::getpoid(int i) const
+{
+    return m_poid[i];
+}
 
+void graphe::setvectpoid(float poid)
+{
+    m_poid.push_back(poid);
+}
 
+std::vector<float> graphe::getvectpoid()const
+{
+    return m_poid;
+}
 graphe::~graphe()
 {
     //dtor
+}
+
+Couleur graphe::getcoul()const
+{
+    return m_couleur;
 }
