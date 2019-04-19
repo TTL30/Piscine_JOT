@@ -8,8 +8,8 @@ class Aretes
 {
     public:
         ///constructeur qui reçoit en params les données du sommet
+        Aretes(int id,std::vector<float> p, Sommet* s1, Sommet* s2, int taille, std::vector<bool> bolAr,int tp);
 
-        Aretes(int id,std::vector<float> p, Sommet* s1, Sommet* s2, int taille, std::vector<bool> bolAr);
         ~Aretes();
         void afficher()const;
         float getpoidnb(int i) const {return m_poid[i];}
