@@ -14,6 +14,5 @@ int main()
         //g.kruskal(svgout,i);
         //g.afficher(svgout);
     }*/
-
     return 0;
 }
