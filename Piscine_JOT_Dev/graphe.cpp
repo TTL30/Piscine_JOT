@@ -283,10 +283,6 @@ void graphe::Pareto(Svgfile &svgout)
     graphe allgraphes= {"files/sous_graphe.txt","files/sous_graphe.txt"};
     ///std::vector<bool> c;
     std::vector<bool> allaretes;
-    /*for(int i=0;i<nbaret;i++)
-    {
-        allaretes.push_back(false);
-    }*/
     for (int i=0; i<nbaret; ++i)
         {
             if (i<ordre-1)
@@ -302,11 +298,6 @@ void graphe::Pareto(Svgfile &svgout)
                 std::sort(allaretes.begin(),allaretes.end());
         do
         {
-            /*for(int i=0;i<nbaret;++i)
-            {
-                std::cout<<allaretes[i];
-            }
-            std::cout<<std::endl;*/
             std::vector<graphe> paretoo;
             std::vector<Sommet*> allsom;
             int con;
@@ -324,7 +315,6 @@ void graphe::Pareto(Svgfile &svgout)
                     j--;
                 }
             }
-
             allgraphes.m_sommets=m_sommets;
             allgraphes.m_nbsom=m_nbsom;
             allgraphes.nbaret=cas;
@@ -333,12 +323,10 @@ void graphe::Pareto(Svgfile &svgout)
 
             if(cas==m_nbsom-1)
             {
-                //printf("TEST\n");
                 con=allgraphes.Connexite();
 
                 if(con==0)
                 {
-                    //printf("connexe ta mere\n");
                     for(int i=0;i<m_nbpoid;i++)
                     {
                         allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
@@ -349,7 +337,6 @@ void graphe::Pareto(Svgfile &svgout)
 
             }
 
-            //toutesPossi.push_back(allgraphes);
             allgraphes.m_aretes.clear();
             allgraphes.m_sommets.clear();
             allgraphes.m_poid.clear();
@@ -358,10 +345,7 @@ void graphe::Pareto(Svgfile &svgout)
         }
     std::cout<<std::endl;
     std::cout<<"size:"<<toutesPossi.size()<<std::endl;
-    //FrontPareto(toutesPossi, svgout);
     toutesPossi[0].afficher(svgout);
-
-
 }
 
 
