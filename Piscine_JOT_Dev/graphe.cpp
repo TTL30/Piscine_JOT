@@ -160,7 +160,7 @@ std::vector<graphe> FrontPareto(std::vector<graphe> possi, Svgfile& svgout)
     affpareto(domine,nndomine,svgout);
     std::cout<<"size pajeto:"<<nndomine.size()<<std::endl;
 
-    return domine;
+    return nndomine;
 
 }
 float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
@@ -278,20 +278,98 @@ int graphe::Connexite()
 }
 
 
-<<<<<<< HEAD
+//void graphe::Pareto(Svgfile &svgout,int dij)
+//{
+//    std::vector<std::vector<bool>> graphepossibles;
+//    int nombreAr=0;
+//    float resltdij=0;
+//    int ordre=m_sommets.size();
+//    std::vector<graphe> toutesPossi;
+//    std::vector<graphe> mon_dijkstra;
+//    graphe allgraphes= {"files/sous_graphe.txt","files/sous_graphe.txt"};
+//    ///std::vector<bool> c;
+//    std::vector<bool> allaretes;
+//    float** ma_matrice;
+//
+//    for (int i=0; i<nbaret; ++i)
+//    {
+//        if (i<ordre-1)
+//        {
+//            allaretes.push_back(true);
+//        }
+//        else
+//            allaretes.push_back(false);
+//    }
+//    for(int h=ordre-1; h<nbaret; ++h)
+//    {
+//        allaretes[0]=1;
+//        std::sort(allaretes.begin(),allaretes.end());
+//        do
+//        {
+//            std::vector<graphe> paretoo;
+//            std::vector<Sommet*> allsom;
+//            int con;
+//            int cas=0;
+//            int j= nbaret-1;
+//            for(Aretes* k : m_aretes)
+//            {
+//                if(allaretes[j]==1)
+//                {
+//                    cas++;
+//                    allgraphes.setar(k);
+//                }
+//                if(j!=0)
+//                {
+//                    j--;
+//                }
+//            }
+//
+//            allgraphes.m_sommets=m_sommets;
+//            allgraphes.m_nbsom=m_nbsom;
+//            allgraphes.nbaret=cas;
+//            allgraphes.m_nbpoid=m_nbpoid;
+//
+//
+//            if(cas==m_nbsom-1)
+//            {
+//                con=allgraphes.Connexite();
+//
+//                if(con==0)
+//                {
+//                    for(int i=0; i<m_nbpoid; i++)
+//                    {
+//                        allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
+//                    }
+//
+//                    toutesPossi.push_back(allgraphes);
+//                }
+//            }
+//
+//            allgraphes.m_aretes.clear();
+//            allgraphes.m_sommets.clear();
+//            allgraphes.m_poid.clear();
+//        }
+//        while(std::next_permutation(allaretes.begin(),allaretes.end()));
+//    }
+//    std::cout<<std::endl;
+//    std::cout<<"size:"<<toutesPossi.size()<<std::endl;
+//    toutesPossi[0].afficher(svgout,0);
+//
+//}
+
+
+
+
 void graphe::Pareto(Svgfile &svgout,int dij)
 {
     std::vector<std::vector<bool>> graphepossibles;
     int nombreAr=0;
-    float resltdij=0;
     int ordre=m_sommets.size();
     std::vector<graphe> toutesPossi;
-    std::vector<graphe> mon_dijkstra;
+    std::vector<graphe>fontiere;
     graphe allgraphes= {"files/sous_graphe.txt","files/sous_graphe.txt"};
     ///std::vector<bool> c;
     std::vector<bool> allaretes;
-    float** ma_matrice;
-
     for (int i=0; i<nbaret; ++i)
     {
         if (i<ordre-1)
@@ -301,63 +379,64 @@ void graphe::Pareto(Svgfile &svgout,int dij)
         else
             allaretes.push_back(false);
     }
-    for(int h=ordre-1; h<nbaret; ++h)
+    std::cout<<std::endl;
+    std::sort(allaretes.begin(),allaretes.end());
+    do
     {
-        allaretes[0]=1;
-        std::sort(allaretes.begin(),allaretes.end());
-        do
+        std::vector<graphe> paretoo;
+        std::vector<Sommet*> allsom;
+        int con;
+        int cas=0;
+        int j= nbaret-1;
+        for(Aretes* k : m_aretes)
         {
-            std::vector<graphe> paretoo;
-            std::vector<Sommet*> allsom;
-            int con;
-            int cas=0;
-            int j= nbaret-1;
-            for(Aretes* k : m_aretes)
+            if(allaretes[j]==1)
             {
-                if(allaretes[j]==1)
-                {
-                    cas++;
-                    allgraphes.setar(k);
-                }
-                if(j!=0)
-                {
-                    j--;
-                }
+                cas++;
+                allgraphes.setar(k);
             }
-
-            allgraphes.m_sommets=m_sommets;
-            allgraphes.m_nbsom=m_nbsom;
-            allgraphes.nbaret=cas;
-            allgraphes.m_nbpoid=m_nbpoid;
-
-
-            if(cas==m_nbsom-1)
+            if(j!=0)
             {
-                con=allgraphes.Connexite();
-
-                if(con==0)
-                {
-                    for(int i=0; i<m_nbpoid; i++)
-                    {
-                        allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
-                    }
-
-                    toutesPossi.push_back(allgraphes);
-                }
+                j--;
             }
-
-            allgraphes.m_aretes.clear();
-            allgraphes.m_sommets.clear();
-            allgraphes.m_poid.clear();
         }
-        while(std::next_permutation(allaretes.begin(),allaretes.end()));
+
+        allgraphes.m_sommets=m_sommets;
+        allgraphes.m_nbsom=m_nbsom;
+        allgraphes.nbaret=cas;
+        allgraphes.m_nbpoid=m_nbpoid;
+
+
+
+            con=allgraphes.Connexite();
+
+            if(con==0)
+            {
+                if(cas==m_nbsom-1)
+        {
+                for(int i=0;i<m_nbpoid;i++)
+                {
+                    allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
+                }
+
+                toutesPossi.push_back(allgraphes);
+            }
+            ///if(cas>=m_nbsom-1)----TIAGO
+
+
+        }
+        allgraphes.m_aretes.clear();
+        allgraphes.m_sommets.clear();
+        allgraphes.m_poid.clear();
+
     }
+    while(std::next_permutation(allaretes.begin(),allaretes.end()));
     std::cout<<std::endl;
     std::cout<<"size:"<<toutesPossi.size()<<std::endl;
-    toutesPossi[0].afficher(svgout);
+    fontiere=FrontPareto(toutesPossi, svgout);
+    std::cout<<"size frontiere:"<<toutesPossi.size()<<std::endl;
 
 }
-
 
 void graphe::trier()
 {
@@ -378,7 +457,6 @@ void graphe::afficher(Svgfile& svgout,int posx) const
 }
 
 void graphe::setar(Aretes* unearete)
-<<<<<<< HEAD
 {
     m_aretes.push_back(unearete);
 }
@@ -541,15 +619,7 @@ Couleur graphe::getcoul()const
 
 }
 
-std::vector<float> graphe::getvectpoid()const
-{
-    return m_poid;
-}
 
-Couleur graphe::getcoul()const
-{
-    return m_couleur;
-}
 
 
 
@@ -629,3 +699,4 @@ Couleur graphe::getcoul()const
 //
 //
 //=======
+

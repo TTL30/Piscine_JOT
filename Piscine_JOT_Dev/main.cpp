@@ -5,7 +5,8 @@ int main()
 {
     // debut
     int choix=0;
-    graphe g{"files/broadway.txt","files/broadway_weights_0.txt"};
+    graphe g{"files/manhattan.txt","files/manhattan_weights_0.txt"};
+
 
     do
     {

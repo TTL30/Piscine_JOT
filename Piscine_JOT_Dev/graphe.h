@@ -11,28 +11,19 @@ class graphe
         ///constructeur qui charge le graphe en mémoire
         //format du fichier ordre/liste des sommets/taille/liste des arêtes
         graphe(std::string, std::string);
-<<<<<<< HEAD
-        ~graphe();
-        void afficher(Svgfile& svgout,int posx) const;
-=======
         ~graphe(){};
-        void afficher(Svgfile& svgout) const;
->>>>>>> pajeto
+        void afficher(Svgfile& svgout,int posx) const;
         Sommet getSom() const;
         void trier();
 
         std::vector<Aretes*> kruskal (Svgfile& svgout,int i);
         float mon_poidtot(std::vector<Aretes*> Krusk,int poid);
-<<<<<<< HEAD
         Aretes* get_aret(){return m_aretes[0];}
         std::vector<Aretes*> getmesaret(){return m_aretes;}
         float** graphetomatradj(graphe  mon_graphe);
         float djikstra(float**matrice_adjacence,int s,int yref);
         void Pareto(Svgfile& svgout,int dij);
-=======
-       /// Aretes* get_aret(){return m_aretes[0];}
-        void Pareto(Svgfile &svgout);
->>>>>>> pajeto
+
         std::vector<bool> possibilites(std::vector<bool> allaretes);
         int Connexite();
         void setar(Aretes* unearete);
@@ -45,11 +36,9 @@ class graphe
         Couleur getcoul()const;
         void setvectpoid(float poid);
         std::vector<float> getvectpoid() const;
-<<<<<<< HEAD
         void setpoiddij(float poiddij);
 
-=======
->>>>>>> pajeto
+
     protected:
 
     private:
