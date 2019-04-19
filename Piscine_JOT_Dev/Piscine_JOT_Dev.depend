@@ -225,11 +225,11 @@
 	<iostream>
 	"time.h"
 
-1555668057 source:c:\users\jade\piscine_jot\piscine_jot_dev\main.cpp
+1555688271 source:c:\users\jade\piscine_jot\piscine_jot_dev\main.cpp
 	<iostream>
 	"graphe.h"
 
-1555667823 c:\users\jade\piscine_jot\piscine_jot_dev\graphe.h
+1555684905 c:\users\jade\piscine_jot\piscine_jot_dev\graphe.h
 	<string>
 	<unordered_map>
 	"sommet.h"
@@ -267,14 +267,16 @@
 	"util.h"
 	<windows.h>
 
-1555668201 source:c:\users\jade\piscine_jot\piscine_jot_dev\graphe.cpp
+1555688887 source:c:\users\jade\piscine_jot\piscine_jot_dev\graphe.cpp
 	<fstream>
 	<iostream>
 	"graphe.h"
 	"aretes.h"
 	"algorithm"
+	"functional"
 	<sstream>
 	<string>
+	<bits/stdc++.h>
 
 1555664670 source:c:\users\oscar\piscine_jot\piscine_jot_dev\couleur.cpp
 	"couleur.h"

@@ -3,8 +3,11 @@
 #include "graphe.h"
 #include "aretes.h"
 #include "algorithm"
+#include "functional"
 #include <sstream>
 #include <string>
+#include <bits/stdc++.h>
+#define Infini 10000
 
 
 graphe::graphe(std::string nomFichier, std::string nomFichier2)
@@ -102,59 +105,73 @@ bool compaPoid(const Aretes* m1,const Aretes* m2)
 {
     return m1->getpoidnb(m1->getnbpoid())<m2->getpoidnb(m2->getnbpoid());
 }
-
-
-bool compaPoidGraph(const graphe m1,const graphe m2)
+bool compaPoid1Graph(const float m1,const float m2)
 {
-    return m1.getpoid(0)<m2.getpoid(0);
+    return m1<m2;
 }
-void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom, Svgfile& svgout)
+
+bool compaPoid0Graph(const graphe m1,const graphe m2, int i)
+{
+    return m1.getpoid(i)<m2.getpoid(i);
+}
+void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<float> mespoids, Svgfile& svgout)
 {
     svgout.addLine(10,10,10,170, "black");
     svgout.addLine(7,50,50,50,"black");
     svgout.addGrid();
+    std::sort(mespoids.begin(),mespoids.end(),compaPoid1Graph);
     int d=10.5, nd=10.5, y1=100.5, y2=100.5;
 
     for(graphe mg:dom)
     {
-        svgout.addDisk((mg.getpoid(0)+1)*5,(-mg.getpoid(1)+20)*5,1,"green");
+        svgout.addDisk((mg.getpoid(0)+1)*5,(-mg.getpoid(1)+mespoids[mespoids.size()-1]+10)*5,1,"green");
         //d=d+20;
         //y1=y1+10;
     }
     for(graphe mf:nodom)
     {
-        svgout.addDisk((mf.getpoid(0)+1)*5,(-mf.getpoid(1)+20)*5,1,"red");
+        svgout.addDisk((mf.getpoid(0)+1)*5,(-mf.getpoid(1)+mespoids[mespoids.size()-1]+10)*5,1,"red");
         //y2=y2+10;
         //nd=nd+20;
     }
 }
 void FrontPareto(std::vector<graphe> possi, Svgfile& svgout)
 {
+    //std::vector<graphe> entredeux;
     std::vector<graphe> domine;
     std::vector<graphe> nndomine;
-    std::sort(possi.begin(),possi.end(),compaPoidGraph);
-    float yref=4000;
+    std::vector<float> mespoid;
+    int j=0;
+    std::sort(possi.begin(),possi.end(),std::bind(compaPoid0Graph, std::placeholders::_1, std::placeholders::_2, 0));
+    domine.push_back(possi[0]);
+    float yref=domine[0].getpoid(1);
       for(graphe mesGr:possi)
         {
-            if(mesGr.getpoid(1)<yref)
+            mespoid.push_back(mesGr.getpoid(1));
+            if((mesGr.getpoid(1)<yref)&&(mesGr.getpoid(0)==domine[domine.size()-1].getpoid(0)))
             {
+                domine.pop_back();
+                mesGr.getcoul()={0,255,0};
+                nndomine.push_back(domine[domine.size()]);
                 domine.push_back(mesGr);
                 yref=mesGr.getpoid(1);
+                //j++;
+            }
+            else if(mesGr.getpoid(1)<yref)
+            {
+                mesGr.getcoul()={0,255,0};
+                domine.push_back(mesGr);
+                yref=mesGr.getpoid(1);
+               //j++;
             }
             else
             {
+                mesGr.getcoul()={255,0,0};
+                if(mesGr.getpoid(1)!=yref)
                 nndomine.push_back(mesGr);
             }
     }
-    for(graphe d:domine)
-    {
-        d.getcoul()={0,255,0};
-    }
-    for(graphe nd:nndomine)
-    {
-        nd.getcoul()={255,0,0};
-    }
-    affpareto(domine,nndomine,svgout);
+    affpareto(domine,nndomine,mespoid,svgout);
 
 }
 float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
@@ -319,12 +336,13 @@ void graphe::Pareto(Svgfile &svgout)
         allgraphes.m_nbpoid=m_nbpoid;
 
 
-        if(cas==m_nbsom-1)
-        {
+
             con=allgraphes.Connexite();
 
             if(con==0)
             {
+                if(cas==m_nbsom-1)
+        {
                 for(int i=0;i<m_nbpoid;i++)
                 {
                     allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
@@ -332,6 +350,8 @@ void graphe::Pareto(Svgfile &svgout)
 
                 toutesPossi.push_back(allgraphes);
             }
+            ///if(cas>=m_nbsom-1)----TIAGO
+
 
         }
         allgraphes.m_aretes.clear();
