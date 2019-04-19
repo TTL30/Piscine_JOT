@@ -116,23 +116,19 @@ bool compaPoid0Graph(const graphe m1,const graphe m2, int i)
 }
 void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<float> mespoids, Svgfile& svgout)
 {
-    svgout.addLine(10,10,10,170, "black");
-    svgout.addLine(7,50,50,50,"black");
-    svgout.addGrid();
     std::sort(mespoids.begin(),mespoids.end(),compaPoid1Graph);
-    int d=10.5, nd=10.5, y1=100.5, y2=100.5;
+    svgout.addLine(10,10,10,mespoids[0]*15, "black");
+    svgout.addLine(-dom[0].getpoid(1)+mespoids[mespoids.size()-1],mespoids[0]*15,800,mespoids[0]*15,"black");
+    //svgout.addGrid();
+
 
     for(graphe mg:dom)
     {
-        svgout.addDisk((mg.getpoid(0)+1)*5,(-mg.getpoid(1)+mespoids[mespoids.size()-1]+10)*5,1,"green");
-        //d=d+20;
-        //y1=y1+10;
+        svgout.addDisk((mg.getpoid(0)-dom[0].getpoid(0)+2)*15,(-mg.getpoid(1)+mespoids[mespoids.size()-1]+1)*15,5,"green");
     }
     for(graphe mf:nodom)
     {
-        svgout.addDisk((mf.getpoid(0)+1)*5,(-mf.getpoid(1)+mespoids[mespoids.size()-1]+10)*5,1,"red");
-        //y2=y2+10;
-        //nd=nd+20;
+        svgout.addDisk((mf.getpoid(0)-dom[0].getpoid(0)+2)*15,(-mf.getpoid(1)+mespoids[mespoids.size()-1]+1)*15,5,"red");
     }
 }
 void FrontPareto(std::vector<graphe> possi, Svgfile& svgout)
