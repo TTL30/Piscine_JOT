@@ -606,6 +606,7 @@ float graphe::djikstra(float**matrice_adjacence,int s)
             }
         }
     }
+    std::cout<<result<<std::endl;
     return result;
 }
 
