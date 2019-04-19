@@ -371,7 +371,7 @@ void graphe::Pareto(Svgfile &svgout)
 {
     //std::vector<graphe> salut;
     //std::vector<graphe> paretoo;
-    std::vector<std::vector<bool>> graphepossibles;
+    //std::vector<std::vector<bool>> graphepossibles;
     int nombreAr=0;
     int ordre=m_sommets.size();
     std::vector<graphe> toutesPossi;
@@ -429,7 +429,7 @@ void graphe::Pareto(Svgfile &svgout)
         allgraphes.nbaret=cas;
 
 
-        if(cas==m_nbsom-1)
+        /*if(cas==m_nbsom-1)
         {
             con=allgraphes.connex2(m_nbsom);
             printf("connexe: %d\n",con);
@@ -439,9 +439,11 @@ void graphe::Pareto(Svgfile &svgout)
                 toutesPossi.push_back(allgraphes);
             }
 
-        }
+        }*/
+        toutesPossi.push_back(allgraphes);
         allgraphes.m_aretes.clear();
         allgraphes.m_sommets.clear();
+
 
         //}
         /*for(int i=0;i<toutesPossi.size();++i)
@@ -451,13 +453,13 @@ void graphe::Pareto(Svgfile &svgout)
         }*/
     }
     while(std::next_permutation(allaretes.begin(),allaretes.end()));
-    std::cout<<std::endl;
+    /*std::cout<<std::endl;
     int oui=0;
     int non=toutesPossi.size();
     int cones=toutesPossi[non-1].connex2(m_nbsom);
     toutesPossi[oui].afficher(svgout);
     int cone=toutesPossi[oui].connex2(m_nbsom);
-    std::cout<<"monnb "<<cone<<cones<<std::endl;
+    std::cout<<"monnb "<<cone<<cones<<std::endl;*/
     /*int cone=toutesPossi[oui].connex2(ordre);
     if (cone==0)
     {

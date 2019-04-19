@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg"> width="1000" height="800">
 
-<text x="130" y="95" fill="black" >8;5</text>
-<line x1="100" y1="100" x2="200" y2="100" stroke="black" />
-<text x="100" y="150" fill="black" >2;5</text>
-<line x1="100" y1="100" x2="100" y2="200" stroke="black" />
-<line x1="200" y1="100" x2="100" y2="200" stroke="black" />
-<circle cx="200" cy="200" r="20" fill="blue" />
-<text x="195" y="205" fill="white" >3</text>
-<circle cx="100" cy="200" r="20" fill="blue" />
-<text x="95" y="205" fill="white" >2</text>
-<circle cx="200" cy="100" r="20" fill="blue" />
-<text x="195" y="105" fill="white" >1</text>
-<circle cx="100" cy="100" r="20" fill="blue" />
-<text x="95" y="105" fill="white" >0</text>
 
 
 </svg>
