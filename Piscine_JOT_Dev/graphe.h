@@ -21,12 +21,21 @@ class graphe
         std::vector<Aretes*> getmesaret(){return m_aretes;}
         float** graphetomatradj(graphe  mon_graphe);
         float djikstra(float**matrice_adjacence,int s);
-
-
-
-        void Pareto(Svgfile& svgout);
+        void Pareto(Svgfile& svgout,int dij);
         std::vector<bool> possibilites(std::vector<bool> allaretes);
-        int connex(int nbsom);
+        int Connexite();
+        void setar(Aretes* unearete);
+        int racine(Sommet i,std::vector<Sommet> foret);
+        ///std::vector<Aretes*> get_aret(){return m_aretes;}
+        void ajouter(Aretes* are,int i);
+        float getpoid( int i) const;
+        int getnbarete()const {return nbaret;}
+        int getnbpoid()const;
+        Couleur getcoul()const;
+        void setvectpoid(float poid);
+        std::vector<float> getvectpoid() const;
+        void setpoiddij(float poiddij);
+
     protected:
 
     private:
@@ -36,6 +45,8 @@ class graphe
         std::unordered_map<int,Sommet*> m_sommets;//stockée dans une map (clé=id du sommet, valeur= pointeur sur le sommet)
         int nbaret;
         int m_nbsom;
+        int m_nbpoid;
+        Couleur m_couleur;
 };
 
 #endif // GRAPHE_H
