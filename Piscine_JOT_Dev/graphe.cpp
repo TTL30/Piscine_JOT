@@ -416,7 +416,7 @@ float graphe::djikstra(float**matrice_adjacence,int s)
         {
             result+=long_min[j2];
         }
-            std::cout<<result<<std::endl;
+        std::cout<<result<<std::endl;
 
         return result;
 }
