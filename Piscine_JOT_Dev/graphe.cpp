@@ -378,11 +378,12 @@ void graphe::Pareto(Svgfile &svgout,int dij)
     }
     std::cout<<std::endl;
     std::cout<<"size:"<<toutesPossi.size()<<std::endl;
-    mon_dijkstra=FrontPareto(toutesPossi, svgout);
-    int oui=5;
-    mon_dijkstra[oui].afficher(svgout,0);
-    std::cout<<"size dij:"<<mon_dijkstra.size()<<std::endl;
-    std::cout<<"monpooiddij :"<<mon_dijkstra[oui].getpoid(1)<<std::endl;
+    if(dij==1)
+    {
+        mon_dijkstra=FrontPareto(toutesPossi, svgout);
+        std::cout<<"size dij:"<<mon_dijkstra.size()<<std::endl;
+
+    }
 
     /*if (dij==1)
     {
