@@ -43,14 +43,14 @@
 <text x="905" y="15" fill="lightgrey" >900</text>
 <line x1="1000" y1="0" x2="1000" y2="800" stroke="lightgrey" />
 <text x="1005" y="15" fill="lightgrey" >1000</text>
-<circle cx="120" cy="31" r="1" fill="green" />
-<circle cx="115" cy="33" r="1" fill="green" />
-<circle cx="114" cy="38" r="1" fill="green" />
-<circle cx="119" cy="36" r="1" fill="red" />
-<circle cx="118" cy="36" r="1" fill="red" />
-<circle cx="120" cy="37" r="1" fill="red" />
-<circle cx="115" cy="39" r="1" fill="red" />
-<circle cx="118" cy="42" r="1" fill="red" />
+<circle cx="60" cy="0" r="1" fill="green" />
+<circle cx="70" cy="25" r="1" fill="green" />
+<circle cx="95" cy="30" r="1" fill="green" />
+<circle cx="85" cy="5" r="1" fill="red" />
+<circle cx="85" cy="10" r="1" fill="red" />
+<circle cx="90" cy="0" r="1" fill="red" />
+<circle cx="100" cy="25" r="1" fill="red" />
+<circle cx="115" cy="10" r="1" fill="red" />
 
 
 </svg>

@@ -139,15 +139,19 @@ void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom, Svgfile& svgo
     svgout.addLine(10,10,10,170, "black");
     svgout.addLine(7,50,50,50,"black");
     svgout.addGrid();
-
+    int d=10.5, nd=10.5, y1=100.5, y2=100.5;
 
     for(graphe mg:dom)
     {
-        svgout.addDisk(mg.getpoid(1)+100,mg.getpoid(0)+20,1,"green");
+        svgout.addDisk((mg.getpoid(0)+1)*5,(-mg.getpoid(1)+20)*5,1,"green");
+        //d=d+20;
+        //y1=y1+10;
     }
     for(graphe mf:nodom)
     {
-        svgout.addDisk(mf.getpoid(1)+100,mf.getpoid(0)+20,1,"red");
+        svgout.addDisk((mf.getpoid(0)+1)*5,(-mf.getpoid(1)+20)*5,1,"red");
+        //y2=y2+10;
+        //nd=nd+20;
     }
 }
 void FrontPareto(std::vector<graphe> possi, Svgfile& svgout)
