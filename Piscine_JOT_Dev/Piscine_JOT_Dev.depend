@@ -1,13 +1,18 @@
 # depslib dependency file v1.0
+<<<<<<< HEAD
 100 
 
 1555694113 source:c:\users\code\piscine_jot\piscine_jot_dev\couleur.cpp
+=======
+1555703745 source:c:\users\code\piscine_jot\piscine_jot_dev\couleur.cpp
+>>>>>>> pajeto
 	"couleur.h"
 	"svgfile.h"
 	"util.h"
 	<iostream>
 	"time.h"
 
+<<<<<<< HEAD
 1555617674 8f2e8101d5a033aacb48fbe027ecb950d490d
 	"couleur.h"
 	"svgfile.h"
@@ -82,20 +87,35 @@
 	<cstdint>
 
 1555694113 c:\users\code\piscine_jot\piscine_jot_dev\svgfile.h
+=======
+1555703745 c:\users\code\piscine_jot\piscine_jot_dev\couleur.h
+	<string>
+	<cstdint>
+
+1555703745 c:\users\code\piscine_jot\piscine_jot_dev\svgfile.h
+>>>>>>> pajeto
 	<string>
 	<fstream>
 	<set>
 	"Couleur.h"
 	"util.h"
 
+<<<<<<< HEAD
 1555694113 c:\users\code\piscine_jot\piscine_jot_dev\util.h
+=======
+1555703745 c:\users\code\piscine_jot\piscine_jot_dev\util.h
+>>>>>>> pajeto
 	<string>
 	<random>
 	<ctime>
 	<iostream>
 	<cstdio>
 
+<<<<<<< HEAD
 1555694113 source:c:\users\code\piscine_jot\piscine_jot_dev\util.cpp
+=======
+1555703745 source:c:\users\code\piscine_jot\piscine_jot_dev\util.cpp
+>>>>>>> pajeto
 	"util.h"
 	<random>
 	<ctime>
@@ -112,17 +132,31 @@
 	"util.h"
 	<windows.h>
 
+<<<<<<< HEAD
 1555694113 source:c:\users\code\piscine_jot\piscine_jot_dev\svgfile.cpp
+=======
+1555703745 source:c:\users\code\piscine_jot\piscine_jot_dev\svgfile.cpp
+>>>>>>> pajeto
 	"svgfile.h"
 	"util.h"
 	<iostream>
 	<sstream>
 
+<<<<<<< HEAD
 1555709637 source:c:\users\code\piscine_jot\piscine_jot_dev\main.cpp
 	<iostream>
 	"graphe.h"
 
 1555710134 source:c:\users\code\piscine_jot\piscine_jot_dev\graphe.cpp
+=======
+1555435197 D
+
+1555703745 source:c:\users\code\piscine_jot\piscine_jot_dev\main.cpp
+	<iostream>
+	"graphe.h"
+
+1555713758 source:c:\users\code\piscine_jot\piscine_jot_dev\graphe.cpp
+>>>>>>> pajeto
 	<fstream>
 	<iostream>
 	"graphe.h"
@@ -164,20 +198,32 @@
 	"sommet.h"
 	<vector>
 
+<<<<<<< HEAD
 1555709980 c:\users\code\piscine_jot\piscine_jot_dev\graphe.h
+=======
+1555703745 c:\users\code\piscine_jot\piscine_jot_dev\graphe.h
+>>>>>>> pajeto
 	<string>
 	<unordered_map>
 	"sommet.h"
 	"aretes.h"
 
+<<<<<<< HEAD
 1555694113 c:\users\code\piscine_jot\piscine_jot_dev\sommet.h
+=======
+1555703745 c:\users\code\piscine_jot\piscine_jot_dev\sommet.h
+>>>>>>> pajeto
 	<string>
 	<vector>
 	<unordered_map>
 	<unordered_set>
 	"svgfile.h"
 
+<<<<<<< HEAD
 1555694113 source:c:\users\code\piscine_jot\piscine_jot_dev\sommet.cpp
+=======
+1555703745 source:c:\users\code\piscine_jot\piscine_jot_dev\sommet.cpp
+>>>>>>> pajeto
 	<iostream>
 	<queue>
 	<stack>
@@ -186,11 +232,19 @@
 	"sommet.h"
 	"svgfile.h"
 
+<<<<<<< HEAD
 1555695407 c:\users\code\piscine_jot\piscine_jot_dev\aretes.h
 	"sommet.h"
 	<vector>
 
 1555695407 source:c:\users\code\piscine_jot\piscine_jot_dev\aretes.cpp
+=======
+1555703745 c:\users\code\piscine_jot\piscine_jot_dev\aretes.h
+	"sommet.h"
+	<vector>
+
+1555703745 source:c:\users\code\piscine_jot\piscine_jot_dev\aretes.cpp
+>>>>>>> pajeto
 	<iostream>
 	<queue>
 	<stack>
@@ -370,7 +424,11 @@
 	<iostream>
 	<cstdio>
 
+<<<<<<< HEAD
 1555665170 source:c:\users\oscar\piscine_jot\piscine_jot_dev\graphe.cpp
+=======
+1555701170 source:c:\users\oscar\piscine_jot\piscine_jot_dev\graphe.cpp
+>>>>>>> pajeto
 	<fstream>
 	<iostream>
 	"graphe.h"
@@ -379,17 +437,24 @@
 	<sstream>
 	<string>
 
+<<<<<<< HEAD
 1555664670 c:\users\oscar\piscine_jot\piscine_jot_dev\graphe.h
+=======
+1555668319 c:\users\oscar\piscine_jot\piscine_jot_dev\graphe.h
+>>>>>>> pajeto
 	<string>
 	<unordered_map>
 	"sommet.h"
 	"aretes.h"
 
 1555440766 aire
+<<<<<<< HEAD
 	<string>
 	<unordered_map>
 	"sommet.h"
 	"aretes.h"
+=======
+>>>>>>> pajeto
 	<string>
 	<vector>
 	<unordered_map>
@@ -427,6 +492,46 @@
 	<unordered_map>
 	<unordered_set>
 	"aretes.h"
+<<<<<<< HEAD
+=======
+	<string>
+	<vector>
+	<unordered_map>
+	<unordered_set>
+	"svgfile.h"
+	<iostream>
+	<queue>
+	<stack>
+	<unordered_map>
+	<unordered_set>
+	"sommet.h"
+	"svgfile.h"
+	"svgfile.h"
+	"util.h"
+	<iostream>
+	<sstream>
+	"util.h"
+	<random>
+	<ctime>
+	<iostream>
+	<cstdio>
+	<streambuf>
+	<vector>
+	<cstdlib>
+	<cstdio>
+	<algorithm>
+	<cstring>
+	<iostream>
+	<thread>
+	"util.h"
+	<windows.h>
+	<iostream>
+	<queue>
+	<stack>
+	<unordered_map>
+	<unordered_set>
+	"aretes.h"
+>>>>>>> pajeto
 	"algorithm"
 
 1555664670 c:\users\oscar\piscine_jot\piscine_jot_dev\sommet.h
@@ -440,7 +545,11 @@
 	"sommet.h"
 	<vector>
 
+<<<<<<< HEAD
 1555664670 source:c:\users\oscar\piscine_jot\piscine_jot_dev\main.cpp
+=======
+1555702510 source:c:\users\oscar\piscine_jot\piscine_jot_dev\main.cpp
+>>>>>>> pajeto
 	<iostream>
 	"graphe.h"
 
