@@ -14,13 +14,17 @@ class Sommet
         void ajouterVoisin(const Sommet*);
         void afficherData() const;
         void afficherVoisins() const;
-        void dessinerSommet(Svgfile& svgout,int i)const;
-        std::vector <const Sommet*> getvoisin() const;
+        void dessinerSommet(Svgfile& svgout, int posinitx,int posinity)const;
 
         ~Sommet();
+        int getX() const;
+        int getY() const;
+        std::vector<const Sommet*> getVois()const {return m_voisins;}
+        std::unordered_map<std::string,std::string> parcoursDFS() const;
+        void dessinerSommet(Svgfile& svgout)const;
+        std::vector <const Sommet*> getvoisin() const;
         int getid() const;
-        double getX() const;
-        double getY() const;
+
 
 
 

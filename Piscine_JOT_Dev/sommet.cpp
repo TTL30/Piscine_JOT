@@ -17,15 +17,21 @@ void Sommet::afficherData() const
 {
     std::cout<<"    "<<m_id<<" : "<<"(x,y)=("<<m_x<<","<<m_y<<")"<<std::endl;
 }
-double Sommet::getX() const
+int Sommet::getX() const
 {
     return m_x;
+}
+
+void Sommet::dessinerSommet(Svgfile& svgout, int posinitx,int posinity)const
+{
+    svgout.addDisk(m_x+posinitx,m_y+posinity,20,"blue");
+    svgout.addText(m_x-5+posinitx,m_y+5+posinity,m_id,"white");
 }
 std::vector<const Sommet*> Sommet::getvoisin() const
 {
     return m_voisins;
 }
-double Sommet::getY() const
+int Sommet::getY() const
 {
     return m_y;
 }
@@ -33,11 +39,8 @@ int Sommet::getid() const
 {
     return m_id;
 }
-void Sommet::dessinerSommet(Svgfile& svgout,int i)const
-{
-    svgout.addDisk(m_x+i*500,m_y,20,"blue");
-    svgout.addText(m_x-5+i*500,m_y+5,m_id,"white");
-}
+
+
 void Sommet::afficherVoisins() const
 {
     std::cout<<"  voisins :"<<std::endl;
@@ -46,6 +49,8 @@ void Sommet::afficherVoisins() const
         v->afficherData();
     }
 }
+
+
 
 Sommet::~Sommet()
 {
