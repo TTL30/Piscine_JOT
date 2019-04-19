@@ -112,18 +112,19 @@ void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom, Svgfile& svgo
 {
     svgout.addLine(10,10,10,170, "black");
     svgout.addLine(7,50,50,50,"black");
+    int scale=(dom.size()+nodom.size())/2;
     svgout.addGrid();
     int d=10.5, nd=10.5, y1=100.5, y2=100.5;
 
     for(graphe mg:dom)
     {
-        svgout.addDisk((mg.getpoid(0)+1)*5,(-mg.getpoid(1)+20)*5,1,"green");
+        svgout.addDisk((mg.getpoid(0)+1)*5,(-mg.getpoid(1)+50)*5,1,"green");
         //d=d+20;
         //y1=y1+10;
     }
     for(graphe mf:nodom)
     {
-        svgout.addDisk((mf.getpoid(0)+1)*5,(-mf.getpoid(1)+20)*5,1,"red");
+        svgout.addDisk((mf.getpoid(0)+1)*5,(-mf.getpoid(1)+500)*5,1,"red");
         //y2=y2+10;
         //nd=nd+20;
     }
@@ -282,67 +283,82 @@ void graphe::Pareto(Svgfile &svgout)
     graphe allgraphes= {"files/sous_graphe.txt","files/sous_graphe.txt"};
     ///std::vector<bool> c;
     std::vector<bool> allaretes;
-    for (int i=0; i<nbaret; ++i)
+    for(int i=0;i<nbaret;i++)
     {
-        if (i<ordre-1)
-        {
-            allaretes.push_back(true);
-        }
-        else
-            allaretes.push_back(false);
+        allaretes.push_back(false);
     }
-    std::cout<<std::endl;
-    std::sort(allaretes.begin(),allaretes.end());
-    do
-    {
-        std::vector<graphe> paretoo;
-        std::vector<Sommet*> allsom;
-        int con;
-        int cas=0;
-        int j= nbaret-1;
-        for(Aretes* k : m_aretes)
+        /*for (int i=0; i<nbaret; ++i)
         {
-            if(allaretes[j]==1)
+            if (i<ordre-1)
             {
-                cas++;
-                allgraphes.setar(k);
+                allaretes.push_back(true);
             }
-            if(j!=0)
-            {
-                j--;
-            }
-        }
-
-        allgraphes.m_sommets=m_sommets;
-        allgraphes.m_nbsom=m_nbsom;
-        allgraphes.nbaret=cas;
-        allgraphes.m_nbpoid=m_nbpoid;
-
-
-        if(cas==m_nbsom-1)
+            else
+                allaretes.push_back(false);
+        }*/
+        for(int h=nbaret;h>-1;h--)
         {
-            con=allgraphes.Connexite();
+            allaretes[h]=1;
 
-            if(con==0)
+        std::sort(allaretes.begin(),allaretes.end());
+        do
+        {
+            for(int i=0;i<nbaret;++i)
             {
-                for(int i=0;i<m_nbpoid;i++)
+                std::cout<<allaretes[i];
+            }
+            std::cout<<std::endl;
+            std::vector<graphe> paretoo;
+            std::vector<Sommet*> allsom;
+            int con;
+            int cas=0;
+            int j= nbaret-1;
+            for(Aretes* k : m_aretes)
+            {
+                if(allaretes[j]==1)
                 {
-                    allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
+                    cas++;
+                    allgraphes.setar(k);
+                }
+                if(j!=0)
+                {
+                    j--;
+                }
+            }
+
+            allgraphes.m_sommets=m_sommets;
+            allgraphes.m_nbsom=m_nbsom;
+            allgraphes.nbaret=cas;
+            allgraphes.m_nbpoid=m_nbpoid;
+
+
+            if(cas>=m_nbsom-1)
+            {
+                //printf("test\n");
+                con=allgraphes.Connexite();
+
+                if(con==0)
+                {
+                    for(int i=0;i<m_nbpoid;i++)
+                    {
+                        allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
+                    }
+
+                    toutesPossi.push_back(allgraphes);
                 }
 
-                toutesPossi.push_back(allgraphes);
             }
-
+            //toutesPossi.push_back(allgraphes);
+            allgraphes.m_aretes.clear();
+            allgraphes.m_sommets.clear();
+            allgraphes.m_poid.clear();
         }
-        allgraphes.m_aretes.clear();
-        allgraphes.m_sommets.clear();
-        allgraphes.m_poid.clear();
-
-    }
-    while(std::next_permutation(allaretes.begin(),allaretes.end()));
+        while(std::next_permutation(allaretes.begin(),allaretes.end()));
+        }
     std::cout<<std::endl;
     std::cout<<"size:"<<toutesPossi.size()<<std::endl;
     FrontPareto(toutesPossi, svgout);
+    //toutesPossi[1].afficher(svgout);
 
 }
 
