@@ -361,7 +361,7 @@ void graphe::Pareto(Svgfile &svgout,int dij)
                             resltdij=0;
                             for(int i=0; i<m_nbsom; i++)
                             {
-                                resltdij=djikstra(ma_matrice,toutesPossi[j].m_sommets.at(i)->getid());
+                                resltdij=djikstra(ma_matrice,toutesPossi[j].m_sommets.at(i)->getid(),25);
                             }
                             toutesPossi[j].setpoiddij(resltdij);
                         }
@@ -470,7 +470,58 @@ float** graphe::graphetomatradj(graphe mon_graphe)
 
     return ma_matrice;
 }
-float graphe::djikstra(float**matrice_adjacence,int s)
+
+
+//float graphe::djikstra(float**matrice_adjacence,int s)
+//{
+//    int *sommet_marques;
+//    float *long_min;
+//    int* pred;
+//    int nums1,nums2,smin;
+//    float minim;
+//    int nb=0;
+//    int nbsommet= m_sommets.size();
+//    float result;
+//    sommet_marques = (int *) malloc(nbsommet*sizeof(int));
+//    pred = (int *) malloc(nbsommet*sizeof(int));
+//    long_min = (float *) malloc(nbsommet*sizeof(float));
+//    for(int i=0; i<nbsommet; i++)
+//    {
+//        sommet_marques[i]=0;
+//        long_min[i]=INFINI;
+//    }
+//    long_min[s]=nb=0;
+//    while(nb<nbsommet)
+//    {
+//        minim=INFINI;
+//        for (nums1=0 ; nums1<nbsommet ; nums1++)
+//        {
+//            if (!sommet_marques[nums1] && long_min[nums1]<minim)
+//            {
+//                smin = nums1 ;
+//                minim = long_min[nums1] ;
+//            }
+//        }
+//        sommet_marques[smin]=1;
+//        nb++;
+//        for (nums2=0 ; nums2<nbsommet ; nums2++)
+//        {
+//            if (matrice_adjacence[smin][nums2] && !sommet_marques[nums2] &&  long_min[smin]+ matrice_adjacence[smin][nums2]<long_min[nums2])
+//            {
+//                long_min[nums2] = long_min[smin] + matrice_adjacence[smin][nums2] ;
+//                pred[nums2] = smin ;
+//                result+=long_min[nums2];
+//
+//            }
+//        }
+//    }
+//    std::cout<<"Mon dij="<<result<<std::endl;
+//    return result;
+//}
+
+
+
+float graphe::djikstra(float**matrice_adjacence,int s,int yref)
 {
     int *sommet_marques;
     float *long_min;
@@ -489,7 +540,7 @@ float graphe::djikstra(float**matrice_adjacence,int s)
         long_min[i]=INFINI;
     }
     long_min[s]=nb=0;
-    while(nb<nbsommet)
+    while((nb<nbsommet)||(result>yref))
     {
         minim=INFINI;
         for (nums1=0 ; nums1<nbsommet ; nums1++)
@@ -508,17 +559,16 @@ float graphe::djikstra(float**matrice_adjacence,int s)
             {
                 long_min[nums2] = long_min[smin] + matrice_adjacence[smin][nums2] ;
                 pred[nums2] = smin ;
+                result+=long_min[nums2];
+
             }
         }
     }
-
-    for(int j2=0; j2<nbsommet; j2++)
-    {
-        result+=long_min[j2];
-    }
-
+    std::cout<<"Mon dij="<<result<<std::endl;
     return result;
 }
+
+
 std::vector<float> graphe::getvectpoid()const
 {
     return m_poid;
