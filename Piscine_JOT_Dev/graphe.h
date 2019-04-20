@@ -37,7 +37,9 @@ class graphe
         void setvectpoid(float poid);
         std::vector<float> getvectpoid() const;
         void setpoiddij(float poiddij);
-        float FrontPareto(std::vector<graphe> possi, Svgfile& svgout);
+        //float FrontPareto(std::vector<graphe> possi, Svgfile& svgout);
+        void FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij);
+
 
 
 
