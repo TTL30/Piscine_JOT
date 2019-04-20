@@ -117,57 +117,116 @@ bool compaPoid0Graph(const graphe m1,const graphe m2, int i)
 void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<float> mespoids, Svgfile& svgout)
 {
     std::sort(mespoids.begin(),mespoids.end(),compaPoid1Graph);
-    svgout.addLine(10,10,10,mespoids[0]*15, "black");
-    svgout.addLine(-dom[0].getpoid(1)+mespoids[mespoids.size()-1],mespoids[0]*15,800,mespoids[0]*15,"black");
+    svgout.addText(10,15, "cout 2", "black");
+    svgout.addText(750,790, "cout 1", "black");
+    svgout.addLine(0, 5,5,0,"black" );
+    svgout.addLine(5,0,10,5,"black");
+    svgout.addLine(795, 790,800,795, "black");
+    svgout.addLine(800,795,795,800, "black");
+    svgout.addLine(5,1,5,800, "black");
+    svgout.addLine(1,795,800, 795,"black");
+    int d=1, dd=1;
     //svgout.addGrid();
 
 
     for(graphe mg:dom)
     {
-        svgout.addDisk((mg.getpoid(0)-dom[0].getpoid(0)+2)*15,(-mg.getpoid(1)+mespoids[mespoids.size()-1]+1)*15,5,"green");
+        svgout.addDisk((mg.getpoid(0)*7),(795-mg.getpoid(1)*(7))+mespoids[mespoids.size()-1],2.5,"green");
     }
     for(graphe mf:nodom)
     {
-        svgout.addDisk((mf.getpoid(0)-dom[0].getpoid(0)+2)*15,(-mf.getpoid(1)+mespoids[mespoids.size()-1]+1)*15,5,"red");
+        svgout.addDisk((mf.getpoid(0)*7),(795-mf.getpoid(1)*(7))+mespoids[mespoids.size()-1],2.5,"red");
     }
 }
-void FrontPareto(std::vector<graphe> possi, Svgfile& svgout)
+void affpareto2(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<float> mespoids, Svgfile& svgout, int x, int y)
+{
+
+    if((x==0)&&(y==1))
+    {
+        svgout.addLine(5,0,5,266, "black");
+        svgout.addLine(0, 266, 266,266, "black");
+        svgout.addText(10,20, "cout2", "black");
+        svgout.addText(216,256, "cout1", "black");
+        svgout.addLine(0,5,5,0,"black");
+        svgout.addLine(5,0,10,5,"black");
+        svgout.addLine(261,261,266,266,"black");
+        svgout.addLine(266,266,261,271,"black");
+        for(graphe mg:dom)
+        {
+            svgout.addDisk((mg.getpoid(x)*7),(266-mg.getpoid(y)*(7))+mespoids[mespoids.size()-1],2,"green");
+        }
+    }
+    else if(x==1)
+    {
+        svgout.addLine(266,266,266,532, "black");
+        svgout.addLine(266,532, 532, 532, "black");
+        svgout.addText(276,286, "cout3", "black");
+        svgout.addText(480,520, "cout2", "black");
+        svgout.addLine(266,266,271,271,"black");
+        svgout.addLine(527,527,532,532,"black");
+        svgout.addLine(532,532,527,537,"black");
+        for(graphe mg:dom)
+        {
+            svgout.addDisk((mg.getpoid(x)*7)+266,(532-mg.getpoid(y)*(7))+mespoids[mespoids.size()-1],2,"green");
+        }
+    }
+    else
+    {
+         svgout.addLine(532,532,532,795, "black");
+         svgout.addLine(532,795,800,795, "black");
+         svgout.addText(542,552, "cout3", "black");
+         svgout.addText(750,790, "cout1", "black");
+         svgout.addLine(532,532,537,537,"black");
+         svgout.addLine(795, 790,800,795, "black");
+         svgout.addLine(800,795,795,800, "black");
+         for(graphe mg:dom)
+        {
+            svgout.addDisk((mg.getpoid(x)*7)+532,(798-mg.getpoid(y)*(7))+mespoids[mespoids.size()-1],2,"green");
+        }
+    }
+
+}
+std::vector<graphe> FrontPareto(std::vector<graphe> possi, Svgfile& svgout, int x, int y, int nbpoid, float* pmax)
 {
     //std::vector<graphe> entredeux;
     std::vector<graphe> domine;
     std::vector<graphe> nndomine;
     std::vector<float> mespoid;
-    int j=0;
-    std::sort(possi.begin(),possi.end(),std::bind(compaPoid0Graph, std::placeholders::_1, std::placeholders::_2, 0));
+    std::sort(possi.begin(),possi.end(),std::bind(compaPoid0Graph, std::placeholders::_1, std::placeholders::_2, x));
     domine.push_back(possi[0]);
-    float yref=domine[0].getpoid(1);
-      for(graphe mesGr:possi)
+    float yref=domine[0].getpoid(y);
+        for(graphe mesGr:possi)
         {
-            mespoid.push_back(mesGr.getpoid(1));
-            if((mesGr.getpoid(1)<yref)&&(mesGr.getpoid(0)==domine[domine.size()-1].getpoid(0)))
+            mespoid.push_back(mesGr.getpoid(y));
+            if((mesGr.getpoid(y)<yref)&&(mesGr.getpoid(x)==domine[domine.size()-1].getpoid(x)))
             {
                 domine.pop_back();
-                mesGr.getcoul()={0,255,0};
                 nndomine.push_back(domine[domine.size()]);
                 domine.push_back(mesGr);
-                yref=mesGr.getpoid(1);
+                yref=mesGr.getpoid(y);
                 //j++;
             }
-            else if(mesGr.getpoid(1)<yref)
+            else if(mesGr.getpoid(y)<yref)
             {
-                mesGr.getcoul()={0,255,0};
                 domine.push_back(mesGr);
-                yref=mesGr.getpoid(1);
-               //j++;
+                yref=mesGr.getpoid(y);
             }
             else
             {
-                mesGr.getcoul()={255,0,0};
-                if(mesGr.getpoid(1)!=yref)
+                if(mesGr.getpoid(y)!=yref)
                 nndomine.push_back(mesGr);
             }
     }
+
+    std::sort(mespoid.begin(),mespoid.end(),compaPoid1Graph);
+    *pmax=mespoid[mespoid.size()-1];
+    if(nbpoid==2)
     affpareto(domine,nndomine,mespoid,svgout);
+    else if(nbpoid==3)
+    {
+        affpareto2(domine,nndomine,mespoid,svgout, x, y);
+    }
+    return domine;
 
 }
 float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
@@ -338,12 +397,12 @@ void graphe::Pareto(Svgfile &svgout)
             if(con==0)
             {
                 if(cas==m_nbsom-1)
-        {
+                {
                 for(int i=0;i<m_nbpoid;i++)
                 {
                     allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
-                }
 
+                }
                 toutesPossi.push_back(allgraphes);
             }
             ///if(cas>=m_nbsom-1)----TIAGO
@@ -358,7 +417,41 @@ void graphe::Pareto(Svgfile &svgout)
     while(std::next_permutation(allaretes.begin(),allaretes.end()));
     std::cout<<std::endl;
     std::cout<<"size:"<<toutesPossi.size()<<std::endl;
-    FrontPareto(toutesPossi, svgout);
+    std::vector<graphe> domine;
+    std::vector<graphe> domine1;
+    std::vector<graphe> domine2;
+    std::vector<graphe> domine3;
+    float p1max=0.0;
+    float p2max=0.0;
+
+    if(m_nbpoid==2)
+        domine=FrontPareto(toutesPossi, svgout, 0, 1, m_nbpoid, &p1max);
+    else if(m_nbpoid==3)
+    {
+        domine1=FrontPareto(toutesPossi, svgout, 0, 1, m_nbpoid, &p1max);
+        domine2=FrontPareto(toutesPossi, svgout, 1, 2, m_nbpoid, &p2max);
+        domine3=FrontPareto(toutesPossi, svgout, 0, 2, m_nbpoid, &p2max);
+        std::cout<<"p1 : "<<p1max <<" p2 "<<p2max<<std::endl;
+        for(graphe dom:domine1)
+        {
+            for(graphe dim:domine2)
+            {
+                for(graphe dam :domine3)
+                {
+                    if((dom.getpoid(0)==dim.getpoid(0))&&(dom.getpoid(0)==dam.getpoid(0))&&
+                       (dom.getpoid(1)==dim.getpoid(1))&&(dom.getpoid(1)==dam.getpoid(1)))
+                    {
+                        svgout.addCircle((dom.getpoid(0)*7),(266-dom.getpoid(1)*(7))+p1max,4,1,"blue");
+                        svgout.addCircle((dim.getpoid(1)*7)+266,(532-dom.getpoid(2)*(7))+p2max,4,1,"blue");
+                        svgout.addCircle((dam.getpoid(0)*7)+532,(798-dom.getpoid(2)*(7))+p2max,4,1,"blue");
+                    }
+                }
+
+            }
+
+
+        }
+    }
 
 }
 
