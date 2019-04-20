@@ -21,7 +21,7 @@ class graphe
         Aretes* get_aret(){return m_aretes[0];}
         std::vector<Aretes*> getmesaret(){return m_aretes;}
         float** graphetomatradj(graphe  mon_graphe);
-        float djikstra(float**matrice_adjacence,int s);
+        float djikstra(float**matrice_adjacence,float yref);
         void Pareto(Svgfile& svgout,int dij);
 
         std::vector<bool> possibilites(std::vector<bool> allaretes);
@@ -37,6 +37,8 @@ class graphe
         void setvectpoid(float poid);
         std::vector<float> getvectpoid() const;
         void setpoiddij(float poiddij);
+        float FrontPareto(std::vector<graphe> possi, Svgfile& svgout);
+
 
 
     protected:
