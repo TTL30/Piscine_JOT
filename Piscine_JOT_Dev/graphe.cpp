@@ -149,28 +149,17 @@ void affparetodij(std::vector<graphe> dom,std::vector<float> mespoids, Svgfile& 
 }
 
 
+
 void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int poidselec)
 {
     std::vector<graphe> domine;
     std::vector<graphe> nndomine;
     std::vector<float> mespoid;
     int nbsommet= m_sommets.size();
-    float** ma_matrice;
-    ma_matrice = (float **) malloc(nbsommet*sizeof(float *));
-    if (ma_matrice == NULL)
-    {
-        printf("espace mémoire insuffisant\n");
-        exit(1);
-    }
-    for (int i=0; i<nbsommet; i++)
-    {
-        ma_matrice[i] = (float *) malloc(nbsommet*sizeof(float));
-        if (ma_matrice[i] == NULL)
-        {
-            printf("espace mémoire insuffisant\n");
-            exit(1);
-        }
-    }
+    float** ma_matrice= new float*[nbsommet];
+      for (int i = 0; i < nbsommet; i++)
+         ma_matrice[i] = new float[nbsommet];
+
     for (int i = 0; i < nbsommet; i++)
     {
         for (int j = 0; j < nbsommet; j++)
@@ -248,12 +237,17 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int 
             }
         }
         std::cout<<"nb frontiere avec dij: "<<domine.size()<<std::endl;
+        for(int i=0;i<domine.size();i++)
+        {
+            domine[i].afficher(svgout,180*i);
+            std::cout<<domine[i].getpoid(0)<<"//"<<domine[i].getpoid(1)<<std::endl;
+        }
         affparetodij(domine,mespoid,svgout);
     }
-                free(ma_matrice);
-
+for (int i = 0; i < nbsommet; i++)
+         delete[] ma_matrice[i];
+      delete[] ma_matrice;
 }
-
 
 float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
 {
@@ -338,8 +332,7 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
 int graphe::Connexite()
 {
     int ordre=m_sommets.size();
-    int* tab_connexe;
-    tab_connexe=(int*) malloc(ordre*sizeof(int));
+    int* tab_connexe=new int[ordre];
     int val_prede,val_s1,val_s2,connexe=0;
     for(int i=0; i<ordre; i++)
     {
@@ -366,6 +359,7 @@ int graphe::Connexite()
             connexe=1;
         }
     }
+    delete[]tab_connexe;
     return connexe;
 }
 
