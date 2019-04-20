@@ -148,11 +148,36 @@ void affparetodij(std::vector<graphe> dom,std::vector<float> mespoids, Svgfile& 
     }
 }
 
+
 void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij)
 {
     std::vector<graphe> domine;
     std::vector<graphe> nndomine;
     std::vector<float> mespoid;
+    int nbsommet= m_sommets.size();
+    float** ma_matrice;
+    ma_matrice = (float **) malloc(nbsommet*sizeof(float *));
+    if (ma_matrice == NULL)
+    {
+        printf("espace mémoire insuffisant\n");
+        exit(1);
+    }
+    for (int i=0; i<nbsommet; i++)
+    {
+        ma_matrice[i] = (float *) malloc(nbsommet*sizeof(float));
+        if (ma_matrice[i] == NULL)
+        {
+            printf("espace mémoire insuffisant\n");
+            exit(1);
+        }
+    }
+    for (int i = 0; i < nbsommet; i++)
+    {
+        for (int j = 0; j < nbsommet; j++)
+        {
+            ma_matrice[i][j]=0;
+        }
+    }
     std::sort(possi.begin(),possi.end(),std::bind(compaPoid0Graph, std::placeholders::_1, std::placeholders::_2, 0));
     if(dij==0)
     {
@@ -190,28 +215,47 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij)
 
     if(dij==1)
     {
-        float** ma_matrice;
-        ma_matrice=graphetomatradj(possi[0]);
+        graphetomatradj(possi[0],ma_matrice);
         possi[0].setpoiddij(djikstra(ma_matrice,INFINI));
         domine.push_back(possi[0]);
         float yref=domine[0].getpoid(1);
         float dij_maillon=0;
         for(graphe mesGr:possi)
         {
-            ma_matrice=graphetomatradj(mesGr);
-            dij_maillon=djikstra(ma_matrice,yref);
-            if(dij_maillon<yref)
+            for (int i = 0; i < nbsommet; i++)
             {
+                for (int j = 0; j < nbsommet; j++)
+                {
+                    ma_matrice[i][j]=0;
+                }
+            }
+            graphetomatradj(mesGr,ma_matrice);
+            dij_maillon=djikstra(ma_matrice,yref);
+            if((dij_maillon<yref)&&(mesGr.getpoid(0)==domine[domine.size()-1].getpoid(0)))
+            {
+                domine.pop_back();
                 mesGr.setpoiddij(dij_maillon);
+                mespoid.push_back(mesGr.getpoid(1));
                 domine.push_back(mesGr);
                 yref=dij_maillon;
+            }
+            else if(dij_maillon<yref)
+            {
+                mesGr.setpoiddij(dij_maillon);
                 mespoid.push_back(mesGr.getpoid(1));
+                domine.push_back(mesGr);
+                yref=dij_maillon;
             }
         }
         std::cout<<"nb frontiere avec dij: "<<domine.size()<<std::endl;
         affparetodij(domine,mespoid,svgout);
     }
+                free(ma_matrice);
+
 }
+
+
+
 
 float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
 {
@@ -500,28 +544,14 @@ void graphe::setvectpoid(float poid)
 {
     m_poid.push_back(poid);
 }
-float** graphe::graphetomatradj(graphe mon_graphe)
+
+
+void graphe::graphetomatradj(graphe mon_graphe,float** ma_matrice)
 {
-    float** ma_matrice;
     int nbsommet= m_sommets.size();
-    ma_matrice = (float **) malloc(nbsommet*sizeof(float *));
-    if (ma_matrice == NULL)
-    {
-        printf("espace mémoire insuffisant\n");
-        exit(1);
-    }
-    for (int i=0; i<nbsommet; i++)
-    {
-        ma_matrice[i] = (float *) malloc(nbsommet*sizeof(float));
-        if (ma_matrice[i] == NULL)
-        {
-            printf("espace mémoire insuffisant\n");
-            exit(1);
-        }
-    }
-    for (int i=0; i<nbsommet; i++)
-        for(int j=0; j<nbsommet; j++)
-            ma_matrice[i][j]=0;
+    int idso1=0;
+    int idso2=0;
+
     for(auto it : mon_graphe.getmesaret())
     {
         int idso1 =it->getsommet1()->getid();
@@ -529,9 +559,9 @@ float** graphe::graphetomatradj(graphe mon_graphe)
         ma_matrice[idso1][idso2]=it->getpoidnb(1);
         ma_matrice[idso2][idso1]=it->getpoidnb(1);
     }
-
-    return ma_matrice;
 }
+
+
 
 float graphe::djikstra(float** matrice_adjacence,float yref)
 {
@@ -550,6 +580,7 @@ float graphe::djikstra(float** matrice_adjacence,float yref)
     int s=0;
     do
     {
+
         for(int i=0; i<nbsommet; i++)
         {
             sommet_marques[i]=0;
@@ -558,6 +589,7 @@ float graphe::djikstra(float** matrice_adjacence,float yref)
         long_min[s]=nb=0;
         while(nb<nbsommet)
         {
+
             minim=INFINI;
             for (nums1=0 ; nums1<nbsommet ; nums1++)
             {
@@ -576,16 +608,19 @@ float graphe::djikstra(float** matrice_adjacence,float yref)
                     long_min[nums2] = long_min[smin] + matrice_adjacence[smin][nums2] ;
                     pred[nums2] = smin ;
                     result+=long_min[nums2];
-
                 }
             }
         }
         s++;
         if (result>yref)
+        {
             break;
-
+        }
     }
     while(s<nbsommet);
+    free(sommet_marques);
+    free(long_min);
+    free(pred);
     return result;
 }
 
