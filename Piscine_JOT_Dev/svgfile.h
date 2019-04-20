@@ -26,6 +26,8 @@ public:
     void addCircleOppacite(double x, double y, double r,double oppa, std::string color);
 
     static std::string makeRGB(int r, int g, int b);
+    void addRoute(double x1, double y1, double x2, double y2,double ep, std::string color);
+
 
     /// Type non copiable
     Svgfile(const Svgfile&) = delete;

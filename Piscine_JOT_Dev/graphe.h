@@ -27,9 +27,9 @@ public:
         return m_aretes;
     }
     //float** graphetomatradj(graphe  mon_graphe);
-    void graphetomatradj(graphe  mon_graphe,float** ma_matrice);
+    void graphetomatradj(graphe mon_graphe,float** ma_matrice,int poidselec);
     float djikstra(float**matrice_adjacence,float yref);
-    void Pareto(Svgfile& svgout,int dij);
+    void Pareto(Svgfile& svgout,int dij,int poidselec);
 
     std::vector<bool> possibilites(std::vector<bool> allaretes);
     int Connexite();
@@ -46,9 +46,9 @@ public:
     Couleur getcoul()const;
     void setvectpoid(float poid);
     std::vector<float> getvectpoid() const;
-    void setpoiddij(float poiddij);
+    void setpoiddij(float poiddij,int poidselec);
     //float FrontPareto(std::vector<graphe> possi, Svgfile& svgout);
-    void FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij);
+    void FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int poidselec);
 
 
 

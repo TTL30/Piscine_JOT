@@ -24,7 +24,7 @@ int Sommet::getX() const
 
 void Sommet::dessinerSommet(Svgfile& svgout, int posinitx,int posinity)const
 {
-    svgout.addDisk(m_x+posinitx,m_y+posinity,20,"blue");
+    svgout.addRectangle(m_x+posinitx-20,m_y+posinity-20,40,40,"#D37460");
     svgout.addText(m_x-5+posinitx,m_y+5+posinity,m_id,"white");
 }
 std::vector<const Sommet*> Sommet::getvoisin() const

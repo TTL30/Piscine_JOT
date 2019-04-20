@@ -149,7 +149,7 @@ void affparetodij(std::vector<graphe> dom,std::vector<float> mespoids, Svgfile& 
 }
 
 
-void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij)
+void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int poidselec)
 {
     std::vector<graphe> domine;
     std::vector<graphe> nndomine;
@@ -215,10 +215,10 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij)
 
     if(dij==1)
     {
-        graphetomatradj(possi[0],ma_matrice);
-        possi[0].setpoiddij(djikstra(ma_matrice,INFINI));
+        graphetomatradj(possi[0],ma_matrice,poidselec);
+        possi[0].setpoiddij(djikstra(ma_matrice,INFINI),poidselec);
         domine.push_back(possi[0]);
-        float yref=domine[0].getpoid(1);
+        float yref=domine[0].getpoid(poidselec);
         float dij_maillon=0;
         for(graphe mesGr:possi)
         {
@@ -229,20 +229,20 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij)
                     ma_matrice[i][j]=0;
                 }
             }
-            graphetomatradj(mesGr,ma_matrice);
+            graphetomatradj(mesGr,ma_matrice,poidselec);
             dij_maillon=djikstra(ma_matrice,yref);
             if((dij_maillon<yref)&&(mesGr.getpoid(0)==domine[domine.size()-1].getpoid(0)))
             {
                 domine.pop_back();
-                mesGr.setpoiddij(dij_maillon);
-                mespoid.push_back(mesGr.getpoid(1));
+                mesGr.setpoiddij(dij_maillon,poidselec);
+                mespoid.push_back(mesGr.getpoid(poidselec));
                 domine.push_back(mesGr);
                 yref=dij_maillon;
             }
             else if(dij_maillon<yref)
             {
-                mesGr.setpoiddij(dij_maillon);
-                mespoid.push_back(mesGr.getpoid(1));
+                mesGr.setpoiddij(dij_maillon,poidselec);
+                mespoid.push_back(mesGr.getpoid(poidselec));
                 domine.push_back(mesGr);
                 yref=dij_maillon;
             }
@@ -253,8 +253,6 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij)
                 free(ma_matrice);
 
 }
-
-
 
 
 float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
@@ -333,7 +331,7 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
     auto poidstring=std::to_string(p);
     poidarbre=mon_poidtot(Arbre,p);
     auto poidtotstring=std::to_string(poidarbre);
-    svgout.addText(posx+100,450,"Kruskal pour le poids ("+poidstring+"), le poids total : ("+poidtotstring+")","black");
+    svgout.addText(posx+100,50+m_sommets[m_sommets.size()-1]->getX(),"Kruskal pour le poids ("+poidstring+"), le poids total : ("+poidtotstring+")","black");
     return Arbre;
 }
 
@@ -372,7 +370,7 @@ int graphe::Connexite()
 }
 
 
-void graphe::Pareto(Svgfile &svgout,int dij)
+void graphe::Pareto(Svgfile &svgout,int dij,int poidselec)
 {
     std::vector<std::vector<bool>> graphepossibles;
     std::vector<bool> last;
@@ -501,7 +499,7 @@ void graphe::Pareto(Svgfile &svgout,int dij)
 
     std::cout<<std::endl;
     std::cout<<"nb sol admissibles:"<<toutesPossi.size()<<std::endl;
-    FrontPareto(toutesPossi,svgout,dij);
+    FrontPareto(toutesPossi,svgout,dij,poidselec);
 }
 
 
@@ -515,11 +513,11 @@ void graphe::afficher(Svgfile& svgout,int posx) const
 {
     for(auto itr=m_aretes.begin(); itr!=m_aretes.end(); itr++)
     {
-        (*itr)->dessinerArete(svgout,"black",posx,0);
+        (*itr)->dessinerArete(svgout,"black",posx,50);
     }
     for(auto it=m_sommets.begin(); it!=m_sommets.end(); it++)
     {
-        it->second->dessinerSommet(svgout,posx,0);
+        it->second->dessinerSommet(svgout,posx,50);
     }
 }
 
@@ -536,9 +534,9 @@ float graphe::getpoid(int i) const
     return m_poid[i];
 }
 
-void graphe::setpoiddij(float poid)
+void graphe::setpoiddij(float poid,int poidselec)
 {
-    this->m_poid[1]=poid;
+    this->m_poid[poidselec]=poid;
 }
 void graphe::setvectpoid(float poid)
 {
@@ -546,18 +544,14 @@ void graphe::setvectpoid(float poid)
 }
 
 
-void graphe::graphetomatradj(graphe mon_graphe,float** ma_matrice)
+void graphe::graphetomatradj(graphe mon_graphe,float** ma_matrice,int poidselec)
 {
-    int nbsommet= m_sommets.size();
-    int idso1=0;
-    int idso2=0;
-
     for(auto it : mon_graphe.getmesaret())
     {
         int idso1 =it->getsommet1()->getid();
         int idso2 =it->getsommet2()->getid();
-        ma_matrice[idso1][idso2]=it->getpoidnb(1);
-        ma_matrice[idso2][idso1]=it->getpoidnb(1);
+        ma_matrice[idso1][idso2]=it->getpoidnb(poidselec);
+        ma_matrice[idso2][idso1]=it->getpoidnb(poidselec);
     }
 }
 

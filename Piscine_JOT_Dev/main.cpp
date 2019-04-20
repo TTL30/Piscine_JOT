@@ -5,9 +5,8 @@ int main()
 {
     // debut
     int choix=0;
+    int lepoid=0;
     graphe g{"files/broadway.txt","files/broadway_weights_0.txt"};
-
-
     do
     {
         std::cout<<"------Bienvenue dans votre generateur------"<<std::endl;
@@ -29,24 +28,29 @@ int main()
         case 1:
         {
             Svgfile svgout;
+            g.afficher(svgout,50);
             for(int i=0; i< g.get_aret()->gettaille(); ++i)
             {
-                std::cout<< "AUTRE KRUSTAL AVEC POID  :  " << i << std::endl;
                 g.kruskal(svgout,i);
-                g.afficher(svgout,i);
             }
             break;
         }
         case 2:
         {
             Svgfile svgout;
-            g.Pareto(svgout,0);
+            g.Pareto(svgout,0,1);
             break;
         }
         case 3:
         {
+            do
+            {
+                std::cout<<"Veuillez entrer l'objectif sur lequel vous voulez realise votre algorithme de dijkstra :"<<std::endl;
+                std::cin>>lepoid;
+            }
+            while((lepoid!=1)&&(lepoid!=2));
             Svgfile svgout;
-            g.Pareto(svgout,1);
+            g.Pareto(svgout,1,lepoid);
             break;
         }
         }
