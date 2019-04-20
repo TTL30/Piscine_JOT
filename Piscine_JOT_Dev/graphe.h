@@ -12,14 +12,18 @@ class graphe
         //format du fichier ordre/liste des sommets/taille/liste des arêtes
         graphe(std::string, std::string);
         ~graphe(){};
-        void afficher(Svgfile& svgout) const;
+        void afficher(Svgfile& svgout,int posx) const;
         Sommet getSom() const;
         void trier();
 
         std::vector<Aretes*> kruskal (Svgfile& svgout,int i);
         float mon_poidtot(std::vector<Aretes*> Krusk,int poid);
-       /// Aretes* get_aret(){return m_aretes[0];}
-        void Pareto(Svgfile &svgout);
+        Aretes* get_aret(){return m_aretes[0];}
+        std::vector<Aretes*> getmesaret(){return m_aretes;}
+        float** graphetomatradj(graphe  mon_graphe);
+        float djikstra(float**matrice_adjacence,int s);
+        void Pareto(Svgfile& svgout,int dij);
+
         std::vector<bool> possibilites(std::vector<bool> allaretes);
         int Connexite();
         void setar(Aretes* unearete);
@@ -32,6 +36,9 @@ class graphe
         Couleur getcoul()const;
         void setvectpoid(float poid);
         std::vector<float> getvectpoid() const;
+        void setpoiddij(float poiddij);
+
+
     protected:
 
     private:
