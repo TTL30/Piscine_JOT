@@ -8,7 +8,7 @@
 #include <string>
 #include <bits/stdc++.h>
 #define Infini 10000
-#define INFINI 1000.0
+#define INFINI 10000
 
 graphe::graphe(std::string nomFichier, std::string nomFichier2)
 {
@@ -157,8 +157,8 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int 
     std::vector<float> mespoid;
     int nbsommet= m_sommets.size();
     float** ma_matrice= new float*[nbsommet];
-      for (int i = 0; i < nbsommet; i++)
-         ma_matrice[i] = new float[nbsommet];
+    for (int i = 0; i < nbsommet; i++)
+        ma_matrice[i] = new float[nbsommet];
 
     for (int i = 0; i < nbsommet; i++)
     {
@@ -208,6 +208,7 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int 
         possi[0].setpoiddij(djikstra(ma_matrice,INFINI),poidselec);
         domine.push_back(possi[0]);
         float yref=domine[0].getpoid(poidselec);
+        std::cout<<domine[0].getpoid(0)<<domine[0].getpoid(poidselec)<<std::endl;
         float dij_maillon=0;
         for(graphe mesGr:possi)
         {
@@ -220,33 +221,43 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int 
             }
             graphetomatradj(mesGr,ma_matrice,poidselec);
             dij_maillon=djikstra(ma_matrice,yref);
-            if((dij_maillon<yref)&&(mesGr.getpoid(0)==domine[domine.size()-1].getpoid(0)))
+
+            /*if((dij_maillon<yref)&&(mesGr.getpoid(0)==domine[domine.size()-1].getpoid(0)))
             {
+                mesGr.setpoiddij(dij_maillon,poidselec);
                 domine.pop_back();
-                mesGr.setpoiddij(dij_maillon,poidselec);
-                mespoid.push_back(mesGr.getpoid(poidselec));
                 domine.push_back(mesGr);
                 yref=dij_maillon;
-            }
-            else if(dij_maillon<yref)
+                //std::cout<<"premiere boucle:"<<mesGr.getpoid(0)<<"//"<<domine[domine.size()-2].getpoid(poidselec)<<std::endl;
+                //std::cout<<"-1: "<<domine[domine.size()-1].getpoid(poidselec)<<std::endl;
+
+            }*/
+             if(dij_maillon<yref)
             {
+
                 mesGr.setpoiddij(dij_maillon,poidselec);
                 mespoid.push_back(mesGr.getpoid(poidselec));
                 domine.push_back(mesGr);
                 yref=dij_maillon;
+                std::cout<<mesGr.getpoid(0)<<"//"<<mesGr.getpoid(poidselec)<<std::endl;
+
             }
         }
+        for(graphe i: domine)
+        {
+            std::cout<<"Domine: "<<i.getpoid(0)<<"//"<<i.getpoid(poidselec)<<std::endl;
+        }
         std::cout<<"nb frontiere avec dij: "<<domine.size()<<std::endl;
-        for(int i=0;i<domine.size();i++)
+        /*for(int i=0; i<domine.size(); i++)
         {
             domine[i].afficher(svgout,180*i);
             std::cout<<domine[i].getpoid(0)<<"//"<<domine[i].getpoid(1)<<std::endl;
-        }
-        affparetodij(domine,mespoid,svgout);
+        }*/
+        //affparetodij(domine,mespoid,svgout);
     }
-for (int i = 0; i < nbsommet; i++)
-         delete[] ma_matrice[i];
-      delete[] ma_matrice;
+    for (int i = 0; i < nbsommet; i++)
+        delete[] ma_matrice[i];
+    delete[] ma_matrice;
 }
 
 float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)

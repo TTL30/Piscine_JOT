@@ -6,7 +6,7 @@ int main()
     // debut
     int choix=0;
     int lepoid=0;
-    graphe g{"files/cubetown.txt","files/cubetown_weights_0.txt"};
+    graphe g{"files/manhattan.txt","files/manhattan_weights_1.txt"};
     do
     {
         std::cout<<"------Bienvenue dans votre generateur------"<<std::endl;
