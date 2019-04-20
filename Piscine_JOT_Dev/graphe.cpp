@@ -220,11 +220,15 @@ float graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout)
             domine.push_back(mesGr);
             yref=dij_maillon;
             mespoid.push_back(mesGr.getpoid(1));
+            std::cout<<mesGr.getpoid(1)<<std::endl;
+
 
         }
     }
         std::cout<<domine.size()<<std::endl;
-    //affpareto(domine,mespoid,svgout);
+
+
+    affpareto(domine,mespoid,svgout);
     return yref;
 }
 
