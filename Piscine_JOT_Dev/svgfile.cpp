@@ -71,11 +71,13 @@ std::string attrib(std::string name, T val)
 
 void Svgfile::addDisk(double x, double y, double r, std::string color)
 {
+    //auto tailley = std::to_string(2);
     m_ostrm << "<circle "
             << attrib("cx", x)
             << attrib("cy", y)
             << attrib("r",  r)
             << attrib("fill", color )
+  //          <<attrib("transform","scale("+tailley+","+tailley+")")
             << "/>\n";
 }
 
@@ -127,6 +129,30 @@ void Svgfile::addLine(double x1, double y1, double x2, double y2, std::string co
             << attrib("stroke", color)
             << "/>\n";
 }
+void Svgfile::addRoute(double x1, double y1, double x2, double y2,double ep, std::string color)
+{
+    m_ostrm << "<line "
+            << attrib("x1", x1)
+            << attrib("y1", y1)
+            << attrib("x2", x2)
+            << attrib("y2", y2)
+            << attrib("stroke", color)
+            << attrib("stroke-width", ep )
+            << "/>\n";
+}
+/*void Svgfile::addroute(double x1, double y1, double x2, double y2, std::string color)
+{
+    m_ostrm << "<rect "
+            << attrib("x", x)
+            << attrib("y", y)
+            << attrib("width",  width)
+            << attrib("height",  height)
+            << attrib("fill", color)
+            << "/>\n";
+
+}*/
+
+
 
 void Svgfile::addText(double x, double y, std::string text, std::string color)
 {

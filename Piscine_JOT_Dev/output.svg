@@ -1,50 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg"> width="1000" height="800">
 
-<line x1="5" y1="0" x2="5" y2="266" stroke="black" />
-<line x1="0" y1="266" x2="266" y2="266" stroke="black" />
-<text x="10" y="20" fill="black" >cout2</text>
-<text x="216" y="256" fill="black" >cout1</text>
-<line x1="0" y1="5" x2="5" y2="0" stroke="black" />
-<line x1="5" y1="0" x2="10" y2="5" stroke="black" />
-<line x1="261" y1="261" x2="266" y2="266" stroke="black" />
-<line x1="266" y1="266" x2="261" y2="271" stroke="black" />
-<circle cx="161" cy="103" r="2" fill="green" />
-<circle cx="168" cy="117" r="2" fill="green" />
-<circle cx="175" cy="124" r="2" fill="green" />
-<circle cx="196" cy="131" r="2" fill="green" />
-<line x1="266" y1="266" x2="266" y2="532" stroke="black" />
-<line x1="266" y1="532" x2="532" y2="532" stroke="black" />
-<text x="276" y="286" fill="black" >cout3</text>
-<text x="480" y="520" fill="black" >cout2</text>
-<line x1="266" y1="266" x2="271" y2="271" stroke="black" />
-<line x1="527" y1="527" x2="532" y2="532" stroke="black" />
-<line x1="532" y1="532" x2="527" y2="537" stroke="black" />
-<circle cx="441" cy="397" r="2" fill="green" />
-<circle cx="448" cy="418" r="2" fill="green" />
-<circle cx="455" cy="425" r="2" fill="green" />
-<circle cx="462" cy="439" r="2" fill="green" />
-<circle cx="469" cy="446" r="2" fill="green" />
-<circle cx="497" cy="453" r="2" fill="green" />
-<circle cx="504" cy="460" r="2" fill="green" />
-<line x1="532" y1="532" x2="532" y2="795" stroke="black" />
-<line x1="532" y1="795" x2="800" y2="795" stroke="black" />
-<text x="542" y="552" fill="black" >cout3</text>
-<text x="750" y="790" fill="black" >cout1</text>
-<line x1="532" y1="532" x2="537" y2="537" stroke="black" />
-<line x1="795" y1="790" x2="800" y2="795" stroke="black" />
-<line x1="800" y1="795" x2="795" y2="800" stroke="black" />
-<circle cx="693" cy="635" r="2" fill="green" />
-<circle cx="700" cy="642" r="2" fill="green" />
-<circle cx="707" cy="656" r="2" fill="green" />
-<circle cx="714" cy="684" r="2" fill="green" />
-<circle cx="721" cy="691" r="2" fill="green" />
-<circle cx="728" cy="705" r="2" fill="green" />
-<circle cx="742" cy="719" r="2" fill="green" />
-<circle cx="756" cy="726" r="2" fill="green" />
-<circle cx="196" cy="131" r="4" fill="none" stroke="blue" stroke-width="1" />
-<circle cx="462" cy="348" r="4" fill="none" stroke="blue" stroke-width="1" />
-<circle cx="728" cy="614" r="4" fill="none" stroke="blue" stroke-width="1" />
+<line x1="150" y1="150" x2="250" y2="150" stroke="grey" stroke-width="20" />
+<line x1="150" y1="150" x2="250" y2="150" stroke="white" stroke-width="1" />
+<line x1="150" y1="150" x2="150" y2="250" stroke="grey" stroke-width="20" />
+<line x1="150" y1="150" x2="150" y2="250" stroke="white" stroke-width="1" />
+<line x1="250" y1="150" x2="150" y2="250" stroke="grey" stroke-width="20" />
+<line x1="250" y1="150" x2="150" y2="250" stroke="white" stroke-width="1" />
+<line x1="250" y1="150" x2="250" y2="250" stroke="grey" stroke-width="20" />
+<line x1="250" y1="150" x2="250" y2="250" stroke="white" stroke-width="1" />
+<line x1="150" y1="250" x2="250" y2="250" stroke="grey" stroke-width="20" />
+<line x1="150" y1="250" x2="250" y2="250" stroke="white" stroke-width="1" />
+<rect x="230" y="230" width="40" height="40" fill="#D37460" />
+<text x="245" y="255" fill="white" >3</text>
+<rect x="130" y="230" width="40" height="40" fill="#D37460" />
+<text x="145" y="255" fill="white" >2</text>
+<rect x="230" y="130" width="40" height="40" fill="#D37460" />
+<text x="245" y="155" fill="white" >1</text>
+<rect x="130" y="130" width="40" height="40" fill="#D37460" />
+<text x="145" y="155" fill="white" >0</text>
+<line x1="600" y1="100" x2="600" y2="200" stroke="grey" stroke-width="20" />
+<line x1="600" y1="100" x2="600" y2="200" stroke="white" stroke-width="1" />
+<line x1="700" y1="100" x2="600" y2="200" stroke="grey" stroke-width="20" />
+<line x1="700" y1="100" x2="600" y2="200" stroke="white" stroke-width="1" />
+<line x1="600" y1="200" x2="700" y2="200" stroke="grey" stroke-width="20" />
+<line x1="600" y1="200" x2="700" y2="200" stroke="white" stroke-width="1" />
+<rect x="680" y="180" width="40" height="40" fill="#D37460" />
+<text x="695" y="205" fill="white" >3</text>
+<rect x="580" y="180" width="40" height="40" fill="#D37460" />
+<text x="595" y="205" fill="white" >2</text>
+<rect x="680" y="80" width="40" height="40" fill="#D37460" />
+<text x="695" y="105" fill="white" >1</text>
+<rect x="580" y="80" width="40" height="40" fill="#D37460" />
+<text x="595" y="105" fill="white" >0</text>
+<text x="600" y="250" fill="black" >Kruskal pour le poids (0), le poids total : (11)</text>
+<line x1="1200" y1="100" x2="1200" y2="200" stroke="grey" stroke-width="20" />
+<line x1="1200" y1="100" x2="1200" y2="200" stroke="white" stroke-width="1" />
+<line x1="1100" y1="100" x2="1100" y2="200" stroke="grey" stroke-width="20" />
+<line x1="1100" y1="100" x2="1100" y2="200" stroke="white" stroke-width="1" />
+<line x1="1100" y1="100" x2="1200" y2="100" stroke="grey" stroke-width="20" />
+<line x1="1100" y1="100" x2="1200" y2="100" stroke="white" stroke-width="1" />
+<rect x="1180" y="180" width="40" height="40" fill="#D37460" />
+<text x="1195" y="205" fill="white" >3</text>
+<rect x="1080" y="180" width="40" height="40" fill="#D37460" />
+<text x="1095" y="205" fill="white" >2</text>
+<rect x="1180" y="80" width="40" height="40" fill="#D37460" />
+<text x="1195" y="105" fill="white" >1</text>
+<rect x="1080" y="80" width="40" height="40" fill="#D37460" />
+<text x="1095" y="105" fill="white" >0</text>
+<text x="1100" y="250" fill="black" >Kruskal pour le poids (1), le poids total : (14)</text>
+<line x1="1600" y1="100" x2="1700" y2="100" stroke="grey" stroke-width="20" />
+<line x1="1600" y1="100" x2="1700" y2="100" stroke="white" stroke-width="1" />
+<line x1="1700" y1="100" x2="1700" y2="200" stroke="grey" stroke-width="20" />
+<line x1="1700" y1="100" x2="1700" y2="200" stroke="white" stroke-width="1" />
+<line x1="1700" y1="100" x2="1600" y2="200" stroke="grey" stroke-width="20" />
+<line x1="1700" y1="100" x2="1600" y2="200" stroke="white" stroke-width="1" />
+<rect x="1680" y="180" width="40" height="40" fill="#D37460" />
+<text x="1695" y="205" fill="white" >3</text>
+<rect x="1580" y="180" width="40" height="40" fill="#D37460" />
+<text x="1595" y="205" fill="white" >2</text>
+<rect x="1680" y="80" width="40" height="40" fill="#D37460" />
+<text x="1695" y="105" fill="white" >1</text>
+<rect x="1580" y="80" width="40" height="40" fill="#D37460" />
+<text x="1595" y="105" fill="white" >0</text>
+<text x="1600" y="250" fill="black" >Kruskal pour le poids (2), le poids total : (7)</text>
 
 
 </svg>
