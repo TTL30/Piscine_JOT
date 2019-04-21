@@ -5,6 +5,8 @@
 #include "sommet.h"
 #include "aretes.h"
 
+/** \class Graphe graphe.h "inc/graphe.h" */
+
 class graphe
 {
 public:

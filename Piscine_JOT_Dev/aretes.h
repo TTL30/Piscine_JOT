@@ -3,7 +3,7 @@
 #include "sommet.h"
 #include <vector>
 
-
+/** \class Aretes aretes.h "inc/aretes.h" */
 class Aretes
 {
     public:
@@ -24,11 +24,6 @@ class Aretes
         std::vector<bool> getbolArr() const {return m_bolAr;}
         int getid();
         void dessinerArete(Svgfile& svgout,std::string m_couleur,int posxinit,int posyinit)const;
-
-
-
-    protected:
-
 
     private:
         /// Données spécifiques du sommet

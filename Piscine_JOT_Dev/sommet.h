@@ -6,6 +6,8 @@
 #include <unordered_set>
 #include "svgfile.h"
 
+/** \class Sommet Sommet.h "inc/Sommet.h" */
+
 class Sommet
 {
     public:

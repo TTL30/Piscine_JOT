@@ -8,8 +8,9 @@
 #include <string>
 #include <bits/stdc++.h>
 #include <queue>
-#include <vector>         // std::vector
-#include <functional>     // std::greater
+#include <vector>
+#include <functional>
+/**  \def  valeur maximun  */
 #define Infini 10000
 #define INFINI 10000.0
 
@@ -125,6 +126,14 @@ bool compaPoid0Graph(const graphe m1,const graphe m2, int i)
     return m1.getpoid(i)<m2.getpoid(i);
 }
 
+/**
+ * \brief       Affichage de pareto
+ * \details    Affiche le pareto sans dijkstra
+ * \param    dom        les graphes domines
+ * \param    nodom      les graphes nondomines
+ * \param    mespoids   les poids pour l'affichage
+ * \param    svgout     la feuille svg
+ */
 void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<float> mespoids, Svgfile& svgout)
 {
     std::sort(mespoids.begin(),mespoids.end(),compaPoid1Graph);
@@ -141,7 +150,13 @@ void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<fl
         svgout.addDisk((mf.getpoid(0)-dom[0].getpoid(0)+2)*15,(-mf.getpoid(1)+mespoids[mespoids.size()-1]+1)*15,5,"red");
     }
 }
-
+/**
+ * \brief       Affichage de pareto
+ * \details    Affiche le pareto avec dijkstra
+ * \param    dom        les graphes domines
+ * \param    mespoids   les poids pour l'affichage
+ * \param    svgout     la feuille svg
+ */
 void affparetodij(std::vector<graphe> dom,std::vector<float> mespoids, Svgfile& svgout)
 {
     std::sort(mespoids.begin(),mespoids.end(),compaPoid1Graph);
@@ -156,7 +171,14 @@ void affparetodij(std::vector<graphe> dom,std::vector<float> mespoids, Svgfile& 
 }
 
 
-
+/**
+ * \brief       Pareto
+ * \details    creation de la frontiere de pareto
+ * \param    possi      les graphes possibles
+ * \param    svgout     feuille svg
+ * \param    dij        1 on fait dijkstra 0 on fait pareto normal
+ * \param    poidselec  poid sur lequel on fait le dijkstra
+ */
 void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int poidselec)
 {
     std::vector<graphe> domine;
@@ -248,21 +270,30 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int 
                 mespoid.push_back(mesGr.getpoid(poidselec));
                 domine.push_back(mesGr);
                 yref=dij_maillon;
-                std::cout<<mesGr.getpoid(0)<<"//"<<mesGr.getpoid(poidselec)<<std::endl;
+               // std::cout<<mesGr.getpoid(0)<<"//"<<mesGr.getpoid(poidselec)<<std::endl;
             }
         }
         std::cout<<"nb frontiere avec dij: "<<domine.size()<<std::endl;
-        /*for(int i=0; i<domine.size(); i++)
+        for(int i=0; i<domine.size(); i++)
         {
-            domine[i].afficher(svgout,180*i);
+            //domine[i].afficher(svgout,180*i);
             std::cout<<domine[i].getpoid(0)<<"//"<<domine[i].getpoid(1)<<std::endl;
-        }*/
-        //affparetodij(domine,mespoid,svgout);
+            domine[i].afficher(svgout,i*180);
+        }
+        affparetodij(domine,mespoid,svgout);
     }
     for (int i = 0; i < nbsommet; i++)
         delete[] ma_matrice[i];
     delete[] ma_matrice;
 }
+
+/**
+ * \brief    mon poid total de graphe
+ * \details  addition des poids
+ * \param    krusk      vector d'aretes du graphe
+ * \param    poid       poid sur lequel on travaille
+ * \return un float mon poid total
+ */
 
 float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
 {
@@ -274,6 +305,13 @@ float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
     return mon_poidtot;
 }
 
+/**
+ * \brief    algo Kruskal
+ * \details  on cherche l'arbre de poids couvrants minimun
+ * \param    svgout     feuille svg
+ * \param    p       poid sur lequel on travaille
+ * \return un float mon poid total
+ */
 std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
 {
     std::vector<Aretes*> Arbre;
@@ -342,6 +380,7 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
     auto poidtotstring=std::to_string(poidarbre);
     svgout.addText(posx+100,50+m_sommets[m_sommets.size()-1]->getX(),"Kruskal pour le poids ("+poidstring+"), le poids total : ("+poidtotstring+")","black");
     return Arbre;
+
 }
 
 int graphe::Connexite()
