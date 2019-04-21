@@ -7,8 +7,11 @@
 #include <sstream>
 #include <string>
 #include <bits/stdc++.h>
+#include <queue>
+#include <vector>         // std::vector
+#include <functional>     // std::greater
 #define Infini 10000
-#define INFINI 10000
+#define INFINI 10000.0
 
 graphe::graphe(std::string nomFichier, std::string nomFichier2)
 {
@@ -107,6 +110,11 @@ bool compaPoid(const Aretes* m1,const Aretes* m2)
     return m1->getpoidnb(m1->getnbpoid())<m2->getpoidnb(m2->getnbpoid());
 }
 
+bool compaPoidar(const Aretes* m1,const Aretes* m2)
+{
+    return m1->getpoidnb(1)<m2->getpoidnb(1);
+}
+
 bool compaPoid1Graph(const float m1,const float m2)
 {
     return m1<m2;
@@ -123,7 +131,6 @@ void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<fl
     svgout.addLine(10,10,10,mespoids[0]*15, "black");
     svgout.addLine(-dom[0].getpoid(1)+mespoids[mespoids.size()-1],mespoids[0]*15,800,mespoids[0]*15,"black");
     //svgout.addGrid();
-
 
     for(graphe mg:dom)
     {
@@ -156,6 +163,7 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int 
     std::vector<graphe> nndomine;
     std::vector<float> mespoid;
     int nbsommet= m_sommets.size();
+    float res=0;
     float** ma_matrice= new float*[nbsommet];
     for (int i = 0; i < nbsommet; i++)
         ma_matrice[i] = new float[nbsommet];
@@ -204,8 +212,9 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int 
 
     if(dij==1)
     {
+
         graphetomatradj(possi[0],ma_matrice,poidselec);
-        possi[0].setpoiddij(djikstra(ma_matrice,INFINI),poidselec);
+        possi[0].setpoiddij(mon_djiskstra(ma_matrice,INFINI),poidselec);
         domine.push_back(possi[0]);
         float yref=domine[0].getpoid(poidselec);
         std::cout<<domine[0].getpoid(0)<<domine[0].getpoid(poidselec)<<std::endl;
@@ -220,9 +229,9 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int 
                 }
             }
             graphetomatradj(mesGr,ma_matrice,poidselec);
-            dij_maillon=djikstra(ma_matrice,yref);
+            dij_maillon=mon_djiskstra(ma_matrice,yref);
 
-            /*if((dij_maillon<yref)&&(mesGr.getpoid(0)==domine[domine.size()-1].getpoid(0)))
+            if((dij_maillon<yref)&&(mesGr.getpoid(0)==domine[domine.size()-1].getpoid(0)))
             {
                 mesGr.setpoiddij(dij_maillon,poidselec);
                 domine.pop_back();
@@ -231,8 +240,8 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int 
                 //std::cout<<"premiere boucle:"<<mesGr.getpoid(0)<<"//"<<domine[domine.size()-2].getpoid(poidselec)<<std::endl;
                 //std::cout<<"-1: "<<domine[domine.size()-1].getpoid(poidselec)<<std::endl;
 
-            }*/
-             if(dij_maillon<yref)
+            }
+            if(dij_maillon<yref)
             {
 
                 mesGr.setpoiddij(dij_maillon,poidselec);
@@ -240,7 +249,6 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int 
                 domine.push_back(mesGr);
                 yref=dij_maillon;
                 std::cout<<mesGr.getpoid(0)<<"//"<<mesGr.getpoid(poidselec)<<std::endl;
-
             }
         }
         std::cout<<"nb frontiere avec dij: "<<domine.size()<<std::endl;
@@ -555,64 +563,64 @@ void graphe::graphetomatradj(graphe mon_graphe,float** ma_matrice,int poidselec)
         ma_matrice[idso2][idso1]=it->getpoidnb(poidselec);
     }
 }
-
-
-
-float graphe::djikstra(float** matrice_adjacence,float yref)
+float graphe::mon_djiskstra(float** matrice_adjacence,float yref)
 {
-    int *sommet_marques;
-    float *long_min;
-    int* pred;
+    float resultdij=0;
+    for(int i=0; i<m_sommets.size(); i++)
+    {
+        resultdij+=djikstra(matrice_adjacence,i,yref);
+        if(resultdij>yref)
+            break;
+    }
+    return resultdij;
+}
+
+
+
+
+
+float graphe::djikstra(float** matrice_adjacence,int s,float yref)
+{
+    int nbsommet= m_sommets.size();
+    int *sommet_marques=new int[nbsommet];
+    float *long_min=new float[nbsommet];
+    int* pred=new int[nbsommet];
     int nums1,nums2,smin=0;
     float minim;
     int nb=0;
-    int nbsommet= m_sommets.size();
     float result=0.0;
-    sommet_marques = (int *) malloc(nbsommet*sizeof(int));
-    long_min = (float *) malloc(nbsommet*sizeof(float));
-    pred = (int *) malloc(nbsommet*sizeof(int));
-    long_min = (float *) malloc(nbsommet*sizeof(float));
-    int s=0;
-    do
+
+
+    for(int i=0; i<nbsommet; i++)
     {
-
-        for(int i=0; i<nbsommet; i++)
+        sommet_marques[i]=0;
+        long_min[i]=INFINI;
+    }
+    long_min[s]=nb=0;
+    while(nb<nbsommet)
+    {
+        minim=INFINI;
+        for (nums1=0 ; nums1<nbsommet ; nums1++)
         {
-            sommet_marques[i]=0;
-            long_min[i]=INFINI;
-        }
-        long_min[s]=nb=0;
-        while(nb<nbsommet)
-        {
-
-            minim=INFINI;
-            for (nums1=0 ; nums1<nbsommet ; nums1++)
+            if (!sommet_marques[nums1] && long_min[nums1]<minim)
             {
-                if (!sommet_marques[nums1] && long_min[nums1]<minim)
-                {
-                    smin = nums1 ;
-                    minim = long_min[nums1] ;
-                }
-            }
-            sommet_marques[smin]=1;
-            nb++;
-            for (nums2=0 ; nums2<nbsommet ; nums2++)
-            {
-                if (matrice_adjacence[smin][nums2] && !sommet_marques[nums2] &&  long_min[smin]+ matrice_adjacence[smin][nums2]<long_min[nums2])
-                {
-                    long_min[nums2] = long_min[smin] + matrice_adjacence[smin][nums2] ;
-                    pred[nums2] = smin ;
-                    result+=long_min[nums2];
-                }
+                smin = nums1 ;
+                minim = long_min[nums1] ;
             }
         }
-        s++;
-        if (result>yref)
+        sommet_marques[smin]=1;
+        nb++;
+        for (nums2=0 ; nums2<nbsommet ; nums2++)
         {
-            break;
+            if (matrice_adjacence[smin][nums2] && !sommet_marques[nums2] &&  long_min[smin]+ matrice_adjacence[smin][nums2]<long_min[nums2])
+            {
+                long_min[nums2] = long_min[smin] + matrice_adjacence[smin][nums2] ;
+                pred[nums2] = smin ;
+                result+=long_min[nums2];
+            }
         }
     }
-    while(s<nbsommet);
+
     free(sommet_marques);
     free(long_min);
     free(pred);

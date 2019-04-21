@@ -5,8 +5,13 @@
 
 const std::string svgHeader =
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-    "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"> ";
+    "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"> "
 
+    " <defs>"
+    "<rect>"
+    "<title>Hello world</title>"
+    "</rect>"
+    " </defs>";
 const std::string svgEnding = "\n\n</svg>\n";
 
 /// Effets "Boule en relief", voir données à la fin de ce fichier

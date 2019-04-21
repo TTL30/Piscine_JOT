@@ -28,7 +28,10 @@ public:
     }
     //float** graphetomatradj(graphe  mon_graphe);
     void graphetomatradj(graphe mon_graphe,float** ma_matrice,int poidselec);
-    float djikstra(float**matrice_adjacence,float yref);
+    float djikstra(float**matrice_adjacence,int s,float yref);
+    float mon_djiskstra(float** matrice_adjacence,float yref);
+
+
     void Pareto(Svgfile& svgout,int dij,int poidselec);
 
     std::vector<bool> possibilites(std::vector<bool> allaretes);
