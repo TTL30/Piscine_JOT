@@ -76,11 +76,13 @@ std::string attrib(std::string name, T val)
 
 void Svgfile::addDisk(double x, double y, double r, std::string color)
 {
+    //auto tailley = std::to_string(2);
     m_ostrm << "<circle "
             << attrib("cx", x)
             << attrib("cy", y)
             << attrib("r",  r)
             << attrib("fill", color )
+  //          <<attrib("transform","scale("+tailley+","+tailley+")")
             << "/>\n";
 }
 

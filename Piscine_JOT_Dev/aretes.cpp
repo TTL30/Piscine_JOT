@@ -28,7 +28,7 @@ void Aretes::afficher()const
 void Aretes::dessinerArete(Svgfile& svgout,std::string m_couleur,int posxinit,int posyinit)const
 {
 
-    /*std::string textpoid;
+    std::string textpoid;
     for(int i=0;i<gettaille();i++)
     {
         int  poid1 = static_cast<int>(getpoidnb(i));
@@ -39,7 +39,7 @@ void Aretes::dessinerArete(Svgfile& svgout,std::string m_couleur,int posxinit,in
             textpoid.append(";");
         }
     }
-    if(m_s1->getX()==m_s2->getX())
+   /* if(m_s1->getX()==m_s2->getX())
     {
     svgout.addText(m_s1->getX()+posxinit,posyinit+(m_s1->getY()+m_s2->getY())/2,textpoid,m_couleur);
     }
@@ -47,8 +47,8 @@ void Aretes::dessinerArete(Svgfile& svgout,std::string m_couleur,int posxinit,in
     {
     svgout.addText(-20+posxinit+(m_s1->getX()+m_s2->getX())/2,-5+m_s1->getY()+posyinit,textpoid,m_couleur);
     }*/
-    svgout.addRoute(m_s1->getX()+posxinit,m_s1->getY()+posyinit,m_s2->getX()+posxinit,m_s2->getY()+posyinit,20,"grey");
-    svgout.addRoute(m_s1->getX()+posxinit,m_s1->getY()+posyinit,m_s2->getX()+posxinit,m_s2->getY()+posyinit,1,"yellow");
+   svgout.addRoute(m_s1->getX()+posxinit,m_s1->getY()+posyinit,m_s2->getX()+posxinit,m_s2->getY()+posyinit,20,"grey");
+  svgout.addRoute(m_s1->getX()+posxinit,m_s1->getY()+posyinit,m_s2->getX()+posxinit,m_s2->getY()+posyinit,1,"white");
 
     }
 

@@ -32,9 +32,7 @@ public:
     void graphetomatradj(graphe mon_graphe,float** ma_matrice,int poidselec);
     float djikstra(float**matrice_adjacence,int s,float yref);
     float mon_djiskstra(float** matrice_adjacence,float yref);
-
-
-    void Pareto(Svgfile& svgout,int dij,int poidselec);
+    void Pareto(Svgfile& svgout,int dij,int poidselec, int choix);
 
     std::vector<bool> possibilites(std::vector<bool> allaretes);
     int Connexite();
@@ -53,7 +51,7 @@ public:
     std::vector<float> getvectpoid() const;
     void setpoiddij(float poiddij,int poidselec);
     //float FrontPareto(std::vector<graphe> possi, Svgfile& svgout);
-    void FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int poidselec);
+    std::vector<graphe> FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int poidselec, int x, int y, int nbpoid, int choix);
 
 
 
