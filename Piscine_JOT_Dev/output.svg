@@ -9,9 +9,10 @@
 <line x1="5" y1="0" x2="10" y2="5" stroke="black" />
 <line x1="261" y1="261" x2="266" y2="266" stroke="black" />
 <line x1="266" y1="266" x2="261" y2="271" stroke="black" />
-<circle cx="77" cy="146" r="2" fill="green" />
-<circle cx="91" cy="181" r="2" fill="green" />
-<circle cx="126" cy="188" r="2" fill="green" />
+<circle cx="161" cy="103" r="2" fill="green" />
+<circle cx="168" cy="117" r="2" fill="green" />
+<circle cx="175" cy="124" r="2" fill="green" />
+<circle cx="196" cy="131" r="2" fill="green" />
 <line x1="266" y1="266" x2="266" y2="532" stroke="black" />
 <line x1="266" y1="532" x2="532" y2="532" stroke="black" />
 <text x="276" y="286" fill="black" >cout3</text>
@@ -19,8 +20,13 @@
 <line x1="266" y1="266" x2="271" y2="271" stroke="black" />
 <line x1="527" y1="527" x2="532" y2="532" stroke="black" />
 <line x1="532" y1="532" x2="527" y2="537" stroke="black" />
-<circle cx="364" cy="486" r="2" fill="green" />
-<circle cx="371" cy="500" r="2" fill="green" />
+<circle cx="441" cy="397" r="2" fill="green" />
+<circle cx="448" cy="418" r="2" fill="green" />
+<circle cx="455" cy="425" r="2" fill="green" />
+<circle cx="462" cy="439" r="2" fill="green" />
+<circle cx="469" cy="446" r="2" fill="green" />
+<circle cx="497" cy="453" r="2" fill="green" />
+<circle cx="504" cy="460" r="2" fill="green" />
 <line x1="532" y1="532" x2="532" y2="795" stroke="black" />
 <line x1="532" y1="795" x2="800" y2="795" stroke="black" />
 <text x="542" y="552" fill="black" >cout3</text>
@@ -28,13 +34,17 @@
 <line x1="532" y1="532" x2="537" y2="537" stroke="black" />
 <line x1="795" y1="790" x2="800" y2="795" stroke="black" />
 <line x1="800" y1="795" x2="795" y2="800" stroke="black" />
-<circle cx="609" cy="696" r="2" fill="green" />
-<circle cx="623" cy="731" r="2" fill="green" />
-<circle cx="658" cy="752" r="2" fill="green" />
-<circle cx="665" cy="766" r="2" fill="green" />
-<circle cx="126" cy="188" r="4" fill="none" stroke="blue" stroke-width="1" />
-<circle cx="364" cy="486" r="4" fill="none" stroke="blue" stroke-width="1" />
-<circle cx="658" cy="752" r="4" fill="none" stroke="blue" stroke-width="1" />
+<circle cx="693" cy="635" r="2" fill="green" />
+<circle cx="700" cy="642" r="2" fill="green" />
+<circle cx="707" cy="656" r="2" fill="green" />
+<circle cx="714" cy="684" r="2" fill="green" />
+<circle cx="721" cy="691" r="2" fill="green" />
+<circle cx="728" cy="705" r="2" fill="green" />
+<circle cx="742" cy="719" r="2" fill="green" />
+<circle cx="756" cy="726" r="2" fill="green" />
+<circle cx="196" cy="131" r="4" fill="none" stroke="blue" stroke-width="1" />
+<circle cx="462" cy="348" r="4" fill="none" stroke="blue" stroke-width="1" />
+<circle cx="728" cy="614" r="4" fill="none" stroke="blue" stroke-width="1" />
 
 
 </svg>

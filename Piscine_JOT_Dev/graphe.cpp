@@ -438,9 +438,10 @@ void graphe::Pareto(Svgfile &svgout)
             {
                 for(graphe dam :domine3)
                 {
-                    if((dom.getpoid(0)==dim.getpoid(0))&&(dom.getpoid(0)==dam.getpoid(0))&&
-                       (dom.getpoid(1)==dim.getpoid(1))&&(dom.getpoid(1)==dam.getpoid(1)))
+                    if((dom.getpoid(0)==dim.getpoid(0))&&(dom.getpoid(0)==dam.getpoid(0)))
+                       //(dom.getpoid(1)==dim.getpoid(1))&&(dom.getpoid(1)==dam.getpoid(1)))
                     {
+                        printf("hehe\n");
                         svgout.addCircle((dom.getpoid(0)*7),(266-dom.getpoid(1)*(7))+p1max,4,1,"blue");
                         svgout.addCircle((dim.getpoid(1)*7)+266,(532-dom.getpoid(2)*(7))+p2max,4,1,"blue");
                         svgout.addCircle((dam.getpoid(0)*7)+532,(798-dom.getpoid(2)*(7))+p2max,4,1,"blue");
