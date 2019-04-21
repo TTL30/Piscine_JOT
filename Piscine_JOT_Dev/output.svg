@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg"> width="1000" height="800">
 
-<line x1="10" y1="10" x2="10" y2="1170" stroke="black" />
-<line x1="12" y1="1170" x2="800" y2="1170" stroke="black" />
-<circle cx="30" cy="195" r="5" fill="green" />
-<circle cx="60" cy="465" r="5" fill="green" />
-<circle cx="135" cy="585" r="5" fill="green" />
-<circle cx="150" cy="645" r="5" fill="green" />
-<circle cx="180" cy="825" r="5" fill="green" />
-<circle cx="105" cy="135" r="5" fill="red" />
-<circle cx="105" cy="105" r="5" fill="red" />
-<circle cx="120" cy="15" r="5" fill="red" />
-<circle cx="150" cy="375" r="5" fill="red" />
-<circle cx="150" cy="525" r="5" fill="red" />
-<circle cx="195" cy="255" r="5" fill="red" />
-<circle cx="225" cy="540" r="5" fill="red" />
-<circle cx="240" cy="675" r="5" fill="red" />
+<line x1="5" y1="0" x2="5" y2="266" stroke="black" />
+<line x1="0" y1="266" x2="266" y2="266" stroke="black" />
+<text x="10" y="20" fill="black" >cout2</text>
+<text x="216" y="256" fill="black" >cout1</text>
+<line x1="0" y1="5" x2="5" y2="0" stroke="black" />
+<line x1="5" y1="0" x2="10" y2="5" stroke="black" />
+<line x1="261" y1="261" x2="266" y2="266" stroke="black" />
+<line x1="266" y1="266" x2="261" y2="271" stroke="black" />
+<circle cx="55" cy="100" r="2" fill="green" />
+<circle cx="55.9091" cy="233" r="2" fill="green" />
+<circle cx="58.1818" cy="259.6" r="2" fill="green" />
+<line x1="5" y1="266" x2="5" y2="532" stroke="black" />
+<line x1="5" y1="532" x2="266" y2="532" stroke="black" />
+<text x="10" y="286" fill="black" >cout3</text>
+<text x="216" y="522" fill="black" >cout2</text>
+<circle cx="55" cy="318" r="2" fill="green" />
+<circle cx="55.3571" cy="436.222" r="2" fill="green" />
+<line x1="5" y1="532" x2="5" y2="798" stroke="black" />
+<line x1="5" y1="798" x2="266" y2="798" stroke="black" />
+<text x="10" y="552" fill="black" >cout3</text>
+<text x="216" y="788" fill="black" >cout1</text>
+<circle cx="55" cy="632" r="2" fill="green" />
+<circle cx="55.9091" cy="788.471" r="2" fill="green" />
+<circle cx="58.1818" cy="882.353" r="2" fill="green" />
+<circle cx="58.6364" cy="944.941" r="2" fill="green" />
+<circle cx="126" cy="188" r="4" fill="none" stroke="blue" stroke-width="1" />
+<circle cx="364" cy="486" r="4" fill="none" stroke="blue" stroke-width="1" />
+<circle cx="658" cy="752" r="4" fill="none" stroke="blue" stroke-width="1" />
 
 
 </svg>

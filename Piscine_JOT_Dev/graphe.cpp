@@ -8,7 +8,7 @@
 #include <string>
 #include <bits/stdc++.h>
 #define Infini 10000
-#define INFINI 1000.0
+
 
 graphe::graphe(std::string nomFichier, std::string nomFichier2)
 {
@@ -93,8 +93,7 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
 
         std::vector<bool> bolAr = {nbaret -1,false};
         bolAr[k]=true;
-        m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, bolAr,0}});
-
+        m_aretes.push_back({new Aretes{id_arete,poid, m_sommets.find(id)->second, m_sommets.find(id_voisin)->second, taille_poid, bolAr}});
         bolAr.clear();
         --k;
         poid.clear();
@@ -106,7 +105,6 @@ bool compaPoid(const Aretes* m1,const Aretes* m2)
 {
     return m1->getpoidnb(m1->getnbpoid())<m2->getpoidnb(m2->getnbpoid());
 }
-
 bool compaPoid1Graph(const float m1,const float m2)
 {
     return m1<m2;
@@ -119,58 +117,132 @@ bool compaPoid0Graph(const graphe m1,const graphe m2, int i)
 void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<float> mespoids, Svgfile& svgout)
 {
     std::sort(mespoids.begin(),mespoids.end(),compaPoid1Graph);
-    svgout.addLine(10,10,10,mespoids[0]*15, "black");
-    svgout.addLine(-dom[0].getpoid(1)+mespoids[mespoids.size()-1],mespoids[0]*15,800,mespoids[0]*15,"black");
+    svgout.addText(10,15, "cout 2", "black");
+    svgout.addText(750,790, "cout 1", "black");
+    svgout.addLine(0, 5,5,0,"black" );
+    svgout.addLine(5,0,10,5,"black");
+    svgout.addLine(795, 790,800,795, "black");
+    svgout.addLine(800,795,795,800, "black");
+    svgout.addLine(5,1,5,800, "black");
+    svgout.addLine(1,795,800, 795,"black");
+    int d=1, dd=1;
     //svgout.addGrid();
 
 
     for(graphe mg:dom)
     {
-        svgout.addDisk((mg.getpoid(0)-dom[0].getpoid(0)+2)*15,(-mg.getpoid(1)+mespoids[mespoids.size()-1]+1)*15,5,"green");
+        svgout.addDisk((mg.getpoid(0)*7),(795-mg.getpoid(1)*(7))+mespoids[mespoids.size()-1],2.5,"green");
     }
     for(graphe mf:nodom)
     {
-        svgout.addDisk((mf.getpoid(0)-dom[0].getpoid(0)+2)*15,(-mf.getpoid(1)+mespoids[mespoids.size()-1]+1)*15,5,"red");
+        svgout.addDisk((mf.getpoid(0)*7),(795-mf.getpoid(1)*(7))+mespoids[mespoids.size()-1],2.5,"red");
     }
 }
+void affpareto2(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<float> mespoids, Svgfile& svgout, int x, int y)
+{
+    int xref=5;
+    int yref1=266;
+    int yref2=532;
+    int yref3=789;
 
-std::vector<graphe> FrontPareto(std::vector<graphe> possi, Svgfile& svgout)
+    if((x==0)&&(y==1))
+    {
+        float fact1x= xref/(dom[dom.size()-1].getpoid(x));
+        float fact1y= yref1/(dom[dom.size()-1].getpoid(y));
+        std::cout<<dom[dom.size()-1].getpoid(x)<<std::endl;
+        std::cout<<dom[dom.size()-1].getpoid(y)<<std::endl;
+        printf("%f\n",fact1x);
+        printf("%f\n",fact1y);
+        svgout.addLine(5,0,5,266, "black");
+        svgout.addLine(0, 266, 266,266, "black");
+        svgout.addText(10,20, "cout2", "black");
+        svgout.addText(216,256, "cout1", "black");
+        svgout.addLine(0,5,5,0,"black");
+        svgout.addLine(5,0,10,5,"black");
+        svgout.addLine(261,261,266,266,"black");
+        svgout.addLine(266,266,261,271,"black");
+        for(graphe mg:dom)
+        {
+            svgout.addDisk((mg.getpoid(x)*xref/(dom[0].getpoid(x)))+50,632-((mg.getpoid(y)*yref2/(dom[0].getpoid(y)))),2,"green");
+        }
+    }
+    else if(x==1)
+    {
+        int factx= xref/(dom[0].getpoid(x));
+        int fact2y= yref2/(dom[0].getpoid(y));
+        printf("Fact 2  %f\n",factx);
+        printf("Fact 2  %f\n",fact2y);
+        std::cout<<dom[0].getpoid(y)<<std::endl;
+        svgout.addLine(5,266,5,532, "black");
+        svgout.addLine(5,532, 266, 532, "black");
+        svgout.addText(10,286, "cout3", "black");
+        svgout.addText(216,522, "cout2", "black");
+        //svgout.addLine(266,5,271,10,"black");
+        //svgout.addLine(527,527,532,532,"black");
+        //svgout.addLine(532,532,527,537,"black");
+        for(graphe mg:dom)
+        {
+            svgout.addDisk((mg.getpoid(x)*xref/(dom[0].getpoid(x)))+50,850-((mg.getpoid(y)*yref2/(dom[0].getpoid(y)))),2,"green");
+            std::cout<< mg.getpoid(y)<<"  NTM  "<<850-(mg.getpoid(y)*yref2/(dom[0].getpoid(y)))<<std::endl;
+            std::cout<< mg.getpoid(x)<<"  FDP  "<<((mg.getpoid(x)*xref/(dom[0].getpoid(x)))+xref)<<std::endl;
+        }
+    }
+    else
+    {
+         svgout.addLine(5,532,5,798, "black");
+         svgout.addLine(5,798,266,798, "black");
+         svgout.addText(10,552, "cout3", "black");
+         svgout.addText(216,788, "cout1", "black");
+         //svgout.addLine(532,532,537,537,"black");
+         //svgout.addLine(795, 790,800,795, "black");
+         //svgout.addLine(800,795,795,800, "black");
+         for(graphe mg:dom)
+        {
+            svgout.addDisk((mg.getpoid(x)*xref/(dom[0].getpoid(x)))+50,1164-((mg.getpoid(y)*yref2/(dom[0].getpoid(y)))),2,"green");
+        }
+    }
+
+}
+std::vector<graphe> FrontPareto(std::vector<graphe> possi, Svgfile& svgout, int x, int y, int nbpoid, float* pmax)
 {
     //std::vector<graphe> entredeux;
     std::vector<graphe> domine;
     std::vector<graphe> nndomine;
     std::vector<float> mespoid;
-    int j=0;
-    std::sort(possi.begin(),possi.end(),std::bind(compaPoid0Graph, std::placeholders::_1, std::placeholders::_2, 0));
+    std::sort(possi.begin(),possi.end(),std::bind(compaPoid0Graph, std::placeholders::_1, std::placeholders::_2, x));
     domine.push_back(possi[0]);
-    float yref=domine[0].getpoid(1);
-    for(graphe mesGr:possi)
-    {
-        mespoid.push_back(mesGr.getpoid(1));
-        if((mesGr.getpoid(1)<yref)&&(mesGr.getpoid(0)==domine[domine.size()-1].getpoid(0)))
+    float yref=domine[0].getpoid(y);
+        for(graphe mesGr:possi)
         {
-            domine.pop_back();
-            mesGr.getcoul()= {0,255,0};
-            nndomine.push_back(domine[domine.size()]);
-            domine.push_back(mesGr);
-            yref=mesGr.getpoid(1);
-            //j++;
-        }
-        else if(mesGr.getpoid(1)<yref)
-        {
-            mesGr.getcoul()= {0,255,0};
-            domine.push_back(mesGr);
-            yref=mesGr.getpoid(1);
-            //j++;
-        }
-        else
-        {
-            mesGr.getcoul()= {255,0,0};
-            if(mesGr.getpoid(1)!=yref)
+            mespoid.push_back(mesGr.getpoid(y));
+            if((mesGr.getpoid(y)<yref)&&(mesGr.getpoid(x)==domine[domine.size()-1].getpoid(x)))
+            {
+                domine.pop_back();
+                nndomine.push_back(domine[domine.size()]);
+                domine.push_back(mesGr);
+                yref=mesGr.getpoid(y);
+                //j++;
+            }
+            else if(mesGr.getpoid(y)<yref)
+            {
+                domine.push_back(mesGr);
+                yref=mesGr.getpoid(y);
+            }
+            else
+            {
+                if(mesGr.getpoid(y)!=yref)
                 nndomine.push_back(mesGr);
-        }
+            }
     }
+
+    std::sort(mespoid.begin(),mespoid.end(),compaPoid1Graph);
+    *pmax=mespoid[mespoid.size()-1];
+    if(nbpoid==2)
     affpareto(domine,nndomine,mespoid,svgout);
+    else if(nbpoid==3)
+    {
+        affpareto2(domine,nndomine,mespoid,svgout, x, y);
+    }
     return domine;
 
 }
@@ -260,17 +332,17 @@ int graphe::Connexite()
     int* tab_connexe;
     tab_connexe=(int*) malloc(ordre*sizeof(int));
     int val_prede,val_s1,val_s2,k,connexe=0;
-    for(int i=0; i<ordre; i++)
+    for(int i=0;i<ordre;i++)
     {
         tab_connexe[i]=i;
     }
-    for(auto &mon_arete:m_aretes)
+   for(auto &mon_arete:m_aretes)
     {
         val_s1=mon_arete->getsommet1()->getid();
         val_s2=mon_arete->getsommet2()->getid();
         val_prede=tab_connexe[val_s2];
         tab_connexe[val_s2]=tab_connexe[val_s1];
-        for(int j=0; j<ordre; j++)
+        for(int j=0;j<ordre;j++)
         {
             if(tab_connexe[j]==val_prede)
             {
@@ -278,7 +350,7 @@ int graphe::Connexite()
             }
         }
     }
-    for(int i=0; i<ordre-1; i++)
+    for(int i=0;i<ordre-1;i++)
     {
         if(tab_connexe[i]!=tab_connexe[i+1])
         {
@@ -289,100 +361,16 @@ int graphe::Connexite()
 }
 
 
-//void graphe::Pareto(Svgfile &svgout,int dij)
-//{
-//    std::vector<std::vector<bool>> graphepossibles;
-//    int nombreAr=0;
-//    float resltdij=0;
-//    int ordre=m_sommets.size();
-//    std::vector<graphe> toutesPossi;
-//    std::vector<graphe> mon_dijkstra;
-//    graphe allgraphes= {"files/sous_graphe.txt","files/sous_graphe.txt"};
-//    ///std::vector<bool> c;
-//    std::vector<bool> allaretes;
-//    float** ma_matrice;
-//
-//    for (int i=0; i<nbaret; ++i)
-//    {
-//        if (i<ordre-1)
-//        {
-//            allaretes.push_back(true);
-//        }
-//        else
-//            allaretes.push_back(false);
-//    }
-//    for(int h=ordre-1; h<nbaret; ++h)
-//    {
-//        allaretes[0]=1;
-//        std::sort(allaretes.begin(),allaretes.end());
-//        do
-//        {
-//            std::vector<graphe> paretoo;
-//            std::vector<Sommet*> allsom;
-//            int con;
-//            int cas=0;
-//            int j= nbaret-1;
-//            for(Aretes* k : m_aretes)
-//            {
-//                if(allaretes[j]==1)
-//                {
-//                    cas++;
-//                    allgraphes.setar(k);
-//                }
-//                if(j!=0)
-//                {
-//                    j--;
-//                }
-//            }
-//
-//            allgraphes.m_sommets=m_sommets;
-//            allgraphes.m_nbsom=m_nbsom;
-//            allgraphes.nbaret=cas;
-//            allgraphes.m_nbpoid=m_nbpoid;
-//
-//
-//            if(cas==m_nbsom-1)
-//            {
-//                con=allgraphes.Connexite();
-//
-//                if(con==0)
-//                {
-//                    for(int i=0; i<m_nbpoid; i++)
-//                    {
-//                        allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
-//                    }
-//
-//                    toutesPossi.push_back(allgraphes);
-//                }
-//            }
-//
-//            allgraphes.m_aretes.clear();
-//            allgraphes.m_sommets.clear();
-//            allgraphes.m_poid.clear();
-//        }
-//        while(std::next_permutation(allaretes.begin(),allaretes.end()));
-//    }
-//    std::cout<<std::endl;
-//    std::cout<<"size:"<<toutesPossi.size()<<std::endl;
-//    toutesPossi[0].afficher(svgout,0);
-//
-//}
-
-
-
-
-void graphe::Pareto(Svgfile &svgout,int dij)
+void graphe::Pareto(Svgfile &svgout)
 {
     std::vector<std::vector<bool>> graphepossibles;
     int nombreAr=0;
     int ordre=m_sommets.size();
     std::vector<graphe> toutesPossi;
-    std::vector<graphe>mes_dijkstra;
+    std::vector<graphe> toutesPossiconnexe;
     graphe allgraphes= {"files/sous_graphe.txt","files/sous_graphe.txt"};
     ///std::vector<bool> c;
     std::vector<bool> allaretes;
-    float** ma_matrice;
-    int resltdij=0;
     for (int i=0; i<nbaret; ++i)
     {
         if (i<ordre-1)
@@ -392,100 +380,95 @@ void graphe::Pareto(Svgfile &svgout,int dij)
         else
             allaretes.push_back(false);
     }
-    for(int h=ordre-1; h<nbaret; ++h)
+    std::cout<<std::endl;
+    std::sort(allaretes.begin(),allaretes.end());
+    do
     {
-        allaretes[0]=1;
-        std::sort(allaretes.begin(),allaretes.end());
-        do
+        std::vector<graphe> paretoo;
+        std::vector<Sommet*> allsom;
+        int con;
+        int cas=0;
+        int j= nbaret-1;
+        for(Aretes* k : m_aretes)
         {
-            std::vector<graphe> paretoo;
-            std::vector<Sommet*> allsom;
-            int con;
-            int cas=0;
-            int j= nbaret-1;
-            for(Aretes* k : m_aretes)
+            if(allaretes[j]==1)
             {
-                if(allaretes[j]==1)
-                {
-                    cas++;
-                    allgraphes.setar(k);
-                }
-                if(j!=0)
-                {
-                    j--;
-                }
+                cas++;
+                allgraphes.setar(k);
             }
+            if(j!=0)
+            {
+                j--;
+            }
+        }
 
-            allgraphes.m_sommets=m_sommets;
-            allgraphes.m_nbsom=m_nbsom;
-            allgraphes.nbaret=cas;
-            allgraphes.m_nbpoid=m_nbpoid;
+        allgraphes.m_sommets=m_sommets;
+        allgraphes.m_nbsom=m_nbsom;
+        allgraphes.nbaret=cas;
+        allgraphes.m_nbpoid=m_nbpoid;
 
-            if(dij==0)
+
+
+            con=allgraphes.Connexite();
+
+            if(con==0)
             {
                 if(cas==m_nbsom-1)
                 {
-                    con=allgraphes.Connexite();
-
-                    if(con==0)
-                    {
-                        for(int i=0; i<m_nbpoid; i++)
-                        {
-                            allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
-                        }
-
-                        toutesPossi.push_back(allgraphes);
-                    }
-                }
-            }
-            if(dij==1)
-            {
-                if(cas>=m_nbsom-1)
+                for(int i=0;i<m_nbpoid;i++)
                 {
-                    con=allgraphes.Connexite();
+                    allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
 
-                    if(con==0)
-                    {
-                        for(int i=0; i<m_nbpoid; i++)
-                        {
-                            allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
-                        }
-
-                        toutesPossi.push_back(allgraphes);
-                        for(int j=0; j<toutesPossi.size(); j++)
-                        {
-                            ma_matrice=graphetomatradj(toutesPossi[j]);
-                            resltdij=0;
-                            for(int i=0; i<m_nbsom; i++)
-                            {
-                                resltdij=djikstra(ma_matrice,toutesPossi[j].m_sommets.at(i)->getid());
-                            }
-                            toutesPossi[j].setpoiddij(resltdij);
-                        }
-                    }
                 }
+                toutesPossi.push_back(allgraphes);
             }
+            ///if(cas>=m_nbsom-1)----TIAGO
 
-            allgraphes.m_aretes.clear();
-            allgraphes.m_sommets.clear();
-            allgraphes.m_poid.clear();
+
         }
-        while(std::next_permutation(allaretes.begin(),allaretes.end()));
+        allgraphes.m_aretes.clear();
+        allgraphes.m_sommets.clear();
+        allgraphes.m_poid.clear();
+
     }
+    while(std::next_permutation(allaretes.begin(),allaretes.end()));
     std::cout<<std::endl;
     std::cout<<"size:"<<toutesPossi.size()<<std::endl;
-    mes_dijkstra=FrontPareto(toutesPossi, svgout);
-    std::cout<<"size paje dij:"<<mes_dijkstra.size()<<std::endl;
-    for(int i=0;i<mes_dijkstra.size();i++)
+    std::vector<graphe> domine;
+    std::vector<graphe> domine1;
+    std::vector<graphe> domine2;
+    std::vector<graphe> domine3;
+    float p1max=0.0;
+    float p2max=0.0;
+    //FrontPareto(toutesPossi,svgout,0,1,m_nbpoid,&p1max);
+    if(m_nbpoid==2)
+        domine=FrontPareto(toutesPossi, svgout, 0, 1, m_nbpoid, &p1max);
+    else if(m_nbpoid==3)
     {
-        std::cout<<"p1 et dij "<<i<<" "<<mes_dijkstra[i].getpoid(0)<<"//"<<mes_dijkstra[i].getpoid(1)<<std::endl;
-    }
-    /*for(int i=0;i<toutesPossi.size();i++)
-    {
-         toutesPossi[i].afficher(svgout,150*i);
-        std::cout<<"dij de "<<i<<" "<<toutesPossi[i].getpoid(1)<<std::endl;
+        domine1=FrontPareto(toutesPossi, svgout, 0, 1, m_nbpoid, &p1max);
+        domine2=FrontPareto(toutesPossi, svgout, 1, 2, m_nbpoid, &p2max);
+        domine3=FrontPareto(toutesPossi, svgout, 0, 2, m_nbpoid, &p2max);
+        std::cout<<"p1 : "<<p1max <<" p2 "<<p2max<<std::endl;
+        for(graphe dom:domine1)
+        {
+            for(graphe dim:domine2)
+            {
+                for(graphe dam :domine3)
+                {
+                    if((dom.getpoid(0)==dim.getpoid(0))&&(dom.getpoid(0)==dam.getpoid(0))&&
+                       (dom.getpoid(1)==dim.getpoid(1))&&(dom.getpoid(1)==dam.getpoid(1)))
+                    {
+                        svgout.addCircle((dom.getpoid(0)*7),(266-dom.getpoid(1)*(7))+p1max,4,1,"blue");
+                        svgout.addCircle((dim.getpoid(1)*7)+266,(532-dom.getpoid(2)*(7))+p2max,4,1,"blue");
+                        svgout.addCircle((dam.getpoid(0)*7)+532,(798-dom.getpoid(2)*(7))+p2max,4,1,"blue");
+                    }
+                }
 
-    }*/
+            }
+
+
+        }
+    }
 
 }
 
@@ -496,15 +479,16 @@ void graphe::trier()
 }
 
 
-void graphe::afficher(Svgfile& svgout,int posx) const
+void graphe::afficher(Svgfile& svgout) const
 {
     for(auto itr=m_aretes.begin(); itr!=m_aretes.end(); itr++)
     {
-        (*itr)->dessinerArete(svgout,"black",posx,0);
+        //(*itr)->afficher();
+        (*itr)->dessinerArete(svgout,"black",0,0);
     }
     for(auto it=m_sommets.begin(); it!=m_sommets.end(); it++)
     {
-        it->second->dessinerSommet(svgout,posx,0);
+        it->second->dessinerSommet(svgout,0,0);
     }
 }
 
@@ -521,143 +505,10 @@ float graphe::getpoid(int i) const
     return m_poid[i];
 }
 
-void graphe::setpoiddij(float poid)
-{
-    this->m_poid[1]=poid;
-}
 void graphe::setvectpoid(float poid)
 {
     m_poid.push_back(poid);
 }
-float** graphe::graphetomatradj(graphe mon_graphe)
-{
-    float** ma_matrice;
-    int nbsommet= m_sommets.size();
-    ma_matrice = (float **) malloc(nbsommet*sizeof(float *));
-    if (ma_matrice == NULL)
-    {
-        printf("espace mémoire insuffisant\n");
-        exit(1);
-    }
-    for (int i=0; i<nbsommet; i++)
-    {
-        ma_matrice[i] = (float *) malloc(nbsommet*sizeof(float));
-        if (ma_matrice[i] == NULL)
-        {
-            printf("espace mémoire insuffisant\n");
-            exit(1);
-        }
-    }
-    for (int i=0; i<nbsommet; i++)
-        for(int j=0; j<nbsommet; j++)
-            ma_matrice[i][j]=0;
-    for(auto it : mon_graphe.getmesaret())
-    {
-        int idso1 =it->getsommet1()->getid();
-        int idso2 =it->getsommet2()->getid();
-        ma_matrice[idso1][idso2]=it->getpoidnb(1);
-        ma_matrice[idso2][idso1]=it->getpoidnb(1);
-    }
-
-    return ma_matrice;
-}
-
-
-float graphe::djikstra(float**matrice_adjacence,int s)
-{
-    int *sommet_marques;
-    float *long_min;
-    int* pred;
-    int nums1,nums2,smin;
-    float minim;
-    int nb=0;
-    int nbsommet= m_sommets.size();
-    float result;
-    sommet_marques = (int *) malloc(nbsommet*sizeof(int));
-    pred = (int *) malloc(nbsommet*sizeof(int));
-    long_min = (float *) malloc(nbsommet*sizeof(float));
-    for(int i=0; i<nbsommet; i++)
-    {
-        sommet_marques[i]=0;
-        long_min[i]=INFINI;
-    }
-    long_min[s]=nb=0;
-    while(nb<nbsommet)
-    {
-        minim=INFINI;
-        for (nums1=0 ; nums1<nbsommet ; nums1++)
-        {
-            if (!sommet_marques[nums1] && long_min[nums1]<minim)
-            {
-                smin = nums1 ;
-                minim = long_min[nums1] ;
-            }
-        }
-        sommet_marques[smin]=1;
-        nb++;
-        for (nums2=0 ; nums2<nbsommet ; nums2++)
-        {
-            if (matrice_adjacence[smin][nums2] && !sommet_marques[nums2] &&  long_min[smin]+ matrice_adjacence[smin][nums2]<long_min[nums2])
-            {
-                long_min[nums2] = long_min[smin] + matrice_adjacence[smin][nums2] ;
-                pred[nums2] = smin ;
-                result+=long_min[nums2];
-
-            }
-        }
-    }
-    return result;
-}
-
-
-
-//float graphe::djikstra(float**matrice_adjacence,int s,int yref)
-//{
-//    int *sommet_marques;
-//    float *long_min;
-//    int* pred;
-//    int nums1,nums2,smin;
-//    float minim;
-//    int nb=0;
-//    int nbsommet= m_sommets.size();
-//    float result;
-//    sommet_marques = (int *) malloc(nbsommet*sizeof(int));
-//    pred = (int *) malloc(nbsommet*sizeof(int));
-//    long_min = (float *) malloc(nbsommet*sizeof(float));
-//    for(int i=0; i<nbsommet; i++)
-//    {
-//        sommet_marques[i]=0;
-//        long_min[i]=INFINI;
-//    }
-//    long_min[s]=nb=0;
-//    while((nb<nbsommet)||(result>yref))
-//    {
-//        minim=INFINI;
-//        for (nums1=0 ; nums1<nbsommet ; nums1++)
-//        {
-//            if (!sommet_marques[nums1] && long_min[nums1]<minim)
-//            {
-//                smin = nums1 ;
-//                minim = long_min[nums1] ;
-//            }
-//        }
-//        sommet_marques[smin]=1;
-//        nb++;
-//        for (nums2=0 ; nums2<nbsommet ; nums2++)
-//        {
-//            if (matrice_adjacence[smin][nums2] && !sommet_marques[nums2] &&  long_min[smin]+ matrice_adjacence[smin][nums2]<long_min[nums2])
-//            {
-//                long_min[nums2] = long_min[smin] + matrice_adjacence[smin][nums2] ;
-//                pred[nums2] = smin ;
-//                result+=long_min[nums2];
-//
-//            }
-//        }
-//    }
-//    std::cout<<"Mon dij="<<result<<std::endl;
-//    return result;
-//}
-
 
 std::vector<float> graphe::getvectpoid()const
 {
@@ -667,87 +518,4 @@ std::vector<float> graphe::getvectpoid()const
 Couleur graphe::getcoul()const
 {
     return m_couleur;
-
 }
-
-
-
-
-
-
-
-
-//
-//if(dij==0)
-//            {
-//                if(cas==m_nbsom-1)
-//                {
-//                    con=allgraphes.Connexite();
-//
-//                    if(con==0)
-//                    {
-//                        for(int i=0; i<m_nbpoid; i++)
-//                        {
-//                            allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
-//                        }
-//
-//                        toutesPossi.push_back(allgraphes);
-//                    }
-//                }
-//            }
-//            if (dij==1)
-//            {
-//                if(cas>=m_nbsom-1)
-//                {
-//                    con=allgraphes.Connexite();
-//
-//                    if(con==0)
-//                    {
-//                        for(int i=0; i<m_nbpoid; i++)
-//                        {
-//                            allgraphes.setvectpoid(mon_poidtot(allgraphes.m_aretes, i));
-//                        }
-//
-//                        toutesPossi.push_back(allgraphes);
-//                        for(int j=0; j<toutesPossi.size(); j++)
-//                        {
-//                            ma_matrice=graphetomatradj(toutesPossi[j]);
-//                            resltdij=0;
-//                            for(int i=0; i<m_nbsom; i++)
-//                            {
-//                                resltdij=djikstra(ma_matrice,toutesPossi[j].m_sommets.at(i)->getid(),25);
-//                            }
-//                            toutesPossi[j].setpoiddij(resltdij);
-//                        }
-//                    }
-//
-//                }
-
-
-
-
-//
-//<<<<<<< HEAD
-//    }
-//    std::cout<<std::endl;
-//    std::cout<<"size:"<<toutesPossi.size()<<std::endl;
-//    if(dij==1)
-//    {
-//        mon_dijkstra=FrontPareto(toutesPossi, svgout);
-//        std::cout<<"size dij:"<<mon_dijkstra.size()<<std::endl;
-//
-//    }
-//
-//    /*if (dij==1)
-//    {
-//        ma_matrice=graphetomatradj(mon_dijkstra[0]);
-//        for(int i=0; i<m_nbsom; i++)
-//        {
-//            resltdij+=djikstra(ma_matrice,toutesPossi[0].m_sommets.at(i)->getid());
-//        }
-//    }*/
-//
-//
-//
-//=======
-
