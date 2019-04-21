@@ -310,7 +310,7 @@ float graphe::mon_poidtot(std::vector<Aretes*> Krusk,int poid)
  * \details  on cherche l'arbre de poids couvrants minimun
  * \param    svgout     feuille svg
  * \param    p       poid sur lequel on travaille
- * \return un float mon poid total
+ * \return   l'arbre
  */
 std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
 {
@@ -383,6 +383,11 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
 
 }
 
+/**
+ * \brief    algo connexite
+ * \details  on fait un tableau de connexité
+ * \return   le tableau de connexe
+ */
 int graphe::Connexite()
 {
     int ordre=m_sommets.size();
