@@ -243,10 +243,6 @@ void graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgout,int dij,int 
 
             }
         }
-        for(graphe i: domine)
-        {
-            std::cout<<"Domine: "<<i.getpoid(0)<<"//"<<i.getpoid(poidselec)<<std::endl;
-        }
         std::cout<<"nb frontiere avec dij: "<<domine.size()<<std::endl;
         /*for(int i=0; i<domine.size(); i++)
         {
