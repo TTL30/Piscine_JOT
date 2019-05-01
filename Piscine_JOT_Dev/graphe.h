@@ -40,6 +40,7 @@ public:
     int racine(Sommet i,std::vector<Sommet> foret);
     ///std::vector<Aretes*> get_aret(){return m_aretes;}
     void afficherP(Svgfile& svgout,int posx, int posy) const;
+
     void ajouter(Aretes* are,int i);
     float getpoid( int i) const;
     int getnbarete()const

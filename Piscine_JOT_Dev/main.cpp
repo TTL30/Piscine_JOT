@@ -1,6 +1,12 @@
 #include <iostream>
 #include "graphe.h"
-
+/**
+ * \file      main.c
+ * \author    Jade/Oscar/Tiago
+ * \version   1.0
+ * \brief     Menu du projet.
+ * \details   initialisation des fichiers que l'on etudie, menu avec choix du fichier puis choix de l'action que l'on veut realiser.
+ */
 int main()
 {
     int choix=0;
@@ -59,6 +65,7 @@ int main()
         {
             std::cin>>choix;
         }while((choix<0)||(choix>3));
+
         std::cout<<std::endl;
         switch(choix)
         {
