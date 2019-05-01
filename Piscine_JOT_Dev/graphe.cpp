@@ -106,21 +106,44 @@ graphe::graphe(std::string nomFichier, std::string nomFichier2)
     }
 }
 
+/**
+ * \brief       comparaison poid arete
+ * \details    on compare le poids que l'on veut
+ * \param    m1      arete 1
+ * \param    m2      arete 2
+* \return    le poid de l'arete qui a le poid inferieur.
+ */
 bool compaPoid(const Aretes* m1,const Aretes* m2)
 {
     return m1->getpoidnb(m1->getnbpoid())<m2->getpoidnb(m2->getnbpoid());
 }
-
+/**
+ * \brief       comparaison poid arete
+ * \details    on compare le poids 1
+ * \param    m1      arete 1
+ * \param    m2      arete 2
+ * \return    le poid de l'arete qui a le poid inferieur.
+ */
 bool compaPoidar(const Aretes* m1,const Aretes* m2)
 {
     return m1->getpoidnb(1)<m2->getpoidnb(1);
 }
-
+/**
+ * \brief       comparaison poid graphe
+ * \param    m1      poid 1
+ * \param    m2      poid 2
+ * \return   le poid inferieur.
+ */
 bool compaPoid1Graph(const float m1,const float m2)
 {
     return m1<m2;
 }
-
+/**
+ * \brief       comparaison poid graphe que l'on veut
+ * \param    m1      poid 1
+ * \param    m2      poid 2
+ * \return   le poid inferieur.
+ */
 bool compaPoid0Graph(const graphe m1,const graphe m2, int i)
 {
     return m1.getpoid(i)<m2.getpoid(i);
@@ -133,13 +156,14 @@ bool compaPoid0Graph(const graphe m1,const graphe m2, int i)
  * \param    nodom      les graphes nondomines
  * \param    mespoids   les poids pour l'affichage
  * \param    svgout     la feuille svg
+* \param    choix      inutile
  */
 
 void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<float> mespoids, Svgfile& svgout, int choix)
 {
     int d=7;
     //if(choix >2)
-   // {
+    // {
     //    d=2;
     //}
     std::sort(mespoids.begin(),mespoids.end(),compaPoid1Graph);
@@ -162,14 +186,22 @@ void affpareto(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<fl
     {
         svgout.addDisk((mf.getpoid(0)*d),(795-mf.getpoid(1)*(d))+mespoids[mespoids.size()-1],2.5,"red");
     }
+    for(int i=0; i<dom.size(); i++)
+    {
+
+        dom[i].afficher(svgout,500+i*300);
+    }
 }
 
 /**
  * \brief       Affichage de pareto
- * \details    Affiche le pareto avec dijkstra
+ * \details    Affiche le pareto avec plus de 2 poids
  * \param    dom        les graphes domines
+ * \param    nodom      les graphes nondomines
  * \param    mespoids   les poids pour l'affichage
  * \param    svgout     la feuille svg
+ * \param    x     ?
+ * \param    y     ?
  */
 void affpareto2(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<float> mespoids, Svgfile& svgout, int x, int y, int choix)
 {
@@ -201,7 +233,7 @@ void affpareto2(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<f
             {
                 if(mg.getpoid(x)>10000)
                     aa=100;
-                 mg.setpoiddij(mg.getpoid(x)/aa, x);
+                mg.setpoiddij(mg.getpoid(x)/aa, x);
             }
             svgout.addDisk((mg.getpoid(x)*d),(266-mg.getpoid(y)*d),2,"green");
         }
@@ -227,21 +259,21 @@ void affpareto2(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<f
             {
                 if(mg.getpoid(x)>10000)
                     aa=100;
-                 mg.setpoiddij(mg.getpoid(x)/aa, x);
+                mg.setpoiddij(mg.getpoid(x)/aa, x);
             }
             svgout.addDisk((mg.getpoid(x)*d)+266,(532-mg.getpoid(y)*d),2,"green");
         }
     }
     else
     {
-         svgout.addLine(532,532,532,795, "black");
-         svgout.addLine(532,795,800,795, "black");
-         svgout.addText(542,552, "cout3", "black");
-         svgout.addText(750,790, "cout1", "black");
-         svgout.addLine(532,532,537,537,"black");
-         svgout.addLine(795, 790,800,795, "black");
-         svgout.addLine(800,795,795,800, "black");
-         for(graphe mg:dom)
+        svgout.addLine(532,532,532,795, "black");
+        svgout.addLine(532,795,800,795, "black");
+        svgout.addText(542,552, "cout3", "black");
+        svgout.addText(750,790, "cout1", "black");
+        svgout.addLine(532,532,537,537,"black");
+        svgout.addLine(795, 790,800,795, "black");
+        svgout.addLine(800,795,795,800, "black");
+        for(graphe mg:dom)
         {
             if(mg.getpoid(y)>1000)
             {
@@ -253,7 +285,7 @@ void affpareto2(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<f
             {
                 if(mg.getpoid(x)>10000)
                     aa=100;
-                 mg.setpoiddij(mg.getpoid(x)/aa, x);
+                mg.setpoiddij(mg.getpoid(x)/aa, x);
             }
             svgout.addDisk((mg.getpoid(x)*d)+532,(798-mg.getpoid(y)*d),2,"green");
         }
@@ -261,10 +293,17 @@ void affpareto2(std::vector<graphe> dom, std::vector<graphe> nodom,std::vector<f
 
 }
 
-
+/**
+ * \brief       Affichage de pareto
+ * \details    Affiche le pareto avec dijkstra
+ * \param    dom        les graphes domines
+ * \param    mespoids   les poids pour l'affichage
+ * \param    svgout     la feuille svg
+ * \param    choix     poid sur lequel on travaille
+ */
 void affparetodij(std::vector<graphe> dom,std::vector<float> mespoids, Svgfile& svgout, int choix)
 {
-svgout.addText(10,15, "cout 2", "black");
+    svgout.addText(10,15, "cout 2", "black");
     svgout.addText(750,790, "cout 1", "black");
     svgout.addLine(0, 5,5,0,"black" );
     svgout.addLine(5,0,10,5,"black");
@@ -314,13 +353,13 @@ std::vector<graphe> graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgo
     for (int i = 0; i < nbsommet; i++)
         ma_matrice[i] = new float[nbsommet];
 
-   /* for (int i = 0; i < nbsommet; i++)
-    {
-        for (int j = 0; j < nbsommet; j++)
-        {
-            ma_matrice[i][j]=0;
-        }
-    }*/
+    /* for (int i = 0; i < nbsommet; i++)
+     {
+         for (int j = 0; j < nbsommet; j++)
+         {
+             ma_matrice[i][j]=0;
+         }
+     }*/
 
     std::sort(possi.begin(),possi.end(),std::bind(compaPoid0Graph, std::placeholders::_1, std::placeholders::_2, x));
     if(dij==0)
@@ -346,7 +385,7 @@ std::vector<graphe> graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgo
             else
             {
                 if((mesGr.getpoid(y)!=yref)&&(nbpoid!=3))
-                nndomine.push_back(mesGr);
+                    nndomine.push_back(mesGr);
             }
         }
         std::cout<<"nb frontiere juste pajeto: "<<domine.size()<<std::endl;
@@ -354,14 +393,14 @@ std::vector<graphe> graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgo
         std::sort(mespoid.begin(),mespoid.end(),compaPoid1Graph);
 //    *pmax=mespoid[mespoid.size()-1];
 
-    if(nbpoid==2)
-    {
-                affpareto(domine,nndomine,mespoid,svgout, choix);
-    }
-    else if(nbpoid==3)
-    {
-        affpareto2(domine,nndomine,mespoid,svgout, x, y, choix);
-    }
+        if(nbpoid==2)
+        {
+            affpareto(domine,nndomine,mespoid,svgout, choix);
+        }
+        else if(nbpoid==3)
+        {
+            affpareto2(domine,nndomine,mespoid,svgout, x, y, choix);
+        }
     }
 
 
@@ -402,7 +441,7 @@ std::vector<graphe> graphe::FrontPareto(std::vector<graphe> possi, Svgfile& svgo
                 mespoid.push_back(mesGr.getpoid(poidselec));
                 domine.push_back(mesGr);
                 yref=dij_maillon;
-               // std::cout<<mesGr.getpoid(0)<<"//"<<mesGr.getpoid(poidselec)<<std::endl;
+                // std::cout<<mesGr.getpoid(0)<<"//"<<mesGr.getpoid(poidselec)<<std::endl;
             }
         }
         std::cout<<"nb frontiere avec dij: "<<domine.size()<<std::endl;
@@ -502,16 +541,16 @@ std::vector<Aretes*> graphe::kruskal (Svgfile& svgout,int p)
         posx=500+p*500;
     for(auto itr=Arbre.begin(); itr!=Arbre.end(); itr++)
     {
-        (*itr)->dessinerArete(svgout,"red",posx,0);
+        (*itr)->dessinerArete(svgout,"red",posx,50);
     }
     for(auto it=m_sommets.begin(); it!=m_sommets.end(); it++)
     {
-        it->second->dessinerSommet(svgout,posx,0);
+        it->second->dessinerSommet(svgout,posx,50);
     }
     auto poidstring=std::to_string(p);
     poidarbre=mon_poidtot(Arbre,p);
     auto poidtotstring=std::to_string(poidarbre);
-    svgout.addText(posx+100,50+m_sommets[m_sommets.size()-1]->getX(),"Kruskal pour le poids ("+poidstring+"), le poids total : ("+poidtotstring+")","black");
+    svgout.addText(posx+100,100+m_sommets[m_sommets.size()-1]->getX(),"Kruskal pour le poids ("+poidstring+"), le poids total : ("+poidtotstring+")","black");
     return Arbre;
 
 }
@@ -555,7 +594,13 @@ int graphe::Connexite()
     return connexe;
 }
 
-
+/**
+ * \brief    algo Pareto
+ * \details  on cherche toutes les possibilites admissibles avec (pour dijkstra) et sans cycle
+ * \param    svgout     feuille svg
+ * \param    dij     choix realise dans le main si on fait dijkstra ou non
+ * \param    poidselec     poid sur lequel on travaille le dijkstra
+ */
 void graphe::Pareto(Svgfile &svgout,int dij,int poidselec, int choix)
 {
     std::vector<std::vector<bool>> graphepossibles;
@@ -709,7 +754,7 @@ void graphe::Pareto(Svgfile &svgout,int dij,int poidselec, int choix)
             {
                 for(graphe dam :domine3)
                 {
-                     if((dom.getpoid(0)==dim.getpoid(0))&&(dom.getpoid(0)==dam.getpoid(0)))
+                    if((dom.getpoid(0)==dim.getpoid(0))&&(dom.getpoid(0)==dam.getpoid(0)))
                     {
                         svgout.addDisk(725,35,4,"blue");
                         svgout.addText(750,40, "graphe en commun au trois Frontires de Pareto ", "black");
@@ -731,13 +776,21 @@ void graphe::Pareto(Svgfile &svgout,int dij,int poidselec, int choix)
     //FrontPareto(toutesPossi,svgout,dij,poidselec);
 }
 
-
+/**
+ * \brief      trie des aretes
+ * \details    trie des aretes d'un graphe en fonction de leur poids
+ */
 void graphe::trier()
 {
     std::sort(m_aretes.begin(),m_aretes.end(),compaPoid);
 }
 
-
+/**
+ * \brief      dessin des graphes
+  * \details   dessin des sommets et des aretes du graphe
+ * \param    svgout         feuille de dessin.
+ * \param    posx         position ou l'on va dessiner le graphe.
+ */
 void graphe::afficher(Svgfile& svgout,int posx) const
 {
     for(auto itr=m_aretes.begin(); itr!=m_aretes.end(); itr++)
@@ -749,30 +802,57 @@ void graphe::afficher(Svgfile& svgout,int posx) const
         it->second->dessinerSommet(svgout,posx,50);
     }
 }
-
+/**
+ * \brief    setteur d'arete
+ * \param    unearete     arete que l'on definit.
+ */
 void graphe::setar(Aretes* unearete)
 {
     m_aretes.push_back(unearete);
 }
+/**
+ * \brief    getteur du nombre de poid
+ * \return    m_nbpoid    le nombre de poid du graphe.
+ */
 int graphe::getnbpoid()const
 {
     return m_nbpoid;
 }
+/**
+ * \brief    getteur du poid que l'on veut du graphe
+  * \param    i    le numero du poid sur lequel on travaille.
+ * \return    m_nbpoid    le poid reel du graphe.
+ */
 float graphe::getpoid(int i) const
 {
     return m_poid[i];
 }
-
+/**
+ * \brief    setteur de poid
+* \details   on set le poid sur lequel on realise le dijkstra avec le poid calcule
+  * \param    poid    poid reel dijkstra calcule.
+ * \param    poidselec    poid sur lequel on fait le dijkstra.
+ */
 void graphe::setpoiddij(float poid,int poidselec)
 {
     this->m_poid[poidselec]=poid;
 }
+/**
+ * \brief    setteur de vecteur de poid du graphe
+  * \param    poid    poid reel  calcule.
+ */
 void graphe::setvectpoid(float poid)
 {
     m_poid.push_back(poid);
 }
 
-
+/**
+ * \brief    matrice d'adjacence d'un graphe
+ * \details  on convertie le graphe en matrice d'adjacence
+  * \param    mon_graphe    graphe que l'on etudie.
+  * \param    ma_matrice    matrice d'adjacence.
+  * \param    poidselec    poid sur lequel on travaille.
+ */
 void graphe::graphetomatradj(graphe mon_graphe,float** ma_matrice,int poidselec)
 {
     for(auto it : mon_graphe.getmesaret())
@@ -783,6 +863,13 @@ void graphe::graphetomatradj(graphe mon_graphe,float** ma_matrice,int poidselec)
         ma_matrice[idso2][idso1]=it->getpoidnb(poidselec);
     }
 }
+/**
+ * \brief    algo dijkstra
+ * \details  on realise le dijkstra sur tout les sommets tant que la valeur ne soit pas superieur a notre dijkstra de reference (on evite aisni de nombreux calculs)
+  * \param    matrice_adjacence    matrice d'adjacence du graphe.
+  * \param    yref    valeur dijkstra de reference.
+  * \return   un reel, le resultat dijkstra de la possibilite du graphe.
+ */
 float graphe::mon_djiskstra(float** matrice_adjacence,float yref)
 {
     float resultdij=0;
@@ -794,7 +881,14 @@ float graphe::mon_djiskstra(float** matrice_adjacence,float yref)
     }
     return resultdij;
 }
-
+/**
+ * \brief    algo dijkstra
+ * \details  on realise le dijkstra sur 1 sommet passer en parametre
+  * \param    matrice_adjacence    matrice d'adjacence du graphe.
+  * \param    s    id du sommet sur lequel on travaille.
+  * \param    yref    inutile.
+  * \return   un reel, le resultat dijkstra d'un sommet.
+ */
 float graphe::djikstra(float** matrice_adjacence,int s,float yref)
 {
     int nbsommet= m_sommets.size();
@@ -841,7 +935,10 @@ float graphe::djikstra(float** matrice_adjacence,int s,float yref)
     return result;
 }
 
-
+/**
+ * \brief    getteur de vecteur de poid
+  * \return  mon vecteur de poid du graphe.
+ */
 std::vector<float> graphe::getvectpoid()const
 {
     return m_poid;

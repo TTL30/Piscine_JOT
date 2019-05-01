@@ -1,12 +1,18 @@
 #include <iostream>
 #include "graphe.h"
-
+/**
+ * \file      main.c
+ * \author    Jade/Oscar/Tiago
+ * \version   1.0
+ * \brief     Menu du projet.
+ * \details   initialisation des fichiers que l'on etudie, menu avec choix du fichier puis choix de l'action que l'on veut realiser.
+ */
 int main()
 {
     int choix=0;
     int lepoid=0;
     int chx=0;
-    graphe g1{"files/broadway.txt","files/broadway_weights_0.txt"};
+    graphe g1{"files/broadway.txt","files/broadway_weights_3.txt"};
     graphe g2{"files/cubetown.txt","files/cubetown_weights_1.txt"};
     graphe g3{"files/triville.txt","files/triville_weights_0.txt"};
     graphe g4{"files/manhattan.txt","files/manhattan_weights_1.txt"};

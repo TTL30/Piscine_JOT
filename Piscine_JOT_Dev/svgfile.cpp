@@ -8,9 +8,7 @@ const std::string svgHeader =
     "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"> "
 
     " <defs>"
-    "<rect>"
     "<title>Hello world</title>"
-    "</rect>"
     " </defs>";
 const std::string svgEnding = "\n\n</svg>\n";
 
@@ -121,6 +119,7 @@ void Svgfile::addRectangle(double x, double y, double width, double height, std:
             << attrib("width",  width)
             << attrib("height",  height)
             << attrib("fill", color)
+            <<attrib("title","Hello world")
             << "/>\n";
 }
 
