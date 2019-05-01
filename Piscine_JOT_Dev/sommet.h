@@ -6,11 +6,14 @@
 #include <unordered_set>
 #include "svgfile.h"
 
+/** \class Sommet Sommet.h "inc/Sommet.h" */
+
 class Sommet
 {
     public:
         ///constructeur qui reçoit en params les données du sommet
         Sommet(int,double,double);
+        Sommet();
         void ajouterVoisin(const Sommet*);
         void afficherData() const;
         void afficherVoisins() const;

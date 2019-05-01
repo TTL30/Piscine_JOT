@@ -3,12 +3,13 @@
 #include "sommet.h"
 #include <vector>
 
-
+/** \class Aretes aretes.h "inc/aretes.h" */
 class Aretes
 {
     public:
         ///constructeur qui reçoit en params les données du sommet
         Aretes(int id,std::vector<float> p, Sommet* s1, Sommet* s2, int taille, std::vector<bool> bolAr,int tp);
+
         ~Aretes();
         void afficher()const;
         float getpoidnb(int i) const {return m_poid[i];}
@@ -21,13 +22,7 @@ class Aretes
         Sommet* getsommet2()const {return m_s2;}
         bool getbolAr(int i) const {return m_bolAr[i];}
         std::vector<bool> getbolArr() const {return m_bolAr;}
-        int getid();
         void dessinerArete(Svgfile& svgout,std::string m_couleur,int posxinit,int posyinit)const;
-
-
-
-    protected:
-
 
     private:
         /// Données spécifiques du sommet
